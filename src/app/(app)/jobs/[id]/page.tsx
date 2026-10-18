@@ -118,7 +118,7 @@ export default function JobPage() {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2 className="text-lg font-semibold">How to position yourself honestly</h2>
-            <p className="mt-1 text-sm text-muted">A deeper read by Nemotron 3 Ultra, run only when you ask. It can take a minute.</p>
+            <p className="mt-1 text-sm text-muted">A deeper read by Nemotron 3 Ultra, run only when you ask. It can take a minute. This is advice: nothing here goes into an application unless it passes the Claims Ledger.</p>
           </div>
           <button className="btn btn-quiet btn-sm" disabled={!!busy} onClick={() => run("deep", `/api/jobs/${job.id}/deep`)}>
             {busy === "deep" && <Spinner />}

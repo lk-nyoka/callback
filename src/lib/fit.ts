@@ -92,7 +92,7 @@ export async function deepAnalysis(job: JobPosting, facts: CareerFact[], trace: 
     messages: [
       {
         role: "system",
-        content: `You are a blunt, honest career strategist. ${UNTRUSTED_GUARD} Using ONLY the candidate's verified facts, explain: (1) the 3 strongest honest angles for this application, citing fact IDs in brackets; (2) the real gaps a recruiter will notice and how to address each truthfully (e.g. a small project, a course, how to frame transferable work), never by exaggerating; (3) one question to ask the employer. Plain markdown, under 300 words.`,
+        content: `You are a blunt, honest career strategist. ${UNTRUSTED_GUARD} Using ONLY the candidate's verified facts, explain: (1) the 3 strongest honest angles for this application, citing fact IDs in brackets; (2) the real gaps a recruiter will notice and how to address each truthfully (e.g. a small project, a course, how to frame transferable work), never by exaggerating; (3) one question to ask the employer. Describe the candidate's work in the facts' own terms: no inflation such as "production-grade" or rounding 1.2 million up to "millions". Plain markdown with headings and bullet lists, no tables, under 300 words.`,
       },
       { role: "user", content: `CANDIDATE FACTS:\n${factsBlock(confirmed)}\n\n<posting>\n${job.title} at ${job.company} (${job.location})\n\n${job.descriptionText.slice(0, 7000)}\n</posting>` },
     ],

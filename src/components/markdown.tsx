@@ -5,7 +5,11 @@ import type { CareerFact } from "@/lib/types";
 // Tiny, safe markdown renderer (headings, lists, bold, fact-id citations).
 // No HTML from the model is ever injected.
 export function Markdown({ text, facts }: { text: string; facts?: Map<string, CareerFact> }) {
-  const blocks = text.split(/\n{2,}/);
+  // Give tables their own block even when the model omits the blank line.
+  const normalised = text
+    .replace(/^(?!\s*\|)(.+)\n(?=\s*\|)/gm, "$1\n\n")
+    .replace(/^(\s*\|.*\|)\s*\n(?!\s*\|)/gm, "$1\n\n");
+  const blocks = normalised.split(/\n{2,}/);
   return (
     <div className="space-y-3 text-[0.97rem] leading-relaxed">
       {blocks.map((b, i) => {
@@ -19,6 +23,25 @@ export function Markdown({ text, facts }: { text: string; facts?: Map<string, Ca
                 <li key={j}>{inline(l.replace(/^\s*([-*•]|\d+[.)])\s+/, ""), facts)}</li>
               ))}
             </Tag>
+          );
+        }
+        // Simple pipe tables: | a | b |, with a |---| separator row.
+        if (lines.length >= 2 && lines.every((l) => /^\s*\|.*\|\s*$/.test(l))) {
+          const rows = lines.filter((l) => !/^\s*\|[\s:|-]+\|\s*$/.test(l)).map((l) => l.trim().slice(1, -1).split("|").map((c) => c.trim()));
+          const [head, ...body] = rows;
+          return (
+            <div key={i} className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr>{head.map((c, j) => <th key={j} className="border-b border-rule-strong py-1.5 pr-4 font-semibold">{inline(c, facts)}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {body.map((r, k) => (
+                    <tr key={k} className="border-b border-rule align-top">{r.map((c, j) => <td key={j} className="py-1.5 pr-4">{inline(c, facts)}</td>)}</tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           );
         }
         const h = b.match(/^#{1,4}\s+(.*)/);
