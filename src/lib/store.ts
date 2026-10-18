@@ -86,8 +86,10 @@ function filePath(id: string) {
 }
 
 // Supabase adapter (PostgREST). Table: workspaces(id text primary key, state jsonb, updated_at timestamptz)
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+// CALLBACK_* take precedence so the app's storage can be pinned explicitly even
+// when a hosting integration also injects its own SUPABASE_* variables.
+const supabaseUrl = (process.env.CALLBACK_SUPABASE_URL || process.env.SUPABASE_URL || "").replace(/\/$/, "") || undefined;
+const supabaseKey = process.env.CALLBACK_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const supabaseAdapter: Adapter = {
   async load(id) {
@@ -179,4 +181,15 @@ export async function deleteWorkspace(id: string) {
 
 export async function listWorkspaces() {
   return adapter.list();
+}
+
+// Lightweight connectivity check for /api/health (never returns secrets).
+export async function storageHealth(): Promise<{ mode: string; ok: boolean; detail?: string }> {
+  if (storageMode !== "supabase") return { mode: storageMode, ok: storageMode === "local-files" };
+  try {
+    const r = await fetch(`${supabaseUrl}/rest/v1/workspaces?select=id&limit=1`, { headers: sbHeaders(), cache: "no-store" });
+    return { mode: storageMode, ok: r.ok, detail: r.ok ? undefined : `HTTP ${r.status}` };
+  } catch (e) {
+    return { mode: storageMode, ok: false, detail: (e as Error).message };
+  }
 }
