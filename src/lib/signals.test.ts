@@ -93,3 +93,11 @@ describe("matching: title precision", () => {
     expect(titleRelevance("Junior Data Analyst", intent)).toBeGreaterThan(titleRelevance("People Analytics Intern", intent));
   });
 });
+
+describe("matching: remote tied to a place", () => {
+  const intent = { role: "Data Analyst", keywords: [], locations: ["Johannesburg", "Remote"], remoteOk: true, seniority: "junior" as const, dealbreakers: [] };
+  it("rejects remote roles tied to an unlisted foreign city", () => expect(locationMatches("Helsinki", true, intent).ok).toBe(false));
+  it("accepts 'Remote (Fully remote)'", () => expect(locationMatches("Remote (Fully remote)", true, intent).ok).toBe(true));
+  it("accepts worldwide", () => expect(locationMatches("Home based - Worldwide", true, intent).ok).toBe(true));
+  it("accepts Africa", () => expect(locationMatches("Remote - Africa", true, intent).ok).toBe(true));
+});

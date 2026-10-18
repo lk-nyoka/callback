@@ -21,11 +21,16 @@ export function AppNav() {
   ];
   return (
     <header className="sticky top-0 z-40 border-b border-rule bg-paper/95 backdrop-blur md:h-screen md:border-b-0 md:border-r">
-      <div className="flex items-center justify-between gap-3 px-4 py-3 md:flex-col md:items-stretch md:gap-6 md:px-5 md:py-8">
-        <Link href="/" aria-label="Callback home">
-          <Logo />
-        </Link>
-        <nav aria-label="Main" className="flex gap-1 overflow-x-auto md:flex-col">
+      <div className="flex flex-col gap-2 px-4 py-3 md:h-full md:gap-6 md:px-5 md:py-8">
+        <div className="flex items-center justify-between gap-3">
+          <Link href="/" aria-label="Callback home">
+            <Logo />
+          </Link>
+          <div className="md:hidden">
+            <TransparencyButton />
+          </div>
+        </div>
+        <nav aria-label="Main" className="-mx-4 flex gap-1 overflow-x-auto px-4 md:mx-0 md:flex-col md:overflow-visible md:px-0">
           {items.map((it) => {
             const active = path === it.href || path.startsWith(it.href + "/");
             return (
@@ -33,7 +38,7 @@ export function AppNav() {
                 key={it.href}
                 href={it.href}
                 aria-current={active ? "page" : undefined}
-                className={`flex items-center justify-between gap-3 whitespace-nowrap rounded-lg px-3 py-2 text-[0.95rem] ${active ? "bg-ink text-paper" : "text-ink-2 hover:bg-sunk"}`}
+                className={`flex shrink-0 items-center justify-between gap-2 whitespace-nowrap rounded-lg px-3 py-1.5 text-[0.95rem] md:py-2 ${active ? "bg-ink text-paper" : "text-ink-2 hover:bg-sunk"}`}
               >
                 {it.label}
                 {!!it.count && (
@@ -49,9 +54,6 @@ export function AppNav() {
           <TransparencyButton />
           <p className="mt-3 text-xs leading-snug text-muted">Runs on NVIDIA Nemotron via Nebius Token Factory.</p>
         </div>
-      </div>
-      <div className="flex justify-end px-4 pb-2 md:hidden">
-        <TransparencyButton />
       </div>
     </header>
   );

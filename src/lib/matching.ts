@@ -40,9 +40,16 @@ export function locationMatches(location: string, remote: boolean, intent: Searc
   if (allowed.some((a) => mentions(loc, a))) return { ok: true, why: "Location matches" };
   const wantsRemote = intent.remoteOk || intent.locations.some((l) => /remote/i.test(l));
   if (remote && wantsRemote) {
+    // A remote role is open to the user only if it names no place, or only
+    // generic remote wording. Any named city or country restricts it (an
+    // allow-list of regions is safer than a block-list of every country).
+    const residue = loc
+      .replace(/\b(fully\s+)?remote\b|\bhome[\s-]?based\b|\bwork from home\b|\bwfh\b|\bdistributed\b|\bflexible\b/g, " ")
+      .replace(/[()\[\];,|/\-–]+/g, " ")
+      .trim();
+    if (!residue) return { ok: true, why: "Remote, no region restriction stated" };
     const restricted = RESTRICTIVE_REGIONS.find((r) => mentions(loc, r));
-    if (!restricted) return { ok: true, why: "Remote, no region restriction stated" };
-    return { ok: false, why: `Remote but limited to ${restricted.toUpperCase()}` };
+    return { ok: false, why: restricted ? `Remote but limited to ${restricted.toUpperCase()}` : `Remote but tied to ${residue}` };
   }
   return { ok: false, why: "Outside your locations" };
 }
