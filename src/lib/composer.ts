@@ -26,8 +26,20 @@ export function contextTermsFor(job: JobPosting) {
 // Re-checking is pure code, but auditor flags are model output we can't
 // recompute for free. A flag stays attached to the exact line it was raised
 // on (same text, same citations) so re-checks can never quietly drop it.
+// Models sometimes paste citation IDs into the prose ("... (fct_ab12)").
+// Citations belong in factIds, so remove them from the visible text.
+export function stripCitationIds(text: string): string {
+  return text
+    .replace(/\s*[\[(]\s*fct_[A-Za-z0-9_-]+(?:\s*[,;]\s*fct_[A-Za-z0-9_-]+)*\s*[\])]/g, "")
+    .replace(/\bfct_[A-Za-z0-9_-]+\b/g, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([,.;:])/g, "$1")
+    .trim();
+}
+
 export function checkLines(lines: { text: string; factIds: string[] }[], facts: CareerFact[], job: JobPosting, previous: PackBullet[] = []): PackBullet[] {
   const ctx = contextTermsFor(job);
+  lines = lines.map((l) => ({ ...l, text: stripCitationIds(l.text) }));
   const flagged = new Map(
     previous
       .filter((p) => p.verdict.reasons.some((r) => r.startsWith("auditor_flag")))
@@ -67,7 +79,7 @@ export async function composePack(job: JobPosting, facts: CareerFact[], trace: T
       {
         role: "system",
         content: `You write tailored, recruiter-ready CV bullets and a short application note. ${UNTRUSTED_GUARD}
-Use ONLY the candidate's verified facts. Every bullet and every note sentence that states anything about the candidate must cite the fact IDs it relies on in fact_ids. Write 5-7 bullets ordered by relevance to the posting, strong action verbs, specific, under 30 words each. Keep numbers, tools and titles exactly as in the facts. Prefer the facts' own wording. Do NOT add impact, benefit or quality clauses the facts don't state (e.g. "driving data-informed decisions", "validating advanced skills", "ensuring accuracy"): every clause must be traceable to a fact.
+Use ONLY the candidate's verified facts. Every bullet and every note sentence that states anything about the candidate must cite the fact IDs it relies on in fact_ids. Never write fact IDs inside the text itself. Write 5-7 bullets ordered by relevance to the posting, strong action verbs, specific, under 30 words each. Keep numbers, tools and titles exactly as in the facts. Prefer the facts' own wording. Do NOT add impact, benefit or quality clauses the facts don't state (e.g. "driving data-informed decisions", "validating advanced skills", "ensuring accuracy"): every clause must be traceable to a fact.
 The note is 4-6 sentences addressed to the hiring team: why this role, the 2-3 most relevant proofs, a close. Connective sentences that make no claim about the candidate may have empty fact_ids.
 Respond with JSON only: {"bullets":[{"text":"","fact_ids":["fct_x"]}],"note":[{"text":"","fact_ids":[]}]}`,
       },

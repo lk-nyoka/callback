@@ -18,3 +18,11 @@ describe("checkLines keeps auditor flags", () => {
     expect(checkLines([{ text: flagged.text, factIds: ["f1", "f2"] }], more, job, [flagged])[0].verdict.status).toBe("pass");
   });
 });
+
+import { stripCitationIds } from "./composer";
+describe("stripCitationIds", () => {
+  it("removes pasted citation ids", () => {
+    expect(stripCitationIds("Built a dashboard (fct_JtB8clK9), and wrote SQL (fct_a, fct_b).")).toBe("Built a dashboard, and wrote SQL.");
+    expect(stripCitationIds("Presented findings [fct_x1] to managers")).toBe("Presented findings to managers");
+  });
+});

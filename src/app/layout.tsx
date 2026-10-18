@@ -7,7 +7,7 @@ const newsreader = Newsreader({ subsets: ["latin"], variable: "--font-newsreader
 
 export const metadata: Metadata = {
   title: "Callback",
-  description: "A private job-search assistant that only applies with claims your documents can prove, to jobs that show real hiring signals.",
+  description: "A private job-search assistant that finds roles with visible hiring evidence and drafts applications checked line by line against facts you confirmed.",
   icons: { icon: "/icon.svg" },
 };
 
