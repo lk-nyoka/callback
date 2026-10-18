@@ -115,3 +115,24 @@ describe("real-draft regressions", () => {
     expect(checkClaim({ text: "Led a team of three students in a university robotics project", factIds: ["f3"] }, F).status).toBe("pass"));
   it("splits terms on em dashes", () => expect(extractTerms("Certified—demonstrates skill")).not.toContain("Certified—demonstrates"));
 });
+
+describe("role context from document structure", () => {
+  const mk = (id: string, text: string, start: number, type: CareerFact["type"] = "experience"): CareerFact => ({ id, text, type, documentId: "cv", evidenceQuote: text, quoteStart: start, status: "user_confirmed", userEdited: false, createdAt: "" });
+  const facts = [
+    mk("r1", "Data Analyst Intern, Kopano Logistics, Jan 2025 - Dec 2025", 100),
+    mk("a1", "Wrote SQL queries in PostgreSQL to clean 3 years of shipment records", 160),
+    mk("r2", "Student Assistant, Wits Statistics Department, Feb 2023 - Nov 2024", 400),
+    mk("a2", "Marked assignments for a class of 180 students", 460),
+  ];
+  it("lets an achievement name the employer of the role it sits under", () =>
+    expect(checkClaim({ text: "At Kopano Logistics, wrote SQL queries in PostgreSQL to clean 3 years of shipment records", factIds: ["a1"] }, facts).status).toBe("pass"));
+  it("does not let it borrow a different role's employer", () =>
+    expect(checkClaim({ text: "At Kopano Logistics, marked assignments for a class of 180 students", factIds: ["a2"] }, facts).status).not.toBe("pass"));
+});
+
+describe("real-draft regressions (2)", () => {
+  it("does not treat 'express my interest' as Express.js", () =>
+    expect(checkClaim({ text: "I am writing to express my interest in the role.", factIds: [] }, F).status).toBe("pass"));
+  it("matches plural forms in the novelty check", () =>
+    expect(checkClaim({ text: "Built automated tests for Python services", factIds: ["f1"] }, F).status).toBe("pass"));
+});

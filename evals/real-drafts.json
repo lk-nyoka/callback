@@ -1,0 +1,741 @@
+{
+  "summary": {
+    "generatedAt": "2026-10-18T23:57:28.373Z",
+    "packs": 6,
+    "lines": 63,
+    "pass": 44,
+    "needs_confirmation": 15,
+    "blocked": 4,
+    "truthLabelled": 0
+  },
+  "howToLabel": "Set each row's \"true\" to true or false, then run: node scripts/summarise-real-drafts.mjs",
+  "rows": [
+    {
+      "job": "Data Analyst (Data Enablement, Governance & Insights) @ IQbusiness",
+      "kind": "bullet",
+      "text": "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting.",
+      "cited": [
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst (Data Enablement, Governance & Insights) @ IQbusiness",
+      "kind": "bullet",
+      "text": "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows).",
+      "cited": [
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst (Data Enablement, Governance & Insights) @ IQbusiness",
+      "kind": "bullet",
+      "text": "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour.",
+      "cited": [
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst (Data Enablement, Governance & Insights) @ IQbusiness",
+      "kind": "bullet",
+      "text": "Presented monthly delivery-performance findings to the operations manager and two depot supervisors.",
+      "cited": [
+        "Presented monthly delivery-performance findings to the operations manager and two depot supervisors"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst (Data Enablement, Governance & Insights) @ IQbusiness",
+      "kind": "bullet",
+      "text": "Served as Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025–Dec 2025.",
+      "cited": [
+        "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst (Data Enablement, Governance & Insights) @ IQbusiness",
+      "kind": "bullet",
+      "text": "Assisted as Student Assistant, Department of Statistics, University of the Witwatersrand, Feb 2023–Nov 2024.",
+      "cited": [
+        "Student Assistant at Department of Statistics, University of the Witwatersrand, Feb 2023 – Nov 2024"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst (Data Enablement, Governance & Insights) @ IQbusiness",
+      "kind": "note",
+      "text": "I am excited to apply for the Data Analyst (Data Enablement, Governance & Insights) position at IQbusiness in Johannesburg.",
+      "cited": [],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst (Data Enablement, Governance & Insights) @ IQbusiness",
+      "kind": "note",
+      "text": "My experience building a Power BI dashboard for 14 regional depots and writing SQL queries on large PostgreSQL datasets aligns with the role’s focus on BI reporting and data analysis.",
+      "cited": [
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting",
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:large, datasets, aligns, role's, focus"
+      ],
+      "true": null
+    },
+    {
+      "job": "Data Analyst (Data Enablement, Governance & Insights) @ IQbusiness",
+      "kind": "note",
+      "text": "I have automated weekly reports with Python/pandas and presented performance findings to operations stakeholders, demonstrating practical reporting and communication skills.",
+      "cited": [
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour",
+        "Presented monthly delivery-performance findings to the operations manager and two depot supervisors"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:performance, demonstrating, practical, communication"
+      ],
+      "true": null
+    },
+    {
+      "job": "Data Analyst (Data Enablement, Governance & Insights) @ IQbusiness",
+      "kind": "note",
+      "text": "My background as a Data Analyst Intern and Student Assistant in statistics provides a solid foundation for enabling data-driven governance.",
+      "cited": [
+        "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025",
+        "Student Assistant at Department of Statistics, University of the Witwatersrand, Feb 2023 – Nov 2024"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:background, provides, solid, foundation, enabling"
+      ],
+      "true": null
+    },
+    {
+      "job": "Data Analyst (Data Enablement, Governance & Insights) @ IQbusiness",
+      "kind": "note",
+      "text": "I look forward to contributing to IQbusiness’s data enablement goals and welcome the opportunity to discuss my fit.",
+      "cited": [],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Junior Data Analyst @ Hirehangar",
+      "kind": "bullet",
+      "text": "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting.",
+      "cited": [
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Junior Data Analyst @ Hirehangar",
+      "kind": "bullet",
+      "text": "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (~1.2 million rows).",
+      "cited": [
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Junior Data Analyst @ Hirehangar",
+      "kind": "bullet",
+      "text": "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour.",
+      "cited": [
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Junior Data Analyst @ Hirehangar",
+      "kind": "bullet",
+      "text": "Presented monthly delivery-performance findings to the operations manager and two depot supervisors.",
+      "cited": [
+        "Presented monthly delivery-performance findings to the operations manager and two depot supervisors"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Junior Data Analyst @ Hirehangar",
+      "kind": "bullet",
+      "text": "Served as Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025.",
+      "cited": [
+        "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Junior Data Analyst @ Hirehangar",
+      "kind": "bullet",
+      "text": "Worked as Student Assistant in the Department of Statistics, University of the Witwatersrand (Feb 2023 – Nov 2024).",
+      "cited": [
+        "Student Assistant at Department of Statistics, University of the Witwatersrand, Feb 2023 – Nov 2024"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Junior Data Analyst @ Hirehangar",
+      "kind": "note",
+      "text": "I am excited to apply for the Junior Data Analyst role at Hirehangar because it aligns with my experience building dashboards and automating reports.",
+      "cited": [
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting",
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:because, aligns"
+      ],
+      "true": null
+    },
+    {
+      "job": "Junior Data Analyst @ Hirehangar",
+      "kind": "note",
+      "text": "During my internship at Kopano Logistics I wrote SQL queries to clean and join large shipment datasets and presented monthly performance findings to stakeholders.",
+      "cited": [
+        "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025",
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)",
+        "Presented monthly delivery-performance findings to the operations manager and two depot supervisors"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:internship, large, datasets, performance"
+      ],
+      "true": null
+    },
+    {
+      "job": "Junior Data Analyst @ Hirehangar",
+      "kind": "note",
+      "text": "I am eager to contribute to Hirehangar’s global projects while continuing to develop my SQL, Python, and BI skills under US‑time‑zone guidance.",
+      "cited": [],
+      "status": "blocked",
+      "reasons": [
+        "unsupported_scope:global"
+      ],
+      "true": null
+    },
+    {
+      "job": "Junior Data Analyst @ Hirehangar",
+      "kind": "note",
+      "text": "Thank you for considering my application; I look forward to the opportunity to discuss how I can support your analytics team.",
+      "cited": [],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Revenuecat",
+      "kind": "bullet",
+      "text": "Built a Power BI dashboard tracking on‑time delivery for 14 regional depots, used in weekly operations meetings.",
+      "cited": [
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Revenuecat",
+      "kind": "bullet",
+      "text": "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (~1.2 M rows).",
+      "cited": [
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Revenuecat",
+      "kind": "bullet",
+      "text": "Automated a weekly Excel report with Python (pandas), reducing preparation time from 6 hours to 1 hour.",
+      "cited": [
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Revenuecat",
+      "kind": "bullet",
+      "text": "Presented monthly delivery‑performance findings to the operations manager and two depot supervisors.",
+      "cited": [
+        "Presented monthly delivery-performance findings to the operations manager and two depot supervisors"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Revenuecat",
+      "kind": "bullet",
+      "text": "Served as Student Assistant in the Department of Statistics, University of the Witwatersrand (Feb 2023–Nov 2024).",
+      "cited": [
+        "Student Assistant at Department of Statistics, University of the Witwatersrand, Feb 2023 – Nov 2024"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Revenuecat",
+      "kind": "bullet",
+      "text": "Worked as Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025–Dec 2025.",
+      "cited": [
+        "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Revenuecat",
+      "kind": "note",
+      "text": "I built a Power BI dashboard tracking on‑time delivery for 14 regional depots that was used in weekly operations meetings.",
+      "cited": [
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Revenuecat",
+      "kind": "note",
+      "text": "I wrote SQL queries in PostgreSQL to clean and join three years of shipment records (~1.2 M rows).",
+      "cited": [
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Revenuecat",
+      "kind": "note",
+      "text": "I automated a weekly Excel report with Python (pandas), reducing preparation time from six hours to one hour.",
+      "cited": [
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Revenuecat",
+      "kind": "note",
+      "text": "I presented monthly delivery‑performance findings to operations managers and two depot supervisors.",
+      "cited": [
+        "Presented monthly delivery-performance findings to the operations manager and two depot supervisors"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Forward-Deployed Data Analyst @ Qed Ai",
+      "kind": "bullet",
+      "text": "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting.",
+      "cited": [
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Forward-Deployed Data Analyst @ Qed Ai",
+      "kind": "bullet",
+      "text": "Wrote SQL queries in PostgreSQL to clean and join three years of shipment records totaling approximately 1.2 million rows.",
+      "cited": [
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:totaling, approximately"
+      ],
+      "true": null
+    },
+    {
+      "job": "Forward-Deployed Data Analyst @ Qed Ai",
+      "kind": "bullet",
+      "text": "Automated a weekly Excel report using Python (pandas), reducing preparation time from six hours to one hour.",
+      "cited": [
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Forward-Deployed Data Analyst @ Qed Ai",
+      "kind": "bullet",
+      "text": "Presented monthly delivery‑performance findings to the operations manager and two depot supervisors.",
+      "cited": [
+        "Presented monthly delivery-performance findings to the operations manager and two depot supervisors"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Forward-Deployed Data Analyst @ Qed Ai",
+      "kind": "bullet",
+      "text": "Served as a Student Assistant in the Department of Statistics at the University of the Witwatersrand, supporting statistical tasks.",
+      "cited": [
+        "Student Assistant at Department of Statistics, University of the Witwatersrand, Feb 2023 – Nov 2024"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:served, statistical"
+      ],
+      "true": null
+    },
+    {
+      "job": "Forward-Deployed Data Analyst @ Qed Ai",
+      "kind": "note",
+      "text": "I am eager to contribute to QED’s mission of strengthening health data systems across Sub-Saharan Africa through the Forward‑Deployed Data Analyst position.",
+      "cited": [],
+      "status": "blocked",
+      "reasons": [
+        "unsupported_term:Sub-Saharan",
+        "unsupported_term:Africa"
+      ],
+      "true": null
+    },
+    {
+      "job": "Forward-Deployed Data Analyst @ Qed Ai",
+      "kind": "note",
+      "text": "I built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting.",
+      "cited": [
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Forward-Deployed Data Analyst @ Qed Ai",
+      "kind": "note",
+      "text": "I wrote SQL queries in PostgreSQL to clean and join three years of shipment records totaling approximately 1.2 million rows.",
+      "cited": [
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:totaling, approximately"
+      ],
+      "true": null
+    },
+    {
+      "job": "Forward-Deployed Data Analyst @ Qed Ai",
+      "kind": "note",
+      "text": "I automated a weekly Excel report using Python (pandas), reducing preparation time from six hours to one hour.",
+      "cited": [
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Forward-Deployed Data Analyst @ Qed Ai",
+      "kind": "note",
+      "text": "I am prepared to travel frequently and work closely with ministries and donors to deploy ScanForm‑based solutions.",
+      "cited": [],
+      "status": "blocked",
+      "reasons": [
+        "unsupported_term:ScanForm‑based"
+      ],
+      "true": null
+    },
+    {
+      "job": "DATA ANALYST @ Goldman Tech Resourcing",
+      "kind": "bullet",
+      "text": "Built Power BI dashboard tracking on‑time delivery for 14 regional depots, used in weekly operations meeting.",
+      "cited": [
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "DATA ANALYST @ Goldman Tech Resourcing",
+      "kind": "bullet",
+      "text": "Wrote SQL queries in PostgreSQL to clean and join three years of shipment records (~1.2 million rows).",
+      "cited": [
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "DATA ANALYST @ Goldman Tech Resourcing",
+      "kind": "bullet",
+      "text": "Automated a weekly Excel report with Python (pandas), reducing preparation time from six hours to one hour.",
+      "cited": [
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "DATA ANALYST @ Goldman Tech Resourcing",
+      "kind": "bullet",
+      "text": "Presented monthly delivery‑performance findings to the operations manager and two depot supervisors.",
+      "cited": [
+        "Presented monthly delivery-performance findings to the operations manager and two depot supervisors"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "DATA ANALYST @ Goldman Tech Resourcing",
+      "kind": "bullet",
+      "text": "Served as Data Analyst Intern at Kopano Logistics, Johannesburg (Jan–Dec 2025), supporting logistics analytics.",
+      "cited": [
+        "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:served, jan-dec, analytics"
+      ],
+      "true": null
+    },
+    {
+      "job": "DATA ANALYST @ Goldman Tech Resourcing",
+      "kind": "bullet",
+      "text": "Worked as Student Assistant at Department of Statistics, University of the Witwatersrand (Feb 2023–Nov 2024).",
+      "cited": [
+        "Student Assistant at Department of Statistics, University of the Witwatersrand, Feb 2023 – Nov 2024"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "DATA ANALYST @ Goldman Tech Resourcing",
+      "kind": "note",
+      "text": "I am excited about the Data Analyst position at Goldman Tech Resourcing because it aligns with my experience delivering SQL‑based insights and Python automation in a logistics context.",
+      "cited": [
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)",
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour",
+        "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:because, aligns, delivering, sql-based, automation"
+      ],
+      "true": null
+    },
+    {
+      "job": "DATA ANALYST @ Goldman Tech Resourcing",
+      "kind": "note",
+      "text": "During my internship at Kopano Logistics I built a Power BI dashboard tracking on‑time delivery for 14 regional depots that was used in weekly operations meetings.",
+      "cited": [
+        "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025",
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:internship, meetings"
+      ],
+      "true": null
+    },
+    {
+      "job": "DATA ANALYST @ Goldman Tech Resourcing",
+      "kind": "note",
+      "text": "I also wrote PostgreSQL queries to clean and join three years of shipment records (~1.2 M rows) and automated a weekly Excel report with pandas, cutting prep time from six hours to one hour.",
+      "cited": [
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)",
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "DATA ANALYST @ Goldman Tech Resourcing",
+      "kind": "note",
+      "text": "My role as a Student Assistant in the Department of Statistics sharpened my statistical foundation, which I apply to every analysis.",
+      "cited": [
+        "Student Assistant at Department of Statistics, University of the Witwatersrand, Feb 2023 – Nov 2024"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:sharpened, statistical, foundation, every"
+      ],
+      "true": null
+    },
+    {
+      "job": "DATA ANALYST @ Goldman Tech Resourcing",
+      "kind": "note",
+      "text": "I look forward to contributing to your team’s data‑driven projects and welcome the opportunity to discuss how my skills match your needs.",
+      "cited": [],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Helderberg Personnel cc",
+      "kind": "bullet",
+      "text": "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting",
+      "cited": [
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Helderberg Personnel cc",
+      "kind": "bullet",
+      "text": "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)",
+      "cited": [
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Helderberg Personnel cc",
+      "kind": "bullet",
+      "text": "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour",
+      "cited": [
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Helderberg Personnel cc",
+      "kind": "bullet",
+      "text": "Presented monthly delivery-performance findings to the operations manager and two depot supervisors",
+      "cited": [
+        "Presented monthly delivery-performance findings to the operations manager and two depot supervisors"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Helderberg Personnel cc",
+      "kind": "bullet",
+      "text": "Served as Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025",
+      "cited": [
+        "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Helderberg Personnel cc",
+      "kind": "bullet",
+      "text": "Worked as Student Assistant at Department of Statistics, University of the Witwatersrand, Feb 2023 – Nov 2024",
+      "cited": [
+        "Student Assistant at Department of Statistics, University of the Witwatersrand, Feb 2023 – Nov 2024"
+      ],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Helderberg Personnel cc",
+      "kind": "bullet",
+      "text": "Junior Data Analyst based in Johannesburg, South Africa (contact: thandi.mokoena@example.com)",
+      "cited": [
+        "Junior Data Analyst at Johannesburg, South Africa, thandi.mokoena@example.com"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:based, contact, thandimokoena, examplecom"
+      ],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Helderberg Personnel cc",
+      "kind": "note",
+      "text": "I am writing to express my interest in the Data Analyst position at Helderberg Personnel cc.",
+      "cited": [],
+      "status": "blocked",
+      "reasons": [
+        "unsupported_term:express"
+      ],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Helderberg Personnel cc",
+      "kind": "note",
+      "text": "My experience includes building a Power BI dashboard for 14 regional depots, writing SQL queries in PostgreSQL to clean and join large shipment datasets, and automating weekly Excel reports with Python pandas.",
+      "cited": [
+        "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting",
+        "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)",
+        "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:large, datasets"
+      ],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Helderberg Personnel cc",
+      "kind": "note",
+      "text": "I have also presented performance findings to operations staff and completed a Data Analyst internship.",
+      "cited": [
+        "Presented monthly delivery-performance findings to the operations manager and two depot supervisors",
+        "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 – Dec 2025"
+      ],
+      "status": "needs_confirmation",
+      "reasons": [
+        "new_content:performance, staff, internship"
+      ],
+      "true": null
+    },
+    {
+      "job": "Data Analyst @ Helderberg Personnel cc",
+      "kind": "note",
+      "text": "I look forward to contributing my analytical skills to your team.",
+      "cited": [],
+      "status": "pass",
+      "reasons": [],
+      "true": null
+    }
+  ]
+}

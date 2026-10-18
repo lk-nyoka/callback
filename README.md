@@ -9,7 +9,7 @@ Callback is a private job-search assistant. It reads your CV into a **Career Vau
 
 | | |
 |---|---|
-| Live demo | `TODO: add URL after deploy` |
+| Live demo | **https://callback-psi-two.vercel.app** (try it with the sample CV) |
 | Video (3 min) | `TODO: add YouTube URL` |
 
 ---
@@ -51,7 +51,7 @@ Every drafted line arrives as `{ text, factIds }`. `src/lib/ledger.ts` checks it
 
 | Layer | What it checks | Outcome | Reason codes |
 |---|---|---|---|
-| Citations | Every cited fact exists and you confirmed it | Block | `missing_or_unconfirmed_fact` |
+| Citations | Every cited fact exists and you confirmed it. Each cited achievement also inherits the role heading it sits under in your CV (found from quote positions), so "at Kopano Logistics" is supported by the role it belongs to, and not by a different one | Block | `missing_or_unconfirmed_fact` |
 | Hard rules | Numbers (including number words, so "five" can't dodge "3"), quantity words, scope, superlatives, audience (executives, board), capability phrases (machine learning, forecasting, in production), career progression (promoted), and seniority/ownership verbs in curated families (led, managed, architected, mentored, founded...) must appear in the cited facts | Block | `unsupported_number`, `unsupported_scope`, `escalated_claim`, `unsupported_progression`, ... |
 | Uncited lines | Connective sentences may not claim experience or quality ("extensive experience", "consistently") | Block | `uncited_claim` |
 | Named terms | Tools, technologies and organisations must appear in the cited facts. The target company and role may be named, but never in a claim of having worked there | Block, or route a single near-match to you | `unsupported_term`, `unmatched_term` |
@@ -85,7 +85,18 @@ What got through on the fresh set, and why:
 
 The live drafts during development show the ledger doing its job on real model output: from the fact *"Track club income and expenses in Google Sheets"*, Nemotron 3 Super wrote *"**Managed** club finances as Volunteer Treasurer"*, and the ledger blocked it (`escalated_claim:managed`).
 
-**Not yet measured:** the false-flag rate on real Super drafts. The plan is to generate 20+ packs and hand-label every line as passed, flagged or blocked, and as true or untrue.
+### On real drafts
+
+Two samples of six packs each, drafted live by Nemotron 3 Super for live roles (`evals/real-drafts.v1.json`, `evals/real-drafts.json`):
+
+| Sample | Lines | Supported | Sent to you | Blocked |
+|---|---:|---:|---:|---:|
+| v1 | 65 | 48 (74%) | 9 (14%) | 8 (12%) |
+| v2, after the role-heading rule | 63 | 44 (70%) | 15 (24%) | 4 (6%) |
+
+A first read of v1's 17 flagged lines found real catches ("**supervised** teams", "**senior** stakeholders", "**leading** sessions" for "running", "complex SQL", "large datasets") and about five false blocks. Two of those false blocks shared a cause (an employer named in a line that cited only the achievement), which the role-heading rule fixed. Others quote the job posting ("collaboration with Marketing, Sales...") and are deliberately left strict. Fixes made after v2 (common connective words, plural matching, "express" no longer read as Express.js) are not yet reflected in a new sample.
+
+These lines are **not yet truth-labelled**: set each row's `true` field and run `node scripts/summarise-real-drafts.mjs` to get the real-draft confusion table.
 
 ## Hiring signals
 
@@ -146,7 +157,7 @@ A full run from CV to shortlist to one pack costs about **4 US cents**. Reasonin
 | Track | Personal AI: a persistent, user-confirmed Vault; a nightly watch; private, exportable, deletable data; every outbound action approval-gated |
 | Public repo with an open-source license | MIT, `LICENSE` at the root |
 | README with setup | [Run it](#run-it) |
-| Working demo and video | `TODO` |
+| Working demo and video | Demo: https://callback-psi-two.vercel.app. Video: `TODO` |
 | Feedback on the tools | [Below](#feedback-on-the-tools) |
 
 ## Run it
@@ -159,7 +170,7 @@ cd callback
 npm install
 cp .env.example .env.local   # add NEBIUS_API_KEY and TAVILY_API_KEY
 npm run dev                  # http://localhost:3000
-npm test                     # unit tests and ledger evaluations
+npm test                     # 73 unit tests and ledger evaluations
 ```
 
 Check which model IDs your key can use:
@@ -203,7 +214,7 @@ Locally, without Supabase variables, workspaces are stored as JSON files in `.da
 | Tavily discovery | Live (tested 19 Oct 2026) |
 | Demo CV | Synthetic (`data/demo/`) |
 | Pinned demo shortlist | Optional, clearly labelled in the UI |
-| Overnight watch | A real endpoint, scheduled with Vercel Cron or GitHub Actions |
+| Overnight watch | Live endpoint, protected by `CRON_SECRET`, scheduled daily by Vercel Cron (`vercel.json`) |
 | Outcomes in the tracker | Entered by you, never inferred |
 | Evaluation numbers | Measured on the included synthetic sets only |
 

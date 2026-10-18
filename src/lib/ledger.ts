@@ -156,10 +156,10 @@ export const TECH_LEXICON = new Set(
     "pytest unittest jest mocha cypress playwright selenium pandas numpy scipy polars matplotlib seaborn plotly " +
     "scikit-learn sklearn tensorflow pytorch keras xgboost lightgbm spacy nltk huggingface langchain " +
     "docker kubernetes k8s terraform ansible jenkins git github gitlab bitbucket jira confluence " +
-    "react vue angular svelte nextjs next.js nodejs node.js express django flask fastapi spring rails laravel " +
+    "react vue angular svelte nextjs next.js nodejs node.js express.js expressjs django flask fastapi laravel " +
     "postgres postgresql mysql sqlite mongodb redis kafka spark hadoop airflow dbt snowflake bigquery redshift databricks " +
     "excel tableau looker powerbi figma linux bash powershell vba sas spss stata matlab simulink labview arduino " +
-    "python java javascript typescript golang rust kotlin swift scala php ruby sql nosql graphql html css " +
+    "python java javascript typescript golang kotlin scala php sql nosql graphql html css " +
     "aws azure gcp firebase supabase vercel heroku"
   ).split(" "),
 );
@@ -290,7 +290,8 @@ export function overlap(claim: string, support: string): number {
 export const NEUTRAL_WORDS = new Set(
   (
     "built build building created create creating developed develop developing wrote write writing authored used use using made make " +
-    "reduce reduced reducing cut cutting lowered decreased " +
+    "reduce reduced reducing cut cutting lowered decreased served serve serving " +
+    "because since aligns align aligned matches match fits fit relevant interest interested express writing apply approximately roughly around about nearly totaling totalling total " +
     "worked work working helped help helping contributed contributing supported supporting prepared prepare produced produce " +
     "analysed analyzed analyse analyze analysing analyzing ran run running conducted completed earned achieved hold holding holds " +
     "including include includes such also both each every-day various different relevant key core main " +
@@ -308,11 +309,16 @@ export const NEUTRAL_WORDS = new Set(
 );
 
 function stem(w: string) {
-  return w
-    .replace(/['\u2019]s$/, "")
-    .replace(/(ies)$/, "y")
-    .replace(/(ing|ed|es|s|ly|ment|ments|ation|ations)$/, "")
-    .replace(/(.)\1$/, "$1");
+  let x = w.replace(/['\u2019]s$/, "");
+  // Strip up to two suffixes so "meetings" and "meeting" share a stem.
+  for (let i = 0; i < 2; i++) {
+    const before = x;
+    x = x
+      .replace(/ies$/, "y")
+      .replace(/(ing|ed|es|s|ly|ments|ment|ations|ation|ship)$/, "");
+    if (x === before || x.length < 4) break;
+  }
+  return x.replace(/(.)\1$/, "$1");
 }
 
 // Substantive words in the claim that appear nowhere in its cited facts.
@@ -362,7 +368,11 @@ export function checkClaim(
     return { status: "blocked", reasons: ["missing_or_unconfirmed_fact"] };
   }
 
-  const supportText = cited.map((f) => `${f!.text}. ${f!.evidenceQuote}`).join(" \n ");
+  // Each cited achievement also inherits the role heading it sits under in the
+  // CV (e.g. "Data Analyst Intern at Kopano Logistics, 2025"), found from the
+  // quote positions. This is structure from the document, not a model guess.
+  const withParents = [...cited, ...cited.map((f) => parentRole(f!, facts)).filter(Boolean)] as CareerFact[];
+  const supportText = [...new Set(withParents)].map((f) => `${f.text}. ${f.evidenceQuote}`).join(" \n ");
   const supportNorm = normalise(supportText);
   const supportCompact = supportNorm.replace(/[^a-z0-9#+]/g, "");
   const claimNorm = normalise(claim.text);
@@ -450,6 +460,26 @@ export function checkClaim(
     return { status: "needs_confirmation", reasons: missing.map((t) => `unmatched_term:${t}`) };
   }
   return { status: "blocked", reasons: missing.map((t) => `unsupported_term:${t}`) };
+}
+
+// "2023 - 2024", "Jan 2025 - Dec 2025", "2022 – present"
+const DATE_RANGE = /\b(?:19|20)\d{2}\s*(?:[-\u2013\u2014]|to)\s*(?:[A-Za-z]{3,9}\.?\s+)?(?:(?:19|20)\d{2}|present|current|now|today)\b/i;
+
+export function isRoleHeading(f: CareerFact): boolean {
+  return f.type === "experience" && f.quoteStart >= 0 && (DATE_RANGE.test(f.evidenceQuote) || DATE_RANGE.test(f.text));
+}
+
+// The nearest confirmed role heading that precedes this fact in the same document.
+export function parentRole(f: CareerFact, facts: CareerFact[]): CareerFact | undefined {
+  if (f.quoteStart < 0 || isRoleHeading(f)) return undefined;
+  let best: CareerFact | undefined;
+  for (const r of facts) {
+    if (r.documentId !== f.documentId || r.status !== "user_confirmed" || !isRoleHeading(r)) continue;
+    if (r.quoteStart < f.quoteStart && (!best || r.quoteStart > best.quoteStart)) best = r;
+  }
+  // Only inherit if no later section heading (education, projects...) intervenes:
+  // approximated by requiring the role to be the closest preceding heading.
+  return best;
 }
 
 function claimsEmploymentAt(text: string, term: string): boolean {

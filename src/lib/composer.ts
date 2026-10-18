@@ -20,7 +20,9 @@ const AuditSchema = z.object({
 });
 
 export function contextTermsFor(job: JobPosting) {
-  return [job.company, job.title, ...job.title.split(/[,\-–()/]+/)].map((s) => s.trim()).filter(Boolean);
+  // The target company, role and the job's own location may be named freely.
+  const places = (job.location ?? "").split(/[;,|\-–()/]+/).map((s) => s.trim()).filter((s) => s.length > 2 && s.length < 40);
+  return [job.company, job.title, ...job.title.split(/[,\-–()/]+/), ...places].map((s) => s.trim()).filter(Boolean);
 }
 
 // Re-checking is pure code, but auditor flags are model output we can't
