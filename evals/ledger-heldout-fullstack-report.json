@@ -1,0 +1,18 @@
+{
+  "set": "ledger-heldout",
+  "cases": 28,
+  "codeOnly_overstatedReachingApproval": 2,
+  "fullStack_overstatedReachingApproval": 1,
+  "fullStack_honestBlocked": 0,
+  "fullStack_honestRoutedToUser": 2,
+  "honest": 10,
+  "overstated": 18,
+  "stillPassing": [
+    "Data Analyst Intern at Kopano Logistics, where I was promoted to analyst."
+  ],
+  "auditorFlaggedHonest": [],
+  "calls": [
+    "nvidia/Nemotron-3_5-Lightning 538/332 1251ms true",
+    "nvidia/Nemotron-3_5-Lightning 911/333 1202ms true"
+  ]
+}

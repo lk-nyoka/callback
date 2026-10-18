@@ -1,26 +1,177 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Callback — ledger paper. Cool green-grey paper, ink, verified green,
+   red ink for blocked claims. Serif italic is reserved for text quoted
+   from the user's own documents, so evidence always reads as a citation. */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  --paper: #f1f3ef;
+  --surface: #ffffff;
+  --sunk: #e8ebe6;
+  --ink: #17201b;
+  --ink-2: #33403a;
+  --muted: #5b6760;
+  --rule: #d6dbd4;
+  --rule-strong: #b9c1b9;
+  --verified: #1e6b4f;
+  --verified-tint: #e3efe8;
+  --blocked: #b3261e;
+  --blocked-tint: #f7e4e1;
+  --caution: #8a5f00;
+  --caution-tint: #f6ecd4;
+  --neutral-tint: #e9ece8;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --paper: #121815;
+    --surface: #19211d;
+    --sunk: #0e1311;
+    --ink: #e8ece9;
+    --ink-2: #c9d1cc;
+    --muted: #93a099;
+    --rule: #2b3631;
+    --rule-strong: #3d4a44;
+    --verified: #6cc29c;
+    --verified-tint: #193328;
+    --blocked: #f08a80;
+    --blocked-tint: #3a1d1a;
+    --caution: #e0b45a;
+    --caution-tint: #352a14;
+    --neutral-tint: #222b27;
   }
 }
 
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-sunk: var(--sunk);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-verified: var(--verified);
+  --color-verified-tint: var(--verified-tint);
+  --color-blocked: var(--blocked);
+  --color-blocked-tint: var(--blocked-tint);
+  --color-caution: var(--caution);
+  --color-caution-tint: var(--caution-tint);
+  --color-neutral-tint: var(--neutral-tint);
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-quote: var(--font-newsreader), Georgia, serif;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--verified);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.quote {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: 1.02em;
+  line-height: 1.6;
+}
+
+/* Ledger margin: the struck-through blocked claim */
+.struck {
+  text-decoration: line-through;
+  text-decoration-color: var(--blocked);
+  text-decoration-thickness: 2px;
+  color: var(--muted);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  transition: background-color 120ms ease, opacity 120ms ease;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--ink-2);
+}
+.btn-quiet {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule-strong);
+}
+.btn-quiet:hover:not(:disabled) {
+  background: var(--sunk);
+}
+.btn-sm {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+}
+
+.field {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  color: var(--ink);
+}
+.field:focus {
+  outline: 2px solid var(--verified);
+  outline-offset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@keyframes stamp {
+  0% {
+    transform: scale(1.25) rotate(-4deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+.stamp-in {
+  animation: stamp 220ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin {
+  animation: spin 0.9s linear infinite;
 }

@@ -1,0 +1,13 @@
+# Alternative scheduler for the overnight watch (use this or vercel.json).
+name: Overnight watch
+on:
+  schedule:
+    - cron: "0 3 * * *" # 05:00 SAST
+  workflow_dispatch: {}
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger watch
+        run: |
+          curl -fsS -m 300 -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "${{ secrets.CALLBACK_URL }}/api/cron/watch"

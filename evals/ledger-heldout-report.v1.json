@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-10-18T22:33:39.619Z",
+  "cases": 28,
+  "overstated": 18,
+  "honest": 10,
+  "overstatedReachingApproval": 2,
+  "overstatedBlockedOutright": 6,
+  "overstatedRoutedToUser": 10,
+  "honestWronglyBlocked": 0,
+  "honestRoutedToUser": 2,
+  "failures": [
+    {
+      "text": "Coordinated a team of tutors for first-year statistics.",
+      "expected": "reject",
+      "got": "pass",
+      "reasons": []
+    },
+    {
+      "text": "Data Analyst Intern at Kopano Logistics, where I was promoted to analyst.",
+      "expected": "reject",
+      "got": "pass",
+      "reasons": []
+    },
+    {
+      "text": "Estimated outage hours per suburb from public Eskom schedules using pandas.",
+      "expected": "allow",
+      "got": "needs_confirmation",
+      "reasons": [
+        "new_content:estimated, schedules"
+      ]
+    },
+    {
+      "text": "Analysed 300 taxi fare survey responses in R as part of a four-person group.",
+      "expected": "allow",
+      "got": "needs_confirmation",
+      "reasons": [
+        "new_content:part, four-person"
+      ]
+    }
+  ]
+}

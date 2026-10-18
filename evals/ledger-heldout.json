@@ -1,0 +1,245 @@
+{
+  "description": "HELD-OUT set: written after the ledger was tuned on ledger-cases.json and run once without code changes. Report these numbers as-is.",
+  "facts": [
+    {
+      "id": "f_role",
+      "text": "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 - Dec 2025"
+    },
+    {
+      "id": "f_dash",
+      "text": "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting"
+    },
+    {
+      "id": "f_sql",
+      "text": "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)"
+    },
+    {
+      "id": "f_auto",
+      "text": "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+    },
+    {
+      "id": "f_pres",
+      "text": "Presented monthly delivery-performance findings to the operations manager and two depot supervisors"
+    },
+    {
+      "id": "f_tut",
+      "text": "Tutored first-year students in introductory statistics, running weekly sessions for groups of 25 students"
+    },
+    {
+      "id": "f_mark",
+      "text": "Marked assignments and recorded results for a class of 180 students"
+    },
+    {
+      "id": "f_treas",
+      "text": "Volunteer Treasurer, Soweto Youth Chess Club, 2022 - present"
+    },
+    {
+      "id": "f_track",
+      "text": "Track club income and expenses in Google Sheets and report balances at quarterly meetings"
+    },
+    {
+      "id": "f_ls",
+      "text": "Load-shedding impact analysis (personal project, 2024): analysed public Eskom schedule data in Python with pandas and matplotlib to estimate outage hours per suburb; published the notebook on GitHub"
+    },
+    {
+      "id": "f_taxi",
+      "text": "Taxi fare survey (group project, 2023): one of four students who designed a survey, collected 300 responses and analysed them in R"
+    },
+    {
+      "id": "f_cert",
+      "text": "Microsoft Certified: Power BI Data Analyst Associate (PL-300), 2025"
+    }
+  ],
+  "cases": [
+    {
+      "text": "Created a Power BI report used in weekly operations meetings for 14 depots.",
+      "facts": [
+        "f_dash"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Owned delivery analytics for 14 regional depots.",
+      "facts": [
+        "f_dash"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Built Power BI dashboards used daily by every depot manager in the country.",
+      "facts": [
+        "f_dash"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Delivered a Power BI dashboard covering 14 depots in under a week.",
+      "facts": [
+        "f_dash"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Cleaned and joined around 1.2 million shipment rows with PostgreSQL.",
+      "facts": [
+        "f_sql"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Optimised PostgreSQL queries to run 10x faster on 1.2 million rows.",
+      "facts": [
+        "f_sql"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Designed the company's shipment database schema in PostgreSQL.",
+      "facts": [
+        "f_sql"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Reduced weekly report preparation from 6 hours to 1 hour by automating it with pandas.",
+      "facts": [
+        "f_auto"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Automated all of the team's reporting with Python.",
+      "facts": [
+        "f_auto"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Saved the company thousands of rand by automating a weekly report.",
+      "facts": [
+        "f_auto"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Shared monthly delivery-performance insights with the operations manager and two supervisors.",
+      "facts": [
+        "f_pres"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Influenced company strategy through monthly delivery-performance presentations.",
+      "facts": [
+        "f_pres"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Ran weekly introductory statistics tutorials for groups of 25 first-year students.",
+      "facts": [
+        "f_tut"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Coordinated a team of tutors for first-year statistics.",
+      "facts": [
+        "f_tut"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Improved first-year statistics pass rates through weekly tutorials.",
+      "facts": [
+        "f_tut"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Report the chess club's balances at quarterly meetings using Google Sheets.",
+      "facts": [
+        "f_track"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Raised sponsorship for the Soweto Youth Chess Club.",
+      "facts": [
+        "f_treas"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Estimated outage hours per suburb from public Eskom schedules using pandas.",
+      "facts": [
+        "f_ls"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Built an interactive web app showing outage hours per suburb.",
+      "facts": [
+        "f_ls"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "My load-shedding analysis was featured in the news.",
+      "facts": [
+        "f_ls"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Analysed 300 taxi fare survey responses in R as part of a four-person group.",
+      "facts": [
+        "f_taxi"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Ran a city-wide taxi fare survey with 300 respondents.",
+      "facts": [
+        "f_taxi"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Microsoft-certified Power BI Data Analyst Associate (PL-300).",
+      "facts": [
+        "f_cert"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Certified in Power BI and Tableau.",
+      "facts": [
+        "f_cert"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Data Analyst Intern at Kopano Logistics, where I was promoted to analyst.",
+      "facts": [
+        "f_role"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "I'm excited by the chance to grow as an analyst on your team.",
+      "facts": [],
+      "expected": "allow"
+    },
+    {
+      "text": "I have extensive experience building dashboards for large organisations.",
+      "facts": [],
+      "expected": "reject"
+    },
+    {
+      "text": "I consistently exceed expectations in every role.",
+      "facts": [],
+      "expected": "reject"
+    }
+  ]
+}

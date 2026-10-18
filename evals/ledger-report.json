@@ -1,0 +1,12 @@
+{
+  "generatedAt": "2026-10-18T22:33:56.573Z",
+  "cases": 44,
+  "overstated": 31,
+  "honest": 13,
+  "overstatedReachingApproval": 0,
+  "overstatedBlockedOutright": 28,
+  "overstatedRoutedToUser": 3,
+  "honestWronglyBlocked": 0,
+  "honestRoutedToUser": 0,
+  "failures": []
+}
