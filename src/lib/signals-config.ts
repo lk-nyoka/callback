@@ -17,8 +17,6 @@ export const SIGNAL_WEIGHTS = {
 export const STATUS_RULES = {
   strongMinScore: 4,
   strongMinObserved: 3,
-  lowMaxScore: -1, // score < 0
-  lowMinObserved: 3,
   insufficientBelowObserved: 2,
 } as const;
 

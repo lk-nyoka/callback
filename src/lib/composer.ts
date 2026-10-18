@@ -23,9 +23,26 @@ export function contextTermsFor(job: JobPosting) {
   return [job.company, job.title, ...job.title.split(/[,\-–()/]+/)].map((s) => s.trim()).filter(Boolean);
 }
 
-export function checkLines(lines: { text: string; factIds: string[] }[], facts: CareerFact[], job: JobPosting): PackBullet[] {
+// Re-checking is pure code, but auditor flags are model output we can't
+// recompute for free. A flag stays attached to the exact line it was raised
+// on (same text, same citations) so re-checks can never quietly drop it.
+export function checkLines(lines: { text: string; factIds: string[] }[], facts: CareerFact[], job: JobPosting, previous: PackBullet[] = []): PackBullet[] {
   const ctx = contextTermsFor(job);
-  return lines.map((l) => ({ ...l, verdict: checkClaim(l, facts, { contextTerms: ctx }) }));
+  const flagged = new Map(
+    previous
+      .filter((p) => p.verdict.reasons.some((r) => r.startsWith("auditor_flag")))
+      .map((p) => [lineKey(p), p.verdict] as const),
+  );
+  return lines.map((l) => {
+    const verdict = checkClaim(l, facts, { contextTerms: ctx });
+    const prior = flagged.get(lineKey(l));
+    if (verdict.status === "pass" && prior) return { text: l.text, factIds: l.factIds, verdict: prior };
+    return { text: l.text, factIds: l.factIds, verdict };
+  });
+}
+
+function lineKey(l: { text: string; factIds: string[] }) {
+  return `${l.text.trim()}|${[...l.factIds].sort().join(",")}`;
 }
 
 export function combineNote(lines: PackBullet[]): { text: string; verdict: LedgerVerdict } {

@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "eval": "vitest run src/lib/ledger.eval.test.ts src/lib/ledger.heldout.test.ts",
+    "eval": "vitest run src/lib/ledger.eval.test.ts src/lib/ledger.heldout.test.ts src/lib/ledger.heldout-v2.test.ts",
     "eval:live": "LIVE=1 vitest run test/auditor.live.test.ts"
   },
   "dependencies": {

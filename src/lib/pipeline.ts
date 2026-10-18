@@ -1,5 +1,8 @@
 import "server-only";
-import { discover } from "./discovery";
+import { promises as fs } from "fs";
+import path from "path";
+import { config } from "./config";
+import { discover, type DiscoveryResult } from "./discovery";
 import { scoreFit } from "./fit";
 import type { WorkspaceState } from "./store";
 import type { Trace } from "./trace";
@@ -21,7 +24,7 @@ export async function runSearch(s: WorkspaceState, trace: Trace, opts: { markNew
   const confirmed = s.facts.filter((f) => f.status === "user_confirmed");
   if (confirmed.length < 3) throw new Error("Confirm at least 3 Vault facts first.");
 
-  const result = await discover(s.intent, s.jobs, trace, 25);
+  const result = config.demoMode ? await pinned(s.jobs) : await discover(s.intent, s.jobs, trace, 25);
   const known = new Set(s.jobs.map((j) => j.id));
 
   // Fit only where it is not already scored (saves credits on re-runs).
@@ -43,4 +46,18 @@ export async function runSearch(s: WorkspaceState, trace: Trace, opts: { markNew
   const kept = s.jobs.filter((j) => !freshIds.has(j.id) && appJobIds.has(j.id));
   s.jobs = [...result.jobs, ...kept];
   return { ...result, newJobs: newJobs.length, jobs: undefined as unknown as JobPosting[] };
+}
+
+async function pinned(previous: JobPosting[]): Promise<DiscoveryResult> {
+  const raw = await fs.readFile(path.join(process.cwd(), "data/demo/shortlist.json"), "utf8");
+  const snap = JSON.parse(raw) as { capturedAt: string; jobs: JobPosting[] };
+  const prev = new Map(previous.map((j) => [j.id, j]));
+  return {
+    jobs: snap.jobs.map((j) => ({ ...j, fit: prev.get(j.id)?.fit, pinnedAt: snap.capturedAt })),
+    boardsChecked: 0,
+    boardsFailed: [],
+    postingsScanned: snap.jobs.length,
+    tavilyUsed: false,
+    tavilyBoards: 0,
+  };
 }

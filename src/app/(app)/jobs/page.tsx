@@ -62,6 +62,11 @@ export default function JobsPage() {
       <div className="mt-4">
         <ErrorNote>{err}</ErrorNote>
       </div>
+      {state.jobs[0]?.pinnedAt && (
+        <p className="mt-4 rounded-lg border border-caution/40 bg-caution-tint px-3 py-2 text-sm text-caution">
+          Demo mode: these listings are a pinned snapshot from {new Date(state.jobs[0].pinnedAt).toLocaleDateString()}, so the demo is repeatable. Fit, drafting and claim checks run live.
+        </p>
+      )}
 
       {state.jobs.length === 0 ? (
         <div className="mt-10 rounded-xl border border-rule bg-surface p-8">

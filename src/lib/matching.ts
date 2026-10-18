@@ -30,6 +30,8 @@ function mentions(text: string, term: string) {
 
 export function locationMatches(location: string, remote: boolean, intent: SearchIntent): { ok: boolean; why: string } {
   const loc = location.toLowerCase();
+  // Unknown location: keep the role and say so, rather than silently dropping it.
+  if (!loc.trim()) return { ok: true, why: "Location not stated: check before applying" };
   const allowed = allowedRegions(intent);
   if (allowed.some((a) => mentions(loc, a))) return { ok: true, why: "Location matches" };
   const wantsRemote = intent.remoteOk || intent.locations.some((l) => /remote/i.test(l));

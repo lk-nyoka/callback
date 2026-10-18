@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-10-18T22:51:01.180Z",
+  "cases": 28,
+  "overstated": 19,
+  "honest": 9,
+  "overstatedReachingApproval": 5,
+  "overstatedBlockedOutright": 3,
+  "overstatedRoutedToUser": 11,
+  "honestWronglyBlocked": 0,
+  "honestRoutedToUser": 1,
+  "failures": [
+    {
+      "text": "Led the depot route-planning project.",
+      "expected": "reject",
+      "got": "pass",
+      "reasons": []
+    },
+    {
+      "text": "Reconciled 50,000 transactions monthly for the finance team.",
+      "expected": "reject",
+      "got": "pass",
+      "reasons": []
+    },
+    {
+      "text": "Used Java at Kopano Logistics for weekly reporting.",
+      "expected": "reject",
+      "got": "pass",
+      "reasons": []
+    },
+    {
+      "text": "Automated a weekly Excel report in Python within my first month.",
+      "expected": "reject",
+      "got": "pass",
+      "reasons": []
+    },
+    {
+      "text": "I am a highly analytical, detail-obsessed problem solver.",
+      "expected": "reject",
+      "got": "pass",
+      "reasons": []
+    },
+    {
+      "text": "Estimated outage hours per suburb from public Eskom schedule data in Python, and shared the notebook on GitHub.",
+      "expected": "allow",
+      "got": "needs_confirmation",
+      "reasons": [
+        "new_content:estimated, shared"
+      ]
+    }
+  ]
+}

@@ -95,6 +95,9 @@ function Upload({ onDone }: { onDone: () => Promise<void> }) {
         </div>
         <input ref={input} type="file" accept=".pdf,.txt,.md" className="sr-only" onChange={(e) => e.target.files?.[0] && send(e.target.files[0])} />
         <p className="mt-4 text-xs text-muted">The sample is a fictional junior data analyst in Johannesburg.</p>
+        <p className="mx-auto mt-2 max-w-md text-xs text-muted">
+          This is a hackathon build with no accounts: your workspace is tied to this browser. Remove ID numbers and your home address from your CV before uploading.
+        </p>
       </div>
       <div className="mt-4">
         <ErrorNote>{err}</ErrorNote>

@@ -3,10 +3,10 @@ import { LiveLedger } from "@/components/live-ledger";
 
 const DECIDES = [
   ["Read your CV into facts", "Nemotron 3.5 Lightning proposes, you confirm each one"],
-  ["Is this job live?", "Code, from the employer's own job board, dates and link checks"],
+  ["Is this job still advertised?", "Code, from the employer's own job board, dates and link checks"],
   ["How well do you fit?", "Nemotron 3 Super rates each requirement, code checks its citations"],
   ["Draft your CV bullets and note", "Nemotron 3 Super writes, citing your facts"],
-  ["Is each line true?", "Code: the Claims Ledger. A model can only make it stricter"],
+  ["Does each line match your facts?", "Code: the Claims Ledger, plus a Nemotron audit that can only make it stricter. It reduces unsupported claims; it can't guarantee them away"],
   ["Send the application", "You. Callback never submits anything"],
 ];
 
@@ -38,7 +38,7 @@ export default function Home() {
               Stop applying to everything. Start getting callbacks.
             </h1>
             <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-ink-2">
-              Callback finds roles that are live on employers&apos; own hiring systems, shows you the evidence, and drafts applications where every line is checked against your own CV. If your documents can&apos;t prove it, it doesn&apos;t go in.
+              Callback finds roles published on employers&apos; own job boards, shows you the evidence, and drafts applications in which every line must cite a fact you confirmed from your CV. Lines your facts don&apos;t support are blocked or sent back to you. You approve the final pack.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/vault" className="btn btn-primary">
@@ -56,15 +56,15 @@ export default function Home() {
         <section className="border-t border-rule bg-surface">
           <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-3">
             <div>
-              <h2 className="text-xl font-semibold">Jobs that are actually hiring</h2>
+              <h2 className="text-xl font-semibold">Evidence before effort</h2>
               <p className="mt-2 text-ink-2">
-                Roughly one in five advertised jobs shows no hiring activity. Callback checks each role against the employer&apos;s own job board, when it was first published, and whether the application link still works, then shows you that evidence instead of a made-up score.
+                Greenhouse found that about one in five jobs on digital job boards produced no hiring activity. Callback checks each role against the employer&apos;s own job board, when it was first published, and whether the application link still works, then shows you that evidence instead of a made-up score.
               </p>
             </div>
             <div>
               <h2 className="text-xl font-semibold">Applications that can&apos;t embellish</h2>
               <p className="mt-2 text-ink-2">
-                AI CV tools happily turn &ldquo;helped with&rdquo; into &ldquo;led&rdquo;. Callback&apos;s Claims Ledger blocks any number, tool, scope or seniority word your confirmed facts don&apos;t contain, and shows you exactly why.
+                AI CV tools happily turn &ldquo;helped with&rdquo; into &ldquo;led&rdquo;. Callback&apos;s Claims Ledger blocks numbers, tools, scope and seniority words your confirmed facts don&apos;t contain, sends anything else new back to you, and shows you exactly why.
               </p>
             </div>
             <div>
@@ -97,7 +97,7 @@ export default function Home() {
       <footer className="border-t border-rule">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-6 text-sm text-muted sm:px-6">
           <span>Built with NVIDIA Nemotron on Nebius Token Factory, for the Nebius x NVIDIA Global AI Hackathon.</span>
-          <span>Open source, MIT licence.</span>
+          <span>Open source under the MIT License.</span>
         </div>
       </footer>
     </div>

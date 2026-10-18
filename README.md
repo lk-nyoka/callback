@@ -2,10 +2,10 @@
 
 **Stop applying to everything. Start getting callbacks.**
 
-Callback is a private job-search assistant. It reads your CV into a **Career Vault** of facts you confirm, finds roles that are live on employers' own hiring systems, shows the **hiring-signal evidence** for each one, and drafts applications in which **every line is checked by code against your confirmed facts**. If your documents can't prove it, it doesn't go in. Nothing is ever sent for you.
+Callback is a private job-search assistant. It reads your CV into a **Career Vault** of facts you confirm, finds roles published on employers' own job boards, shows the **hiring-signal evidence** for each one, and drafts applications in which **every line must cite a confirmed fact and pass the Claims Ledger**: deterministic checks, plus a Nemotron audit that can only make a verdict stricter. Lines that fail are blocked or sent back to you. **You approve the final pack, and Callback never sends anything for you.**
 
 > Built for the **Nebius x NVIDIA Global AI Hackathon 2026**, Personal AI track.
-> Models: **NVIDIA Nemotron 3.5 Lightning, Nemotron 3 Super and Nemotron 3 Ultra** on **Nebius Token Factory**. Search: **Tavily**. Licence: **MIT**.
+> Models: **NVIDIA Nemotron 3.5 Lightning, Nemotron 3 Super and Nemotron 3 Ultra** on **Nebius Token Factory**. Search: **Tavily**. License: **MIT**.
 
 | | |
 |---|---|
@@ -18,20 +18,19 @@ Callback is a private job-search assistant. It reads your CV into a **Career Vau
 
 Job seekers lose twice.
 
-1. **Many listings go nowhere.** Greenhouse classified about one in five jobs advertised on digital job boards as showing no hiring activity. Long-open "evergreen" requisitions and reposted roles soak up applications that will never be read.
-2. **AI has flooded the other side.** Anyone can generate a polished CV in seconds, so recruiters trust CVs less. The tools that write them happily turn "helped with" into "led", which makes honest candidates look weaker and dishonest ones look the same as everyone else.
+1. **Many listings go nowhere.** Greenhouse classified about 19% of jobs advertised on digital job boards in Q2 as "ghost jobs": postings that received applications but produced no hiring activity such as interviews or job tests ([Allwork.Space, 21 Aug 2026](https://allwork.space/2026/08/nearly-1-in-5-job-ads-may-be-fake-ghost-jobs/); [FOX 5 DC](https://www.fox5dc.com/news/ghost-jobs-greenhouse-analysis)).
+2. **AI has flooded the other side.** Anyone can generate a polished CV in seconds, and the tools that write them happily turn "helped with" into "led". Honest candidates end up looking weaker, and embellished ones look like everyone else.
 
-Most AI job tools make both problems worse: they help you send *more* applications, faster, with *more* embellishment.
-
-Callback does the opposite: **fewer applications, to roles that show real hiring signals, with claims you can defend in an interview.**
+Most AI job tools make both worse: they help you send *more* applications, faster, with *more* embellishment. Callback does the opposite: **fewer applications, to roles with visible hiring evidence, with claims you can defend in an interview.**
 
 ## How it works
 
 ```
 CV ──► Career Vault ──► Discover ──► Hiring signal ──► Fit ──► Application pack ──► You approve ──► Tracker
-        (you confirm)    (ATS + Tavily)  (code)        (Super + code)  (Super + Claims Ledger)     (you apply)
-                                   ▲
-                       Overnight watch re-runs this every night
+        (you confirm)   (ATS boards,   (code)        (Super, then   (Super, then              (you apply
+                         Tavily)                       code checks)   Claims Ledger)            yourself)
+                                    ▲
+                        The overnight watch re-runs this every night
 ```
 
 ### Who decides what
@@ -39,68 +38,116 @@ CV ──► Career Vault ──► Discover ──► Hiring signal ──► F
 | Step | Who decides |
 |---|---|
 | Read the CV into facts | **Nemotron 3.5 Lightning** proposes facts with verbatim quotes; **code** verifies every quote exists in the document; **you** confirm each fact |
-| Is this job live? | **Code**, from the employer's own ATS job board, first-publish date and a live link check |
+| Is the job still advertised? | **Code**, from the employer's own ATS job board, first-publish date and a live link check |
 | How well do you fit? | **Nemotron 3 Super** rates each requirement and cites fact IDs; **code** drops uncited "met" ratings and computes the level |
 | Draft CV bullets and note | **Nemotron 3 Super**, every line citing fact IDs |
-| Is each line true? | **Code**: the Claims Ledger. A **Lightning auditor** can make a verdict stricter, never more permissive |
+| Does each line match your facts? | **Code** (the Claims Ledger), plus a **Lightning auditor** that can only make a verdict stricter. This reduces unsupported claims; it does not guarantee correctness |
 | Honest positioning advice | **Nemotron 3 Ultra**, only when you click "Deep analysis" |
-| Send the application | **You.** There is no auto-submit and no bulk apply |
+| Send the application | **You.** No auto-submit, no bulk apply, a daily cap |
 
 ## The Claims Ledger
 
-Every drafted line arrives as `{ text, factIds }`. `src/lib/ledger.ts` then checks it, in layers:
+Every drafted line arrives as `{ text, factIds }`. `src/lib/ledger.ts` checks it in layers. The reason code on each verdict names the layer that produced it.
 
-1. **Citations.** Every cited fact must exist and be confirmed by you.
-2. **Hard checks, no rescue.** Numbers (including number words, so "five" can't dodge "3"), quantity words (doubled, halved), scope (enterprise-wide, global, at scale), superlatives (award-winning, best), audience (executives, board), capability phrases (machine learning, forecasting, in production) and seniority/ownership verbs in curated families (led, managed, architected, mentored, founded...) must all appear in the cited facts.
-3. **Named terms.** Tools, technologies and organisations must appear in the cited facts. The target company and role may be named, but never in a claim of having worked there.
-4. **Novelty.** A line that adds two or more substantive words its cited facts never mention is routed to you. This catches exaggeration written in ordinary words that no vocabulary list can name.
-5. **Uncited lines** (connective sentences in the note) may not claim experience or quality ("extensive experience", "consistently", "expert").
-6. **Auditor.** Nemotron 3.5 Lightning reviews lines the code passed and can only downgrade them to "check this".
+| Layer | What it checks | Outcome | Reason codes |
+|---|---|---|---|
+| Citations | Every cited fact exists and you confirmed it | Block | `missing_or_unconfirmed_fact` |
+| Hard rules | Numbers (including number words, so "five" can't dodge "3"), quantity words, scope, superlatives, audience (executives, board), capability phrases (machine learning, forecasting, in production), career progression (promoted), and seniority/ownership verbs in curated families (led, managed, architected, mentored, founded...) must appear in the cited facts | Block | `unsupported_number`, `unsupported_scope`, `escalated_claim`, `unsupported_progression`, ... |
+| Uncited lines | Connective sentences may not claim experience or quality ("extensive experience", "consistently") | Block | `uncited_claim` |
+| Named terms | Tools, technologies and organisations must appear in the cited facts. The target company and role may be named, but never in a claim of having worked there | Block, or route a single near-match to you | `unsupported_term`, `unmatched_term` |
+| Novelty | Two or more substantive words the cited facts never mention | Route to you | `new_content` |
+| Auditor | Nemotron 3.5 Lightning reviews lines the code passed | Can only downgrade to "check this" | `auditor_flag` |
 
-There is no "ignore" button. A flagged line is resolved by rewriting it (or asking Super to rewrite it honestly), removing it, or adding a true fact to your Vault, which is then marked as added by you.
+The novelty layer is a **conservative review trigger, not a truth test**. Some honest elaboration trips it, and one well-chosen word can slip past it.
+
+Other rules:
+- **No "ignore" button.** A flagged line is resolved by rewriting it (or asking Super to rewrite it honestly), removing it, or adding a true fact to your Vault, which is marked as added by you.
+- **Auditor flags are sticky.** Re-checking is pure code, but an auditor flag stays attached to that exact line (same text, same citations) until you change one of them.
+- **Approval is bound to the exact pack.** Approving re-runs the ledger against your Vault *as it is now* and stores a SHA-256 hash of the approved lines. An approved pack can't be edited; you draft a new one instead.
 
 ### Measured results
 
-All numbers come from the labelled sets in `evals/` (synthetic CV facts). Run `npm run eval` and `npm run eval:live`.
+All counts come from labelled sets in `evals/`, built on the synthetic demo CV. Run `npm run eval` (code only) and `npm run eval:live` (with the auditor).
 
-| Set | Cases | Overstated claims that reached approval | Honest lines blocked | Honest lines sent to you to confirm |
-|---|---:|---:|---:|---:|
-| Tuning set (`ledger-cases.json`), code only | 44 | **0 / 31** | 0 / 13 | 0 / 13 |
-| **Held-out set** (`ledger-heldout.json`), code only, first run | 28 | 13 / 18 | 0 / 10 | 0 / 10 |
-| Held-out, code after adding the novelty layer (designed after seeing the first run) | 28 | 2 / 18 | 0 / 10 | 2 / 10 |
-| **Held-out, full stack (code + Lightning auditor)** | 28 | **1 / 18** | **0 / 10** | 2 / 10 |
+**Caveats first:** the sets are small (18 to 31 overstated claims each), they are hand-written claims rather than real drafts, and the same author wrote the ledger and the test sets, so none of this is an independent evaluation.
 
-The held-out set was written after the tuning set. The first run is reported as measured, which showed that vocabulary rules alone miss most exaggeration phrased in ordinary words. That result is why the novelty layer exists; since it was designed after seeing those failures, the next step is a fresh held-out set. The remaining miss ("...where I was promoted to analyst") is why you review every pack before approving.
+| Set | How it was used | Overstated claims that reached approval | Honest lines blocked | Honest lines sent to you |
+|---|---|---|---|---|
+| **Fresh held-out v2** (`ledger-heldout-v2.json`) | Written after all ledger changes were frozen, run once | **Code only: 5 of 19. Code + auditor: 3 of 19** | 0 of 9 | 1 of 9 |
+| Held-out v1 (`ledger-heldout.json`), first run | Before the novelty layer existed | Code only: 13 of 18 | 0 of 10 | 0 of 10 |
+| Held-out v1 after the novelty layer | The layer was designed after seeing the first run, so this set is no longer held out | Code + auditor: 1 of 18 | 0 of 10 | 2 of 10 |
+| Tuning set (`ledger-cases.json`) | The ledger was tuned on it, so this is a regression test, not evidence | 0 of 31 | 0 of 13 | 0 of 13 |
 
-The ledger also caught a real model draft during development: from the fact *"Track club income and expenses in Google Sheets"*, Nemotron 3 Super wrote *"**Managed** club finances as Volunteer Treasurer"*. The ledger blocked it (`escalated_claim:managed`).
+What got through on the fresh set, and why:
+
+- **Relational claims: all three got past the code.** Word-level checks can't see who did what, when or where. "Assisted the manager who led the route-planning project" became "*Led* the route-planning project": every word is in the fact, but the relationship changed. Python at one employer and Java at another became "Used Java at the first employer". The auditor caught both of these. "50,000 transactions across two years" became "50,000 transactions *monthly*", which **passed both layers**. The fix is to compare structured claims (actor, action, object, time, place) rather than words. That is the next piece of work.
+- **Timeframe and quality claims.** "...within my first month" and "highly analytical, detail-obsessed problem solver" also passed both layers.
+
+The live drafts during development show the ledger doing its job on real model output: from the fact *"Track club income and expenses in Google Sheets"*, Nemotron 3 Super wrote *"**Managed** club finances as Volunteer Treasurer"*, and the ledger blocked it (`escalated_claim:managed`).
+
+**Not yet measured:** the false-flag rate on real Super drafts. The plan is to generate 20+ packs and hand-label every line as passed, flagged or blocked, and as true or untrue.
 
 ## Hiring signals
 
-Callback never calls a job fake. It shows observable evidence and computes a status in code (`src/lib/signals.ts`, weights in `signals-config.ts`):
+Callback never calls a job fake. It records observable evidence, and code computes a status (`src/lib/signals.ts`; weights in `signals-config.ts`).
 
 | Signal | Source | Weight |
 |---|---|---:|
-| Live on the employer's own ATS board right now | Greenhouse / Ashby / Lever public job-board APIs | +3 |
+| Published on the employer's own ATS board right now | Greenhouse / Ashby / Lever public job-board APIs | +3 |
 | First published within 30 days | ATS `first_published` / `publishedAt` | +2 |
-| Open more than 90 days (even if edited recently: evergreen requisitions are a known ghost-listing pattern) | ATS dates | −2 |
+| First published more than 90 days ago, even if edited since | ATS dates | −2 |
 | Application link resolves to the live posting | HTTP check | +1 / −2 |
-| Employer published or updated 3+ other roles in 30 days | Same board | +1 |
+| Employer published or updated 3+ other roles in 30 days (a maintained board, not proof this role is being interviewed for) | Same board | +1 |
 | Same role on an independent page | Tavily | +1 |
 | Disappeared from the employer's board | Re-check | −3 |
 | Reposted 3+ times | Callback's own history | −2, shown as "needs a few weeks of history" until then |
 
-Statuses: **Strong signal**, **Mixed signal**, **Low hiring signal**, **Insufficient evidence**. Every observation shows its source and time, and every listing has a **Re-check** button. A dead link or a vanished listing prevents "Strong".
+**Decision order** (first matching rule wins):
 
-Recent "updated" timestamps alone never count as fresh: ATS systems bump them for many reasons, and a role first posted in 2021 and edited last week is still a 2021 posting.
+1. The listing has vanished from the employer's own board → **Low hiring signal**
+2. Fewer than 2 observable signals → **Insufficient evidence**
+3. A dead link or vanished listing → can never be **Strong**
+4. Score ≥ 4 with at least 3 observed signals → **Strong signal**
+5. Score < 0 → **Low hiring signal**
+6. Otherwise → **Mixed signal**
+
+Being published on an ATS board proves the employer is **advertising** a role, not that it is interviewing. Recent "updated" timestamps never count as fresh on their own: ATS systems bump them for many reasons, and a role first posted in 2021 and edited last week is still a 2021 posting. Every observation shows its source and time, and every listing has a **Re-check** button.
+
+**Hard filters** run in code before any model call: location (a remote role restricted to another country is excluded; a role with **no stated location is kept and flagged** rather than dropped), seniority and dealbreakers. Salary isn't filtered yet, because few postings state it.
 
 ## Where NVIDIA, Nebius and Tavily are used
 
-- **Nemotron 3.5 Lightning** (reasoning off): CV fact extraction, web-listing normalisation, the claims auditor. Turning reasoning off for mechanical extraction cut one extraction from 55 s and 16k tokens (with no usable answer) to about 4 s and under 1k tokens.
+- **Nemotron 3.5 Lightning** (reasoning off): CV fact extraction, web-listing normalisation, the claims auditor.
 - **Nemotron 3 Super** (reasoning on): fit scoring per requirement, drafting application packs, honest rewrites.
-- **Nemotron 3 Ultra**: on-demand "how to position yourself honestly" analysis.
-- **Nebius Token Factory**: one OpenAI-compatible client for all three tiers (`src/lib/nemotron.ts`), with a one-tier-down fallback chain, JSON validation with one corrective retry, and every call logged.
-- **Tavily**: finds employer job boards and careers-page listings beyond the built-in board list; also an independent-source signal.
-- **"How this ran"** panel on every screen: model per step, tokens, latency, fallbacks and every source fetched.
+- **Nemotron 3 Ultra**: the on-demand "how to position yourself honestly" analysis.
+- **Nebius Token Factory**: one OpenAI-compatible client for all three tiers (`src/lib/nemotron.ts`), with a one-tier-down fallback (never up), JSON validation with one corrective retry, and every call logged.
+- **Tavily**: finds employer job boards and careers-page listings beyond the built-in board list, and provides the independent-source signal. **Status: built, not yet tested with a live key.**
+- **"How this ran"** panel on every screen: the model used per step, tokens, latency, fallbacks and every source fetched.
+
+### Measured cost
+
+Token counts are from live runs on the demo CV. Prices are third-party listings for Token Factory (Lightning $0.06 / $0.24, Super $0.30 / $0.90 per million input / output tokens); confirm them in your console.
+
+| Step | Model | Tokens in / out (one run) | Approx. cost |
+|---|---|---|---:|
+| CV extraction | Lightning | 849 / 921 | $0.0003 |
+| Fit for one role | Super | 2,189 / 3,803 | $0.004 |
+| Shortlist (fit for the top 8 roles) | Super | ~17,500 / ~30,400 | $0.03 |
+| Application pack + audit | Super + Lightning | 2,178 / 3,593 + 666 / 288 | $0.004 |
+
+A full run from CV to shortlist to one pack costs about **4 US cents**. Reasoning tokens dominate Super's output.
+
+## Hackathon requirements
+
+| Requirement | How Callback meets it |
+|---|---|
+| Runs on Nebius Token Factory or AI Cloud | Every model call is a runtime call to Token Factory. The FAQ confirms the web tier may be hosted elsewhere ([FAQ](https://nebiusglobalaihackathon.devpost.com/details/faqs)) |
+| Uses at least one NVIDIA open model | Nemotron 3.5 Lightning, Nemotron 3 Super, Nemotron 3 Ultra |
+| Track | Personal AI: a persistent, user-confirmed Vault; a nightly watch; private, exportable, deletable data; every outbound action approval-gated |
+| Public repo with an open-source license | MIT, `LICENSE` at the root |
+| README with setup | [Run it](#run-it) |
+| Working demo and video | `TODO` |
+| Feedback on the tools | [Below](#feedback-on-the-tools) |
 
 ## Run it
 
@@ -110,77 +157,81 @@ Requires Node 20+.
 git clone https://github.com/lk-nyoka/callback.git
 cd callback
 npm install
-cp .env.example .env.local   # add NEBIUS_API_KEY (and TAVILY_API_KEY)
+cp .env.example .env.local   # add NEBIUS_API_KEY and TAVILY_API_KEY
 npm run dev                  # http://localhost:3000
-npm test                     # 53 unit tests + ledger evaluations
+npm test                     # unit tests and ledger evaluations
 ```
 
-Check model IDs available to your key:
+Check which model IDs your key can use:
 
 ```bash
 curl -s https://api.tokenfactory.nebius.com/v1/models -H "Authorization: Bearer $NEBIUS_API_KEY" | grep -o '"nvidia/[^"]*"'
 ```
 
-Try it without your own CV: open the Vault and choose **Use a sample CV** (a fictional junior data analyst in Johannesburg).
+To try it without your own CV, open the Vault and choose **Use a sample CV** (a fictional junior data analyst in Johannesburg).
+
+**Pinned demo mode.** Run a good live search locally, then `node scripts/capture-fixture.mjs` saves those listings to `data/demo/shortlist.json`. With `DEMO_MODE=true`, discovery serves that snapshot (labelled as such in the UI), while fit, drafting and the ledger still run live. This keeps a recorded demo repeatable.
 
 ### Deploy (free tiers)
 
-1. **Supabase**: create a project, run `supabase/schema.sql`, copy the URL and service-role key.
-2. **Vercel**: import the repo, set the variables from `.env.example`. `vercel.json` schedules the overnight watch; or use `.github/workflows/overnight-watch.yml` with `CRON_SECRET` and `CALLBACK_URL` secrets.
+1. **Supabase**: create a project, run `supabase/schema.sql`, and copy the URL and service-role key.
+2. **Vercel**: import the repo and set the variables from `.env.example`. `vercel.json` schedules the overnight watch; alternatively, use `.github/workflows/overnight-watch.yml` with `CRON_SECRET` and `CALLBACK_URL` secrets.
 
-Without Supabase variables Callback stores workspaces as JSON files in `.data/` (local development only).
+Locally, without Supabase variables, workspaces are stored as JSON files in `.data/`. On Vercel, a missing Supabase configuration fails loudly instead of silently writing to temporary disk.
 
 ## Architecture
 
 - **Next.js 15** (App Router) on Vercel: UI and API in one deploy.
-- **Workspaces**: each visitor gets a private, cookie-scoped workspace. No sign-up; export or delete everything from "Your data".
+- **Workspaces**: each visitor gets a private, cookie-scoped workspace. There is no sign-up; export or delete everything from "Your data".
 - **Storage**: one JSON document per workspace (Supabase Postgres `jsonb` in production, files locally).
-- `src/lib/` holds the logic: `ledger.ts`, `signals.ts`, `ats.ts`, `discovery.ts`, `matching.ts` (hard filters), `vault.ts`, `fit.ts`, `composer.ts`, `nemotron.ts`, `tavily.ts`.
+- `src/lib/` holds the logic: `ledger.ts`, `signals.ts`, `ats.ts`, `discovery.ts`, `matching.ts`, `vault.ts`, `fit.ts`, `composer.ts`, `nemotron.ts`, `tavily.ts`.
 
 ## Privacy and source policy
 
-- Your CV text goes to Nebius Token Factory for inference only. Callback does not train on it. Review Nebius's data terms before uploading real documents.
+- **This hackathon build has no accounts.** A workspace is tied to a browser cookie. Use the sample CV, or remove ID numbers and your home address before uploading a real one.
+- Your CV text is sent to Nebius Token Factory for inference. Callback itself does not store it anywhere else or train on it. **We have not verified Nebius's data-retention terms**, so check them before uploading real documents.
 - Job searches go to employers' public job boards and Tavily. Your CV is never sent to them.
 - Callback uses documented public ATS job-board APIs and Tavily. It does not scrape LinkedIn, Indeed or Glassdoor.
 - Prompts treat documents and web pages as untrusted data. Verdicts and the approval gate live outside the model.
-- Daily approval cap (default 10). No auto-submit.
 
 ## What is real and what is demo
 
 | | Status |
 |---|---|
 | Nemotron calls | Live, Nebius Token Factory |
-| Job listings and hiring signals | Live from employer ATS boards and Tavily |
+| ATS discovery and hiring signals | Live, from the built-in list of employer boards (`SEED_BOARDS` in `discovery.ts`) |
+| Tavily discovery | Built, **not yet tested with a live key** |
 | Demo CV | Synthetic (`data/demo/`) |
-| Overnight watch | Real endpoint; scheduled with Vercel Cron or GitHub Actions |
+| Pinned demo shortlist | Optional, clearly labelled in the UI |
+| Overnight watch | A real endpoint, scheduled with Vercel Cron or GitHub Actions |
 | Outcomes in the tracker | Entered by you, never inferred |
 | Evaluation numbers | Measured on the included synthetic sets only |
 
 ## Limitations
 
-- Hiring signals are evidence, not proof, and will sometimes be wrong both ways.
-- Public ATS feeds cover many global employers but few South African ones; Tavily widens coverage, and broad local coverage will need job-feed partnerships.
-- The ledger is conservative and still imperfect (see the held-out result). Every pack needs your review.
-- English-language CVs and postings only so far. Scanned-image PDFs are not supported.
+- **The ledger misses relational and timeframe exaggeration** (see the fresh held-out results). Every pack needs your review.
+- **Coverage.** Without Tavily, discovery only covers employers on the built-in board list. Public ATS feeds cover many global employers but few South African ones: a live run for a junior data analyst in Johannesburg found only two relevant roles. Broad local coverage will need Tavily and job-feed partnerships.
+- Hiring signals are evidence, not proof, and will sometimes be wrong in both directions.
+- English-language CVs and postings only. Scanned-image PDFs are not supported.
 
 ## Path to production
 
 | Stage | Scope |
 |---|---|
-| Now | Single-user workspaces, live discovery, ledger, overnight watch |
-| Next | Accounts, per-user budgets, SmartRecruiters and Workable feeds, embeddings-based paraphrase checking, larger held-out evaluation |
-| Then | "Verified by Callback" packs employers can audit line by line; university and youth-employment programme dashboards |
+| Now | Single-user workspaces, live discovery, the ledger, the overnight watch |
+| Next | Structured-claim comparison for relational claims, a real-draft evaluation, accounts and per-user budgets, SmartRecruiters and Workable feeds |
+| Then | "Verified by Callback" packs employers can audit line by line; dashboards for universities and youth-employment programmes |
 
 ## Feedback on the tools
 
-- **Token Factory**: the OpenAI-compatible API made three Nemotron tiers a config change. The biggest surprise: reasoning is on by default, and a 16k `max_tokens` extraction call spent its whole budget reasoning and returned almost nothing. `chat_template_kwargs: { enable_thinking: false }` fixed it, but we found it by experiment. It deserves a prominent place in the docs and model cards.
-- **Nemotron**: Lightning with reasoning off was fast and faithful at verbatim quoting (23 facts, 0 unverifiable quotes on the demo CV). Super's drafts were strong but naturally embellished ("managed" for "tracked"), which is exactly why the ledger exists.
+- **Token Factory**: the OpenAI-compatible API made three Nemotron tiers a configuration change. The biggest surprise was that reasoning is on by default: an extraction call with a 16k `max_tokens` budget spent all of it reasoning and returned almost nothing after 55 seconds. Setting `chat_template_kwargs: { enable_thinking: false }` brought the same call down to about 4 seconds and under 1k tokens, with a complete answer. We found the switch by experiment; it deserves a prominent place in the docs and model cards.
+- **Nemotron**: Lightning with reasoning off was fast and faithful at verbatim quoting (23 facts, 0 unverifiable quotes on the demo CV). Super's drafts were strong but naturally embellished ("managed" for "tracked"), which is exactly why the ledger exists. As an auditor, Lightning caught 2 of the 5 fresh-set claims the code missed, and flagged no honest lines.
 - **Tavily**: `TODO after testing with a key`.
 
 ## Pre-existing work
 
 All code was written during the submission period (October 2026). The concept README predates the code.
 
-## Licence
+## License
 
 MIT. See [LICENSE](LICENSE).

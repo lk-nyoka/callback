@@ -1,0 +1,19 @@
+{
+  "set": "ledger-heldout-v2",
+  "cases": 28,
+  "codeOnly_overstatedReachingApproval": 5,
+  "fullStack_overstatedReachingApproval": 3,
+  "fullStack_honestBlocked": 0,
+  "fullStack_honestRoutedToUser": 1,
+  "honest": 9,
+  "overstated": 19,
+  "stillPassing": [
+    "Reconciled 50,000 transactions monthly for the finance team.",
+    "Automated a weekly Excel report in Python within my first month.",
+    "I am a highly analytical, detail-obsessed problem solver."
+  ],
+  "auditorFlaggedHonest": [],
+  "calls": [
+    "nvidia/Nemotron-3_5-Lightning 666/288 1551ms true"
+  ]
+}

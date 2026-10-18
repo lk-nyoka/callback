@@ -34,7 +34,7 @@ export function computeSignal(ev: SignalEvidence): SignalResult {
 
   // 1. Employer's own ATS board
   if (ev.onBoardNow === true) {
-    add({ key: "employer_ats", label: "Live on the employer's own hiring system", direction: "positive", weight: W.onEmployerAts, detail: `Listed right now on the employer's ${providerName(ev.provider)} job board.`, sourceUrl: ev.boardUrl });
+    add({ key: "employer_ats", label: "Published on the employer's own job board", direction: "positive", weight: W.onEmployerAts, detail: `Listed right now on the employer's ${providerName(ev.provider)} job board. This proves the employer is advertising it, not that interviews are happening.`, sourceUrl: ev.boardUrl });
   } else if (ev.onBoardNow === false) {
     add({ key: "employer_ats", label: "No longer on the employer's hiring system", direction: "negative", weight: W.missingFromBoard, detail: "This role was on the employer's job board earlier but is not listed now.", sourceUrl: ev.boardUrl });
   } else {
@@ -77,9 +77,9 @@ export function computeSignal(ev: SignalEvidence): SignalResult {
 
   // 4. Board activity
   if (ev.otherRolesUpdatedLast30d === undefined || ev.otherRolesUpdatedLast30d === null) {
-    add({ key: "board_activity", label: "Employer hiring activity", direction: "unavailable", weight: 0, detail: "No board activity data." });
+    add({ key: "board_activity", label: "Employer board activity", direction: "unavailable", weight: 0, detail: "No board activity data." });
   } else if (ev.otherRolesUpdatedLast30d >= BOARD_ACTIVE_MIN_ROLES) {
-    add({ key: "board_activity", label: "Employer is actively hiring", direction: "positive", weight: W.boardActive, detail: `${ev.otherRolesUpdatedLast30d} other roles on this board were published or updated in the last 30 days.`, sourceUrl: ev.boardUrl });
+    add({ key: "board_activity", label: "Employer's board is active", direction: "positive", weight: W.boardActive, detail: `${ev.otherRolesUpdatedLast30d} other roles on this board were published or updated in the last 30 days. That shows a maintained board, not that this role is being interviewed for.`, sourceUrl: ev.boardUrl });
   } else {
     add({ key: "board_activity", label: "Little recent board activity", direction: "unavailable", weight: 0, detail: `Only ${ev.otherRolesUpdatedLast30d} other roles changed in the last 30 days. Shown for context, not scored.` });
   }
@@ -99,10 +99,18 @@ export function computeSignal(ev: SignalEvidence): SignalResult {
   const observed = obs.filter((o) => o.direction !== "unavailable");
   const score = observed.reduce((s, o) => s + o.weight, 0);
 
+  // Decision order (documented in the README). First matching rule wins.
+  //  1. Listing has vanished from the employer's own board  -> low
+  //  2. Fewer than 2 observable signals                      -> insufficient
+  //  3. Dead link or vanished listing                        -> can never be strong
+  //  4. Score >= 4 with at least 3 observed signals          -> strong
+  //  5. Score < 0                                            -> low
+  //  6. Otherwise                                            -> mixed
   let status: SignalStatus;
-  if (observed.length < R.insufficientBelowObserved) status = "insufficient";
+  if (ev.onBoardNow === false) status = "low";
+  else if (observed.length < R.insufficientBelowObserved) status = "insufficient";
   else if (score >= R.strongMinScore && observed.length >= R.strongMinObserved && !hasConflictSevere(observed)) status = "strong";
-  else if (score < 0 && observed.length >= R.lowMinObserved) status = "low";
+  else if (score < 0) status = "low";
   else status = "mixed";
 
   return { status, score, observations: obs, checkedAt: at };

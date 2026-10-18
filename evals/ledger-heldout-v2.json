@@ -1,0 +1,267 @@
+{
+  "description": "FRESH HELD-OUT set v2. Written after all ledger changes were frozen and run exactly once. Includes three relational counterexamples the lexical ledger is expected to miss. Same author as the ledger: not independent.",
+  "facts": [
+    {
+      "id": "f_role",
+      "text": "Data Analyst Intern at Kopano Logistics (Johannesburg), Jan 2025 - Dec 2025"
+    },
+    {
+      "id": "f_dash",
+      "text": "Built a Power BI dashboard tracking on-time delivery for 14 regional depots, used in the weekly operations meeting"
+    },
+    {
+      "id": "f_sql",
+      "text": "Wrote SQL queries in PostgreSQL to clean and join 3 years of shipment records (about 1.2 million rows)"
+    },
+    {
+      "id": "f_auto",
+      "text": "Automated a weekly Excel report with Python (pandas), cutting preparation time from 6 hours to 1 hour"
+    },
+    {
+      "id": "f_pres",
+      "text": "Presented monthly delivery-performance findings to the operations manager and two depot supervisors"
+    },
+    {
+      "id": "f_tut",
+      "text": "Tutored first-year students in introductory statistics, running weekly sessions for groups of 25 students"
+    },
+    {
+      "id": "f_mark",
+      "text": "Marked assignments and recorded results for a class of 180 students"
+    },
+    {
+      "id": "f_treas",
+      "text": "Volunteer Treasurer, Soweto Youth Chess Club, 2022 - present"
+    },
+    {
+      "id": "f_track",
+      "text": "Track club income and expenses in Google Sheets and report balances at quarterly meetings"
+    },
+    {
+      "id": "f_ls",
+      "text": "Load-shedding impact analysis (personal project, 2024): analysed public Eskom schedule data in Python with pandas and matplotlib to estimate outage hours per suburb; published the notebook on GitHub"
+    },
+    {
+      "id": "f_taxi",
+      "text": "Taxi fare survey (group project, 2023): one of four students who designed a survey, collected 300 responses and analysed them in R"
+    },
+    {
+      "id": "f_cert",
+      "text": "Microsoft Certified: Power BI Data Analyst Associate (PL-300), 2025"
+    },
+    {
+      "id": "f_assist",
+      "text": "Assisted the operations manager who led the depot route-planning project"
+    },
+    {
+      "id": "f_txn",
+      "text": "Reconciled 50,000 transactions across two years for the finance team"
+    },
+    {
+      "id": "f_py_kopano",
+      "text": "Used Python at Kopano Logistics for weekly reporting"
+    },
+    {
+      "id": "f_java_wits",
+      "text": "Used Java at the Wits Statistics Department to build a marking script"
+    }
+  ],
+  "cases": [
+    {
+      "text": "Led the depot route-planning project.",
+      "facts": [
+        "f_assist"
+      ],
+      "expected": "reject",
+      "tag": "relational"
+    },
+    {
+      "text": "Reconciled 50,000 transactions monthly for the finance team.",
+      "facts": [
+        "f_txn"
+      ],
+      "expected": "reject",
+      "tag": "relational"
+    },
+    {
+      "text": "Used Java at Kopano Logistics for weekly reporting.",
+      "facts": [
+        "f_py_kopano",
+        "f_java_wits"
+      ],
+      "expected": "reject",
+      "tag": "relational"
+    },
+    {
+      "text": "Transformed how depots track on-time delivery with a Power BI dashboard.",
+      "facts": [
+        "f_dash"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "My Power BI dashboard became the operations team's main decision tool.",
+      "facts": [
+        "f_dash"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Built a Power BI dashboard tracking on-time delivery, now used by all 14 regional depots every day.",
+      "facts": [
+        "f_dash"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Cleaned and joined 3 years of shipment records in PostgreSQL, eliminating data errors.",
+      "facts": [
+        "f_sql"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Wrote PostgreSQL queries joining 3 years of shipment records, which the business now relies on.",
+      "facts": [
+        "f_sql"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Automated a weekly Excel report with pandas, freeing the team to focus on strategy.",
+      "facts": [
+        "f_auto"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Automated a weekly Excel report in Python within my first month.",
+      "facts": [
+        "f_auto"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Gave monthly delivery-performance briefings that shaped depot staffing decisions.",
+      "facts": [
+        "f_pres"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Ran weekly statistics sessions for groups of 25 students and was rated the top tutor.",
+      "facts": [
+        "f_tut"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Handled results for 180 students with zero errors.",
+      "facts": [
+        "f_mark"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Kept the chess club financially healthy as Volunteer Treasurer.",
+      "facts": [
+        "f_treas",
+        "f_track"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Published a widely shared load-shedding analysis notebook on GitHub.",
+      "facts": [
+        "f_ls"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Designed the taxi fare survey methodology for a four-person group.",
+      "facts": [
+        "f_taxi"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Data Analyst Intern at Kopano Logistics, offered a permanent role at the end of 2025.",
+      "facts": [
+        "f_role"
+      ],
+      "expected": "reject"
+    },
+    {
+      "text": "Created a Power BI dashboard of on-time delivery across 14 regional depots for the weekly operations meeting.",
+      "facts": [
+        "f_dash"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Joined 3 years of shipment records (about 1.2 million rows) using PostgreSQL SQL queries.",
+      "facts": [
+        "f_sql"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Cut weekly report preparation from 6 hours to 1 hour by automating it in Python with pandas.",
+      "facts": [
+        "f_auto"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Reported monthly delivery-performance findings to the operations manager and two depot supervisors.",
+      "facts": [
+        "f_pres"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Ran weekly introductory statistics sessions for first-year groups of 25 students.",
+      "facts": [
+        "f_tut"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "As Volunteer Treasurer of Soweto Youth Chess Club, I track income and expenses in Google Sheets.",
+      "facts": [
+        "f_treas",
+        "f_track"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Estimated outage hours per suburb from public Eskom schedule data in Python, and shared the notebook on GitHub.",
+      "facts": [
+        "f_ls"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "Hold the Microsoft Certified Power BI Data Analyst Associate (PL-300) certification, earned in 2025.",
+      "facts": [
+        "f_cert"
+      ],
+      "expected": "allow"
+    },
+    {
+      "text": "I'd value the chance to talk about the role.",
+      "facts": [],
+      "expected": "allow"
+    },
+    {
+      "text": "I am a highly analytical, detail-obsessed problem solver.",
+      "facts": [],
+      "expected": "reject"
+    },
+    {
+      "text": "Recruiters describe me as one of the strongest junior analysts they've met.",
+      "facts": [],
+      "expected": "reject"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { createHash } from "crypto";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { checkLines } from "@/lib/composer";
@@ -21,20 +22,28 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
       if (!a) throw new Error("Application not found");
       const job = s.jobs.find((j) => j.id === a.jobId);
       if (!job) throw new Error("Job not found");
+      // An approved pack is frozen: approval is bound to that exact text.
+      if ((b.bullets || b.noteLines) && a.status !== "drafted") throw new Error("This pack is approved and locked. Draft a new pack to change it.");
       // Edits are always re-checked by the ledger on the server.
-      if (b.bullets) a.bullets = checkLines(b.bullets, s.facts, job);
-      if (b.noteLines) a.noteLines = checkLines(b.noteLines, s.facts, job);
+      if (b.bullets) a.bullets = checkLines(b.bullets, s.facts, job, a.bullets);
+      if (b.noteLines) a.noteLines = checkLines(b.noteLines, s.facts, job, a.noteLines);
       if (b.status && b.status !== a.status) {
+        let packHash: string | undefined;
         if (b.status === "approved") {
+          // Re-check against the Vault as it is now (a cited fact may have been removed since drafting).
+          a.bullets = checkLines(a.bullets, s.facts, job, a.bullets);
+          a.noteLines = checkLines(a.noteLines, s.facts, job, a.noteLines);
           const lines = [...a.bullets, ...a.noteLines];
           if (lines.some((l) => l.verdict.status !== "pass")) throw new Error("Resolve every flagged line before approving.");
+          packHash = createHash("sha256").update(JSON.stringify(lines.map((l) => [l.text, l.factIds]))).digest("hex");
+          a.approvedHash = packHash;
           const today = new Date().toISOString().slice(0, 10);
           const approvedToday = s.applications.filter((x) => x.history.some((h) => h.status === "approved" && h.at.startsWith(today))).length;
           if (approvedToday >= config.dailyApplicationCap) throw new Error(`Daily cap of ${config.dailyApplicationCap} applications reached. Fewer, better applications.`);
         }
         if (a.status === "drafted" && b.status !== "approved") throw new Error("Approve the pack first.");
         a.status = b.status as ApplicationStatus;
-        a.history.push({ status: a.status, at: new Date().toISOString() });
+        a.history.push({ status: a.status, at: new Date().toISOString(), ...(packHash ? { packHash } : {}) });
       }
       a.updatedAt = new Date().toISOString();
       return a;

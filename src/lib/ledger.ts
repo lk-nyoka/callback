@@ -115,6 +115,12 @@ export const CAPABILITY_PHRASES = [
   "statistical model", "regression model", "classification model", "clustering",
 ];
 
+// Career-progression claims: must be stated in the cited facts.
+export const PROGRESSION_PHRASES = [
+  "promoted", "promotion", "promoted to", "fast-tracked", "fast tracked", "rose to", "advanced to", "elevated to",
+  "upgraded to", "offered a permanent", "converted to permanent", "retained", "rehired", "re-hired",
+];
+
 // Quantity words must be supported like numbers.
 const QUANTITY_WORDS: Record<string, string[]> = {
   doubled: ["doubled", "double", "2x", "two-fold", "twofold", "100%"],
@@ -391,6 +397,9 @@ export function checkClaim(
   for (const phrase of CAPABILITY_PHRASES) {
     if (containsPhrase(claimNorm, phrase) && !containsPhrase(supportNorm, phrase)) reasons.push(`unsupported_capability:${phrase}`);
   }
+  for (const phrase of PROGRESSION_PHRASES) {
+    if (containsPhrase(claimNorm, phrase) && !containsPhrase(supportNorm, phrase)) reasons.push(`unsupported_progression:${phrase}`);
+  }
   // 2f. Seniority / ownership.
   const supportWords = new Set(words(supportText));
   const seenFamilies = new Set<number>();
@@ -487,6 +496,8 @@ export function explainReason(reason: string): string {
       return `"${v}" claims a wider scope than your facts show.`;
     case "unsupported_superlative":
       return `"${v}" is a superlative your facts don't back up.`;
+    case "unsupported_progression":
+      return `"${v}" is a career-progression claim. Add a fact that states it, or remove it.`;
     case "unsupported_audience":
       return `Your facts don't show this reached "${v}".`;
     case "unsupported_capability":

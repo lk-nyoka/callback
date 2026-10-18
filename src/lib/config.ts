@@ -15,6 +15,10 @@ export const config = {
   dailyApplicationCap: Number(process.env.DAILY_APPLICATION_CAP ?? 10),
   dataDir: process.env.CALLBACK_DATA_DIR ?? ".data",
   cronSecret: process.env.CRON_SECRET ?? "",
+  // Pinned demo: discovery returns a saved snapshot (data/demo/shortlist.json)
+  // so a recorded demo can't break because a live listing changed. Fit,
+  // drafting and the ledger still run live.
+  demoMode: process.env.DEMO_MODE === "true",
 };
 
 // A failed call degrades one tier, never escalates.

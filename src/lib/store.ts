@@ -128,7 +128,24 @@ function sbHeaders() {
   };
 }
 
-const adapter: Adapter = supabaseUrl && supabaseKey ? supabaseAdapter : fileAdapter;
+// In a deployed environment, never silently fall back to local files (they
+// vanish between serverless invocations). Fail loudly instead.
+const deployed = !!process.env.VERCEL;
+const misconfigured: Adapter = {
+  async load() {
+    throw new Error("Storage is not configured: set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.");
+  },
+  async save() {
+    throw new Error("Storage is not configured: set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.");
+  },
+  async remove() {},
+  async list() {
+    return [];
+  },
+};
+
+const adapter: Adapter = supabaseUrl && supabaseKey ? supabaseAdapter : deployed ? misconfigured : fileAdapter;
+export const storageMode = supabaseUrl && supabaseKey ? "supabase" : deployed ? "unconfigured" : "local-files";
 
 // Serialise writes per workspace within a process to avoid lost updates.
 const locks = new Map<string, Promise<unknown>>();

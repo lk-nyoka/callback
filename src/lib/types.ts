@@ -81,6 +81,7 @@ export interface JobPosting {
   fit?: FitResult;
   deepAnalysis?: { markdown: string; model: string; at: string };
   isNew?: boolean; // found by the overnight watch, not yet opened
+  pinnedAt?: string; // set when served from the pinned demo snapshot
 }
 
 export type FitLevel = "strong" | "partial" | "weak";
@@ -133,7 +134,8 @@ export interface Application {
   status: ApplicationStatus;
   createdAt: string;
   updatedAt: string;
-  history: { status: ApplicationStatus; at: string }[];
+  history: { status: ApplicationStatus; at: string; packHash?: string }[];
+  approvedHash?: string; // sha-256 of the exact lines that were approved
 }
 
 export interface ModelCall {

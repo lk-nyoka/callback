@@ -5,7 +5,7 @@ import { audit } from "@/lib/composer";
 import { Trace } from "@/lib/trace";
 import type { CareerFact, PackBullet } from "@/lib/types";
 
-for (const set of ["ledger-cases", "ledger-heldout"]) {
+for (const set of (process.env.SETS ?? "ledger-cases,ledger-heldout,ledger-heldout-v2").split(",")) {
   it(`full stack on ${set}`, async () => {
     const d = JSON.parse(readFileSync(`evals/${set}.json`, "utf8"));
     const facts: CareerFact[] = d.facts.map((f: { id: string; text: string }) => ({ id: f.id, text: f.text, type: "experience", documentId: "d", evidenceQuote: f.text, quoteStart: 0, status: "user_confirmed", userEdited: false, createdAt: "" }));

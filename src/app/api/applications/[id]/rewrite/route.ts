@@ -18,6 +18,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     const job = a && s.jobs.find((j) => j.id === a.jobId);
     const line = a?.[b.kind][b.index];
     if (!a || !job || !line) return jsonError("Line not found", 404);
+    if (a.status !== "drafted") return jsonError("This pack is approved and locked.", 400);
     const fixed = await rewriteHonestly(line, s.facts, job, trace);
     const app = await mutate((w) => {
       const x = w.applications.find((y) => y.id === id)!;
