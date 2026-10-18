@@ -10,6 +10,9 @@ const RESTRICTIVE_REGIONS = [
   "us", "u.s", "u.s.", "usa", "united states", "canada", "mexico", "brazil", "latam", "latin america", "americas", "north america",
   "uk", "united kingdom", "ireland", "germany", "france", "spain", "portugal", "netherlands", "poland", "italy", "europe", "eu",
   "india", "japan", "singapore", "australia", "apac", "asia", "china", "korea", "israel", "uae", "dubai",
+  "austria", "belgium", "sweden", "norway", "denmark", "finland", "switzerland", "czech", "romania", "hungary", "greece", "turkey",
+  "saudi arabia", "qatar", "united arab emirates", "egypt", "morocco", "nigeria", "kenya", "ghana", "philippines", "indonesia", "malaysia",
+  "vietnam", "thailand", "pakistan", "argentina", "colombia", "chile", "peru", "new zealand",
   "new york", "san francisco", "seattle", "chicago", "london", "dublin", "berlin", "toronto", "sydney", "bangalore", "tokyo", "paris", "amsterdam",
 ];
 
@@ -28,6 +31,7 @@ function mentions(text: string, term: string) {
   return new RegExp(`(^|[^a-z])${esc}([^a-z]|$)`, "i").test(text);
 }
 
+// Some regions list several places; a role open to any allowed one matches.
 export function locationMatches(location: string, remote: boolean, intent: SearchIntent): { ok: boolean; why: string } {
   const loc = location.toLowerCase();
   // Unknown location: keep the role and say so, rather than silently dropping it.
@@ -87,13 +91,22 @@ export function roleTerms(intent: SearchIntent): string[] {
 
 export function titleRelevance(title: string, intent: SearchIntent): number {
   const t = title.toLowerCase();
+  const role = intent.role.toLowerCase().trim();
+  const words = role.split(/\s+/);
+  const head = words[words.length - 1];
   const core = coreTerms(intent);
   if (!core.some((c) => mentions(t, c))) return 0;
   let score = 0;
-  for (const term of roleTerms(intent)) if (mentions(t, term)) score += term.includes(" ") ? 3 : 1;
-  if (mentions(t, intent.role.toLowerCase())) score += 4;
-  const role = intent.role.toLowerCase();
+  // The bare head noun ("analyst") is weak; synonyms that carry the domain
+  // ("analytics", "business intelligence") are stronger.
+  for (const term of core) if (mentions(t, term)) score += term === head ? 1 : term.includes(" ") ? 3 : 2;
+  const modifiers = words.slice(0, -1).filter((w) => w.length > 2);
+  for (const m of modifiers) if (mentions(t, m)) score += 1;
+  for (const k of intent.keywords) if (k.trim() && mentions(t, k.toLowerCase().trim())) score += 1;
+  if (mentions(t, role)) score += 4;
   for (const fw of FAMILY_WORDS) if (mentions(t, fw) && !role.includes(fw)) score -= 3;
+  // A multi-word role ("data analyst") needs more than the head noun alone.
+  if (modifiers.length && score < 2) return 0;
   return Math.max(0, score);
 }
 

@@ -1,0 +1,454 @@
+{
+ "capturedAt": "2026-10-18T22:58:52.782Z",
+ "jobs": [
+  {
+   "id": "ashby-hirehangar-3c708fbc-3ef1-437f-b45b-7277ed2e3adf",
+   "provider": "ashby",
+   "company": "Hirehangar",
+   "companySlug": "hirehangar",
+   "title": "Junior Data Analyst",
+   "location": "Panama - Panama City; Parugauy - Asuncion; Ecuador - Guayaquil; Bolivia - Santa Cruz de la Sierra; Mexico - Monterrey; Egypt - Cairo; Philippines - Davao City; South Africa - Johannesburg; Yemen - Sana'a; Columbia - Bogotá; Columbia - Medellín; Chile - Santiago; Uruguay - Montevideo; Peru - Lima; Dominican Republic - Santo Domingo; Nicaragua - Managua; Jamaica - Kingston; Argentina - Buenos Aires; Honduras - Tegucigalpa; South Africa - Cape Town; Mexico - Mexico City",
+   "remote": true,
+   "url": "https://jobs.ashbyhq.com/hirehangar/3c708fbc-3ef1-437f-b45b-7277ed2e3adf",
+   "applyUrl": "https://jobs.ashbyhq.com/hirehangar/3c708fbc-3ef1-437f-b45b-7277ed2e3adf/application",
+   "postedAt": "2026-09-05T01:43:07.525+00:00",
+   "descriptionText": "Join Hire Hangar and work with fast-growing global companies while building a long-term career.\n\nJob Title: Junior Data Analyst\n\nLocation: Remote\n\nWorking Hours: US Time Zone (PST - EST)\n\nAre you eager to get started in the world of data analytics? We’re offering an exciting opportunity for a Junior Data Analyst to join our team and grow alongside experienced professionals in a fast-paced, data-driven organization.\n\nWhether you’re a recent graduate, a career switcher, or a self-taught learner, if you’re comfortable with numbers, curious about patterns, and ready to roll up your sleeves, this role is for you.\n\n\n\nKey Responsibilities:\n\n - Assist in collecting, cleaning, and organizing data for analysis\n\n - Build simple reports and visualizations to support business teams\n\n - Help monitor key metrics and investigate anomalies\n\n - Document data sources, definitions, and processes\n\n - Support senior analysts on ongoing analytics projects\n   \n\nQualifications:\n\n - Degree in a STEM field or equivalent experience (bootcamp, internship, self-taught)\n\n - Basic knowledge of Excel and an interest in SQL and BI tools\n\n - Strong desire to learn and grow within data analytics\n\n - Great attention to detail and time management\n\n - Effective communicator and team player\n   \n   \n   Please NOTE\n   \n   It is crucial that you complete the application form in full. As part of the application process, you will be required to record a video. If your application is successful, you will receive an email confirming next steps—the video is the first step of the interview process. If you do not record a video, we will not be able to consider you for ANY open roles\n\nWe connect top talent with vetted employers, competitive pay, and real growth opportunities.",
+   "firstSeenAt": "2026-10-18T22:57:26.600Z",
+   "lastSeenAt": "2026-10-18T22:57:26.600Z",
+   "signal": {
+    "status": "strong",
+    "score": 5,
+    "observations": [
+     {
+      "key": "employer_ats",
+      "label": "Published on the employer's own job board",
+      "direction": "positive",
+      "weight": 3,
+      "detail": "Listed right now on the employer's Ashby job board. This proves the employer is advertising it, not that interviews are happening.",
+      "sourceUrl": "https://jobs.ashbyhq.com/hirehangar",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "freshness",
+      "label": "Published 43 days ago",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "First published 2026-09-05. Neither fresh nor stale.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "apply_link",
+      "label": "Application link works",
+      "direction": "positive",
+      "weight": 1,
+      "detail": "Resolved with HTTP 200.",
+      "sourceUrl": "https://jobs.ashbyhq.com/hirehangar/3c708fbc-3ef1-437f-b45b-7277ed2e3adf/application",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "board_activity",
+      "label": "Employer's board is active",
+      "direction": "positive",
+      "weight": 1,
+      "detail": "20 other roles on this board were published or updated in the last 30 days. That shows a maintained board, not that this role is being interviewed for.",
+      "sourceUrl": "https://jobs.ashbyhq.com/hirehangar",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "repost_history",
+      "label": "Repost history",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "Callback has watched this listing for 0 days. Repost patterns need a few weeks of history.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     }
+    ],
+    "checkedAt": "2026-10-18T22:57:26.600Z"
+   }
+  },
+  {
+   "id": "ashby-revenuecat-ea45acc5-ee1f-4f05-b585-9339667d23ff",
+   "provider": "ashby",
+   "company": "Revenuecat",
+   "companySlug": "revenuecat",
+   "title": "Data Analyst",
+   "location": "Americas; EMEA",
+   "remote": true,
+   "url": "https://jobs.ashbyhq.com/revenuecat/ea45acc5-ee1f-4f05-b585-9339667d23ff",
+   "applyUrl": "https://jobs.ashbyhq.com/revenuecat/ea45acc5-ee1f-4f05-b585-9339667d23ff/application",
+   "postedAt": "2026-08-04T09:46:13.063+00:00",
+   "descriptionText": "RevenueCat gives app businesses the infrastructure and tools to build, run, and improve their monetization. Since graduating from YC's S18 batch, we've grown into the default monetization platform for mobile. \n\nWe're in 50%+ of newly shipped subscription apps, we process $16B+ in annual purchase volume, and we help everyone from a solo developer to the OpenAI mobile team understand and grow their revenue.\n\nWe're a remote-first team of 150+ people across 25+ countries, guided by values we actually practice: Customer Obsession, Always Be Shipping, Own It, and Balance. \n\nThis isn't the right fit for everyone. The systems you’ll build here manage billions of dollars and touch hundreds of millions of end users, and we don’t take that lightly. You'll be expected to work hard and hold a high bar for what you ship, alongside some of the sharpest, most driven people you've worked with. If that sounds energizing rather than exhausting, keep reading.\n\n\nTHE ROLE\n\nWe're hiring a Data Analyst to work as close as possible to the teams that run RevenueCat's business, including Marketing, Sales, Finance, People, Ops, Product, etc.\n\nThe most valuable thing on our Analytics team today isn't SQL, it's domain knowledge. Knowing what a trial start actually counts, why tracked revenue and realized revenue are different, how store refunds land in our data, and which model answers a question correctly the first time. That knowledge is what turns a half-formed Slack question into a number someone can act on within the hour.\n\nSo you'll spend most of your time with business teams: understanding what they're trying to decide, turning vague questions into analysis, and shipping the datasets and dashboards they rely on. You'll build that domain knowledge fast, working day to day with the person who currently owns Analytics here. He'll be your closest partner and the person who helps you grow into the domain.\n\nThe second thing that makes this role exciting is how we expect you to work. We're building the infrastructure that lets AI agents access our data safely, and agentic tooling that answers questions grounded in our semantic layer rather than guessing. You'll be one of its heaviest users and one of the people who makes it trustworthy: curating the semantic context, catching the answers that look right and aren't, and pushing definitions back into dbt and LookML where they belong. We're not hiring someone to do the same volume of work faster, we're hiring someone who supports multiple teams well using this collection of new tools as a force multiplier.\n\n\nWHAT YOU WILL DO\n\n - Partner regularly with Marketing, Sales, Finance and Product teams. Learn their goals, their metrics, and the decisions they're actually stuck on.\n\n - Own analysis end to end: clarify the real question, build or pick the right dataset, deliver the answer, and make sure a decision follows.\n\n - Go deep on our subscription domain, then write it down. Metric definitions, caveats, always-filters, known gotchas. Domain knowledge that only lives in your head doesn't scale, and scaling it is the point of this role.\n\n - Build analytics assets people trust without asking you first: models in dbt, explores in LookML, dashboards that hold up.\n\n - Use our agent tooling as a force multiplier and contribute back to it. Feed it semantic context, flag wrong answers, harden the definitions it depends on.\n\n - Contribute to the data platform where it unblocks you. Small model and pipeline improvements, debugging discrepancies, helping out when something breaks.\n\n - Translate in both directions: business context into robust analysis, data reality into language a non-technical stakeholder can act on.\n\n\nABOUT YOU\n\n3+ years in an analytics role (Data Analyst, BI Analyst, Business Analyst, Analytics Engineer or similar), including real experience as the direct analytics partner to a business team such as Marketing, Sales or Finance.\n\nCuriosity is the thing we're actually screening for:\n\n - You're uncomfortable when you don't understand why a number is what it is, and you dig until you do.\n\n - You ask the question behind the question. When someone asks for a dashboard, you find out what decision it's for.\n\n - You'd rather learn a new domain than a new tool.\n\n - You're comfortable without fully formed requirements, and you create structure where none exists yet.\n\n - You care more about being useful and clear than about polished dashboards.\n\n - You want to be a partner to the business, not a request queue.\n\nFrom a skills perspective, you bring:\n\n - Strong SQL and real comfort working directly in a warehouse. You can get to an answer without hand-holding.\n\n - Experience owning datasets and dashboards that non-technical teams depend on.\n\n - Comfortable working in a repo: git, branches, pull requests, code review. Our analytics lives in version-controlled dbt and LookML repos, not in saved queries.\n\n - You already work with AI agents daily and you're appropriately skeptical of them. You can explain how you verified an answer, not just how you produced one.\n\n - Clear written communication, especially about limits, caveats, and what a number does not say.\n\nNice to have, and genuinely not required: \n\n - Python, dbt, Looker or LookML, Snowflake or ClickHouse\n\n - Subscription or fintech domain experience\n\n - High-volume data\n\n\nWHAT WE OFFER:\n\n - Competitive equity in a fast-growing, Series C startup backed by top-tier investors, including Y Combinator\n\n - 10-year window to exercise vested equity options\n\n - A fully remote environment designed around autonomy and flexibility\n\n - 4-5 weeks of flexible time off annually\n\n - Paid desk at a co-working space\n\n - Workspace budget and continuous learning stipend\n\n\nINTERVIEWING AT REVENUECAT\n\nOur interview process is rigorous on purpose. We want to be sure that everyone we bring on is genuinely excited about this work, aligned with how we operate, and ready to meet our high bar for performance. Curious what that actually looks like? Read m",
+   "firstSeenAt": "2026-10-18T22:57:26.600Z",
+   "lastSeenAt": "2026-10-18T22:57:26.600Z",
+   "signal": {
+    "status": "strong",
+    "score": 5,
+    "observations": [
+     {
+      "key": "employer_ats",
+      "label": "Published on the employer's own job board",
+      "direction": "positive",
+      "weight": 3,
+      "detail": "Listed right now on the employer's Ashby job board. This proves the employer is advertising it, not that interviews are happening.",
+      "sourceUrl": "https://jobs.ashbyhq.com/revenuecat",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "freshness",
+      "label": "Published 75 days ago",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "First published 2026-08-04. Neither fresh nor stale.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "apply_link",
+      "label": "Application link works",
+      "direction": "positive",
+      "weight": 1,
+      "detail": "Resolved with HTTP 200.",
+      "sourceUrl": "https://jobs.ashbyhq.com/revenuecat/ea45acc5-ee1f-4f05-b585-9339667d23ff/application",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "board_activity",
+      "label": "Employer's board is active",
+      "direction": "positive",
+      "weight": 1,
+      "detail": "3 other roles on this board were published or updated in the last 30 days. That shows a maintained board, not that this role is being interviewed for.",
+      "sourceUrl": "https://jobs.ashbyhq.com/revenuecat",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "repost_history",
+      "label": "Repost history",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "Callback has watched this listing for 0 days. Repost patterns need a few weeks of history.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     }
+    ],
+    "checkedAt": "2026-10-18T22:57:26.600Z"
+   }
+  },
+  {
+   "id": "ashby-airapps-66096530-9071-4398-8996-73d08a18b693",
+   "provider": "ashby",
+   "company": "Airapps",
+   "companySlug": "airapps",
+   "title": "Data Analyst",
+   "location": "Helsinki",
+   "remote": true,
+   "url": "https://jobs.ashbyhq.com/airapps/66096530-9071-4398-8996-73d08a18b693",
+   "applyUrl": "https://jobs.ashbyhq.com/airapps/66096530-9071-4398-8996-73d08a18b693/application",
+   "postedAt": "2026-04-27T16:33:46.298+00:00",
+   "descriptionText": "ABOUT AIR APPS\n\nAt Air Apps, we believe in thinking bigger—and moving faster. We’re a family-founded company on a mission to create the world’s first AI-powered Personal & Entrepreneurial Resource Planner (PRP), and we need your passion and ambition to help us change how people plan, work, and live. Born in Lisbon, Portugal in 2018—and now with offices in both Lisbon and San Francisco—we’ve remained self-funded while reaching over 100 million downloads worldwide.\n\nOur long-term focus drives us to challenge the status quo every day, pushing the boundaries of AI-driven solutions that truly make a difference. Here, you’ll be a creative force, shaping products that empower people across the globe.\n\nJoin us on this journey to redefine resource management—and change lives along the way.\n\n\n\n\nTHE ROLE\n\nAs a Data Analyst at Air Apps, you will be responsible for analyzing and interpreting data to drive business insights and optimize product performance. You will create reports, dashboards, and performance metrics to help teams make informed decisions and improve user experience.\n\nThis role requires a data-driven mindset, strong analytical skills, and experience with visualization tools to turn complex data into actionable insights.\n\n - This is a fully onsite position, based at our office in Lisbon, where you will collaborate closely with cross-functional teams in person and contribute to a dynamic and fast-paced environment. We are open to support with relocation efforts.\n\n\n\n\nRESPONSIBILITIES\n\n - Analyze user behavior, product performance, and key business metrics to identify trends and opportunities.\n\n - Create and maintain interactive dashboards and reports using tools like Tableau, Looker, Power BI, or Google Data Studio.\n\n - Collect, clean, and structure large datasets to ensure accuracy and usability.\n\n - Define and track KPIs for marketing, product, and business performance.\n\n - Work with SQL, Python, or R to extract, analyze, and manipulate data.\n\n - Collaborate with product managers, engineers, and marketing teams to provide data-driven insights.\n\n - Conduct A/B testing and experiment analysis to improve product features and user engagement.\n\n - Identify bottlenecks and opportunities in user journeys and customer funnels.\n\n - Present findings in a clear and compelling way to stakeholders and leadership teams.\n\n - Stay up to date with industry trends, analytics best practices, and emerging data tools.\n\n\n\n\nREQUIREMENTS\n\n - Around 3+ years of experience in data analysis, business intelligence, or a related field.\n\n - Proficiency in SQL for data querying and manipulation.\n\n - Experience with data visualization tools (Tableau, Looker, Power BI, Google Data Studio).\n\n - Strong analytical skills with experience in Python or R for data analysis.\n\n - Knowledge of A/B testing methodologies and statistical analysis.\n\n - Experience with Google Analytics, Mixpanel, Amplitude, or similar user analytics tools.\n\n - Strong problem-solving skills and ability to communicate insights to non-technical stakeholders.\n\n - Experience working with large datasets and cloud-based data warehouses (BigQuery, Redshift, Snowflake).\n\n - Familiarity with ETL processes and data pipeline optimization is a plus.\n\n - Ability to work in a fast-paced, data-driven environment and manage multiple projects.\n\n\n\n\nWHAT BENEFITS ARE WE OFFERING?\n\n - Apple hardware ecosystem for work.\n\n - Annual Bonus\n\n - Top-tier Health and Life Insurance for peace of mind.\n\n - Transportation Budget to support your commute needs.\n\n - Coverflex benefits package for meal allowances, well-being, and more.\n\n - Childcare support.\n\n - Air Conference - an opportunity to meet the team, collaborate, and grow together.\n\n - Pension Fund to support your long-term financial planning.\n\n - Urban Sports Club membership to keep you active.\n\n - Meals 100% free at the hub.\n\n\n\n\nDIVERSITY & INCLUSION\n\nAt Air Apps, we are committed to fostering a diverse, inclusive, and equitable workplace. We enthusiastically welcome applicants from all backgrounds, experiences, and perspectives. We celebrate diversity in all its forms and believe that varied voices and experiences make us stronger.\n\n\n\n\nAPPLICATION DISCLAIMER\n\nAt Air Apps, we value transparency and integrity in our hiring process. Applicants must submit their own work without any AI-generated assistance. Any use of AI in application materials, assessments, or interviews will result in disqualification.\n\n\n\n\nIMPORTANT NOTICE\n\nAir Apps does not partner with nor is represented by any recruiting agencies, staffing firms, or third-party recruiters in connection with our hiring efforts. All legitimate communication regarding Air Apps opportunities will come exclusively from an official @airapps.com http://airapps.com email address. Additionally, all open positions are published only through our official careers platform, Ashby.\nIf you are contacted by anyone claiming to represent Air Apps from a different email domain, through a recruiting agency, or via a job posting source other than Ashby, please exercise caution. We do not accept unsolicited candidate submissions from agencies, and any such submissions will not be considered.",
+   "firstSeenAt": "2026-10-18T22:57:26.600Z",
+   "lastSeenAt": "2026-10-18T22:57:26.600Z",
+   "signal": {
+    "status": "mixed",
+    "score": 2,
+    "observations": [
+     {
+      "key": "employer_ats",
+      "label": "Published on the employer's own job board",
+      "direction": "positive",
+      "weight": 3,
+      "detail": "Listed right now on the employer's Ashby job board. This proves the employer is advertising it, not that interviews are happening.",
+      "sourceUrl": "https://jobs.ashbyhq.com/airapps",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "freshness",
+      "label": "Open for 174 days",
+      "direction": "negative",
+      "weight": -2,
+      "detail": "First published 2026-04-27. Old postings can still be active, so treat this as a caution, not proof.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "apply_link",
+      "label": "Application link works",
+      "direction": "positive",
+      "weight": 1,
+      "detail": "Resolved with HTTP 200.",
+      "sourceUrl": "https://jobs.ashbyhq.com/airapps/66096530-9071-4398-8996-73d08a18b693/application",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "board_activity",
+      "label": "Little recent board activity",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "Only 1 other roles changed in the last 30 days. Shown for context, not scored.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "repost_history",
+      "label": "Repost history",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "Callback has watched this listing for 0 days. Repost patterns need a few weeks of history.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     }
+    ],
+    "checkedAt": "2026-10-18T22:57:26.600Z"
+   }
+  },
+  {
+   "id": "ashby-qed-ai-8c9e16c3-55e3-4d41-b372-e7ce0d3fe3c9",
+   "provider": "ashby",
+   "company": "Qed Ai",
+   "companySlug": "qed-ai",
+   "title": "Forward-Deployed Data Analyst",
+   "location": "Global",
+   "remote": true,
+   "url": "https://jobs.ashbyhq.com/qed-ai/8c9e16c3-55e3-4d41-b372-e7ce0d3fe3c9",
+   "applyUrl": "https://jobs.ashbyhq.com/qed-ai/8c9e16c3-55e3-4d41-b372-e7ce0d3fe3c9/application",
+   "postedAt": "2025-10-22T06:28:56.997+00:00",
+   "descriptionText": "QED (https://qed.ai) is a tech company focused on public health and food security in Sub-Saharan Africa. We build the digital infrastructure and AI used at the intersection of aid and scientific inquiry, including in-situ nutrient analysis of crops and soils, and surveillance of HIV and malaria at national-scale in multiple African countries. Our funding comes from multiple philanthropic and governmental organizations such as the Gates Foundation, U.S. government, WHO, the EU, the Global Fund, and more.\n\n\nWe are looking for a Forward-Deployed Data Analyst to work on health data systems and travel frequently to African countries such as Malawi, Cameroon, Cote d’Ivoire, Nigeria, Mozambique, and various other countries throughout the Global South.\n\n\n\n\nBACKGROUND\n\nInformation is essential for host nations to manage their health systems effectively. and even more so in light of shifts in foreign aid funding. With complete, accurate, and near real-time data, health programs can continually focus efforts where most needed and improve their impact. Capturing high quality data affordably and at national scale has been an insurmountable task, until now. ScanForm, developed by private sector company QED.ai http://QED.ai, uses artificial intelligence to instantly digitize data from hand-written information on paper using an inexpensive handheld smartphone. It then instantly integrates that data with canonical health data systems such as DHIS2, OpenMRS, and others, and automates all analysis and reporting functions. The end result is fully digitized and individual data acquired at far less cost than traditional all-electronic approaches. \n\nQED.ai http://QED.ai is looking for a Forward-Deployed Data Analyst that welcomes the challenge of working with governments in Africa to lead high-impact change through ScanForm’s leapfrog technology. You will work directly with ministerial officers and international organizations on the construction of new digital health data pipelines based on ScanForm, starting with preliminary scoping and form design, and ending with full deployment at national scale. Logical reasoning, language fluency, emotional intelligence, clarity of communication, and cultural sensitivity are key.\n\nYou’ll contribute to building well-structured, intuitive tools for capturing data efficiently. This includes standardizing identifiers for specimens, patients, diseases, diagnoses, and treatments. You will help ensure that data is captured on time, is automatically vetted for quality using logical rules of mathematics and public health, and that data is converted into dashboards that tell clear stories to identify actionable trends. You’ll work closely with end users to understand their needs and help them extract relevant information, including high-level stakeholders at the Ministry of Health and healthcare providers working in clinics and the community, always with the aim of achieving a large, meaningful impact that matters. You will also communicate, sharing stories of how ScanForm makes a difference for governments and their constituents.\n\n\n\n\nSCOPE OF WORK\n\n - Engage with Ministries of Health in Africa, as well as donor organizations such as the Centers for Disease Control (CDC), U.S. Department of State, UNICEF, to fully understand all current data processing workflows and pains, and governmental requirements for data capture and data analysis.\n\n - Build data capture and data management solutions for our clients, using training that QED provides. This design includes crafting of questionnaires, layout of data elements, visual aesthetics, and identifiers, while also being sensitive to client needs.\n\n - Help local and international agencies understand the many benefits of converting health systems to ScanForm.\n\n - Develop indicator dashboards analyses that support data use and public health decision-making, using peer-reviewed SQL and training that QED provides.\n\n - Communicate regularly, effectively, and in a timely manner with in-country funders, the host nation government, and QED’s central and regional leadership, particularly when there are challenges that may require intervention from headquarters.\n\n - Participate in discussions and seminars about ScanForm and health system strengthening.\n\n - Assist with representing and presenting ScanForm at conferences.\n   \n   \n\n\nREQUIREMENTS\n\n - Working proficiency (ILR 4/5, or CEFR ≥C1) in speaking, reading, writing, and typing in English. (An official certificate is unnecessary, we’ll just have a conversation.)\n   \n   - For Francophone countries, at least B2 proficiency in French speaking, reading, writing and typing is expected; C1 or above is preferred.\n   \n   - For Lusophone countries, at least B2 proficiency in Portuguese speaking, reading, writing and typing is expected; C1 or above is preferred.\n\n - Must be willing to travel frequently and be physically based in the country of project implementation for at least 25% of the calendar year; more time is better. \n\n - Culturally adaptive and adventurous!\n\n - Logical reasoning, number sense, and creative problem solving skills. Ability to express quantitative ideas clearly, both orally and in writing.\n\n - At ease using computers and digital systems.\n\n - Willingness and interest in working with people from other cultures.\n\n - Resilience.\n\n - High Emotional Intelligence.\n\n - A demonstrated interest in innovative problem solving. We look for people who are courageous, forward-leaning problem-solvers.\n\n - … and you have to care about the work that you do!\n   \n   \n\nBelow are additional skills that are a bonus, but are not required:\n\n - some experience or exposure to the health sciences, such as through biomedical engineering, public health, medicine, biology, or biochemistry\n\n - foreign language skills, especially in French, Portuguese, Swahili, Chichewa, or Chinese.\n\n - experience with STEM olympiads, such as mathematics or informatics competitions\n\n - willingness to relocate to Sub-Saharan Africa ",
+   "firstSeenAt": "2026-10-18T22:57:26.600Z",
+   "lastSeenAt": "2026-10-18T22:57:26.600Z",
+   "signal": {
+    "status": "mixed",
+    "score": 3,
+    "observations": [
+     {
+      "key": "employer_ats",
+      "label": "Published on the employer's own job board",
+      "direction": "positive",
+      "weight": 3,
+      "detail": "Listed right now on the employer's Ashby job board. This proves the employer is advertising it, not that interviews are happening.",
+      "sourceUrl": "https://jobs.ashbyhq.com/qed-ai",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "freshness",
+      "label": "Open for 361 days",
+      "direction": "negative",
+      "weight": -2,
+      "detail": "First published 2025-10-22. Old postings can still be active, so treat this as a caution, not proof.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "apply_link",
+      "label": "Application link works",
+      "direction": "positive",
+      "weight": 1,
+      "detail": "Resolved with HTTP 200.",
+      "sourceUrl": "https://jobs.ashbyhq.com/qed-ai/8c9e16c3-55e3-4d41-b372-e7ce0d3fe3c9/application",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "board_activity",
+      "label": "Employer's board is active",
+      "direction": "positive",
+      "weight": 1,
+      "detail": "4 other roles on this board were published or updated in the last 30 days. That shows a maintained board, not that this role is being interviewed for.",
+      "sourceUrl": "https://jobs.ashbyhq.com/qed-ai",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "repost_history",
+      "label": "Repost history",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "Callback has watched this listing for 0 days. Repost patterns need a few weeks of history.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     }
+    ],
+    "checkedAt": "2026-10-18T22:57:26.600Z"
+   }
+  },
+  {
+   "id": "web-fintechcareers_com-YWx5c3Qtam9oYW5uZXNidXJn",
+   "provider": "web",
+   "company": "Nedbank",
+   "companySlug": "fintechcareers.com",
+   "title": "BI Data Analyst job in Johannesburg, South Africa - Nedbank jobs",
+   "location": "Johannesburg",
+   "remote": false,
+   "url": "https://www.fintechcareers.com/job/26117/bi-data-analyst-johannesburg",
+   "applyUrl": "https://www.fintechcareers.com/job/26117/bi-data-analyst-johannesburg",
+   "descriptionText": "## Credit Analyst\n\n### Nedbank\n\nJob Purpose To add hands-on analytical capacity across data, credit and product, supporting the leads with analysis, models and reporting that inform sound decisions. In doing so, the Analyst turns data into clear insight, keeps data accurate and reliable, and develops the analytical craft as scope is defined. Job Responsibilities…\n\n## BI Data Analyst\n\n### Nedbank\n\nJob Purpose To support and maintain the data warehouse in line with the data model; metadata repository and to provide business intelligence analysis through performing strategic and operational support. Job Responsibilities Structure data into compliance standards by adhering to metadata governance procedures according to Nedbank documented standards and formats. Manage… [...] ## Business Support Consultant\n\n### Nedbank\n\nJob Purpose To support the growth and performance of the Private and Wealth business by designing, developing and facilitating learning solutions that enhance colleague capability across banking and wealth management. The role translates business strategy, product knowledge, client value propositions and operational processes into engaging learning experiences that drive adoption,…\n\n## Sales Manager: Business Development\n\n### nCino [...] ## Sales Manager: Business Development\n\n### nCino\n\nCurious Minds. Bold Ideas. Extraordinary Impact. We’re transforming financial services through bold innovation and relentless execution. You bring the ideas and drive. We’ll build what’s next — together. Reporting Line and Team Reports to: Area Vice President, Africa Direct reports: Business Development Executives covering both run rate (Essentials, Small, Medium)…\n\n## Content Strategist\n\n### Ozow\n\nMeet Ozow Ozow is a leading fintech company that’s redefining digital payments in South Africa and beyond. We’re dedicated to making payments more accessible, secure, and convenient for both businesses and consumers. As a fast-growing player in the financial technology sector, Ozow fosters a culture of innovation, diversity, and inclusivity….",
+   "firstSeenAt": "2026-10-18T22:57:26.600Z",
+   "lastSeenAt": "2026-10-18T22:57:26.600Z",
+   "signal": {
+    "status": "insufficient",
+    "score": 1,
+    "observations": [
+     {
+      "key": "employer_ats",
+      "label": "Employer hiring system",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "Could not confirm against the employer's own job board.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "freshness",
+      "label": "Posting date",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "The posting does not show a publish date.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "apply_link",
+      "label": "Application link works",
+      "direction": "positive",
+      "weight": 1,
+      "detail": "Resolved with HTTP 202.",
+      "sourceUrl": "https://www.fintechcareers.com/job/26117/bi-data-analyst-johannesburg",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "board_activity",
+      "label": "Employer board activity",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "No board activity data.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "repost_history",
+      "label": "Repost history",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "Callback has watched this listing for 0 days. Repost patterns need a few weeks of history.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     }
+    ],
+    "checkedAt": "2026-10-18T22:57:26.600Z"
+   }
+  },
+  {
+   "id": "web-aijobs_net-vdXRoLWFmcmljYS0xMzk4OTU",
+   "provider": "web",
+   "company": "aijobs.net",
+   "companySlug": "aijobs.net",
+   "title": "Static Data Analyst, Valuations - Johannesburg, GP, South Africa",
+   "location": "Johannesburg, GP, South Africa",
+   "remote": false,
+   "url": "https://aijobs.net/job/static-data-analyst-valuations-johannesburg-gp-south-africa-139895",
+   "applyUrl": "https://aijobs.net/job/static-data-analyst-valuations-johannesburg-gp-south-africa-139895",
+   "descriptionText": "Title: Static Data Analyst, Valuations - Johannesburg, GP, South Africa\n# Static Data Analyst, Valuations. ##### Perks/Benefits. ##### Skills/Tech-stack. ##### Education. ##### Roles. ##### Regions. ##### Countries. ##### States. ##### Cities. ### Related jobs.",
+   "firstSeenAt": "2026-10-18T22:57:26.600Z",
+   "lastSeenAt": "2026-10-18T22:57:26.600Z",
+   "signal": {
+    "status": "insufficient",
+    "score": 1,
+    "observations": [
+     {
+      "key": "employer_ats",
+      "label": "Employer hiring system",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "Could not confirm against the employer's own job board.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "freshness",
+      "label": "Posting date",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "The posting does not show a publish date.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "apply_link",
+      "label": "Application link works",
+      "direction": "positive",
+      "weight": 1,
+      "detail": "Resolved with HTTP 200.",
+      "sourceUrl": "https://foorilla.com/hiring/",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "board_activity",
+      "label": "Employer board activity",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "No board activity data.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "repost_history",
+      "label": "Repost history",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "Callback has watched this listing for 0 days. Repost patterns need a few weeks of history.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     }
+    ],
+    "checkedAt": "2026-10-18T22:57:26.600Z"
+   }
+  },
+  {
+   "id": "greenhouse-takealotcom-8267136",
+   "provider": "greenhouse",
+   "company": "takealot.com",
+   "companySlug": "takealotcom",
+   "title": "People Analytics Intern",
+   "location": "Cape Town",
+   "remote": false,
+   "url": "https://job-boards.greenhouse.io/takealotcom/jobs/8267136",
+   "applyUrl": "https://job-boards.greenhouse.io/takealotcom/jobs/8267136",
+   "postedAt": "2026-10-12T03:31:18-04:00",
+   "updatedAt": "2026-10-12T03:31:18-04:00",
+   "descriptionText": "Takealot Group, South Africa’s leading online Retail organisation, is looking for highly talented People Analytics Intern to join our team. The Internships will be split between all businesses within the Group, namely: takealot.com, TFS and Mr D.\n We are a young, dynamic, hyper growth company looking for smart, creative, hard-working people with integrity to join us! \n Think you’ve been challenged before? Think again!\n• Scale: Over 2.5 million happy shoppers shop online. Show them what you can do.\n• Learn: We work with the best of the best, and then some. Work alongside industry leaders and upskill yourself in record time.\n• Grow: Expand your career in the fast-growing Takealot Group: takealot.com, TFS and Mr D. We like to promote from within: Here’s your chance. \n Requirements:\n Qualifications Experience: \n• N6 in Human Resources Management\n The skills we need:\n• Computer Literacy (Basic Microsoft Excel, Document, Google Sheets, etc.)\n• Strong Attention to Detail\n Attributes required: \n• Collaborative\n• Creative Energy\n• Hands on\n• Have an opinion and voice it\n• Strong communication skills\n• Strong problem solving skills\n Internship Start Date: 19th October 2026\n High Level: \n At the Takealot Group, our Internship Programme will help you build both technical and soft-skills to launch your career, learning from the best in the business. The Internship program will prepare you for a career in a large-scale and fast-paced environment.\n Every selected Intern gains unique insights into the e-commerce environment with vast amounts of practical experience from daily exposure to a broad range of skills. The program consists of various technical and soft skill courses where you will receive training on a variety of areas.\n You’ll be working with some of the strongest professionals South Africa has to offer who bring experience from a multitude of Great Industries.\n The Environment: \n• takealot.com employees are entrepreneurial and dynamic, smart, customer-centric, fun and have the shared ambition of takealot.com being the leading e-commerce company in Africa.\n• We have fun, work hard, take ownership, work in teams to create solutions, and are always open to direct feedback/new ideas on where we can improve.\n• We are short on ego and high on output.\n• We are doers and not only thinkers, it’s all in the execution after all.\n• We love what we do and what we are creating.\n Let’s talk about life @ Takealot Group\n• The power is in your hands: We offer a market-related, Total Remuneration Package which allows full flexibility according to your needs. Go on, be the master of your own destiny.\n• No doors: We aren’t fans of stuffy offices or siloed work environments. See someone you like? High five, collab and make something great.\n• Mentorship Program: We aren’t kidding when we say the people with the best people win. Now’s your chance to be one of the best, by learning from the best.\n• Online Learning: Share ideas and grow with global industry leaders who are all just a Slack message away. Love to learn? Up-skill with free access to courses on MyAcademy, Udacity, Coursera and more.\n• Good times: Get to know the other extraordinary minds at takealot.com during regular social events and out-of-office activities (think hikes, think mini golf, think good times).\n• Help when you need it most: Confidential counselling, legal support and financial guidance, for free, anytime, anywhere. \n• Free parking: No more 5km fun runs to your desk (unless you want to).\n Like what you see? \n If you meet the above, you are an Extraordinary Mind. Apply today!!\n Takealot is an Equal Opportunity Employer. Applicants from previously disadvantaged groups and people with disabilities will be given preference.",
+   "firstSeenAt": "2026-10-18T22:57:26.600Z",
+   "lastSeenAt": "2026-10-18T22:57:26.600Z",
+   "signal": {
+    "status": "strong",
+    "score": 7,
+    "observations": [
+     {
+      "key": "employer_ats",
+      "label": "Published on the employer's own job board",
+      "direction": "positive",
+      "weight": 3,
+      "detail": "Listed right now on the employer's Greenhouse job board. This proves the employer is advertising it, not that interviews are happening.",
+      "sourceUrl": "https://job-boards.greenhouse.io/takealotcom",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "freshness",
+      "label": "Published 6 days ago",
+      "direction": "positive",
+      "weight": 2,
+      "detail": "First published 2026-10-12. Last updated 2026-10-12.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "apply_link",
+      "label": "Application link works",
+      "direction": "positive",
+      "weight": 1,
+      "detail": "Resolved with HTTP 200.",
+      "sourceUrl": "https://job-boards.greenhouse.io/takealotcom/jobs/8267136",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "board_activity",
+      "label": "Employer's board is active",
+      "direction": "positive",
+      "weight": 1,
+      "detail": "45 other roles on this board were published or updated in the last 30 days. That shows a maintained board, not that this role is being interviewed for.",
+      "sourceUrl": "https://job-boards.greenhouse.io/takealotcom",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     },
+     {
+      "key": "repost_history",
+      "label": "Repost history",
+      "direction": "unavailable",
+      "weight": 0,
+      "detail": "Callback has watched this listing for 0 days. Repost patterns need a few weeks of history.",
+      "checkedAt": "2026-10-18T22:57:26.600Z"
+     }
+    ],
+    "checkedAt": "2026-10-18T22:57:26.600Z"
+   }
+  }
+ ]
+}

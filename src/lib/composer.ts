@@ -67,7 +67,7 @@ export async function composePack(job: JobPosting, facts: CareerFact[], trace: T
       {
         role: "system",
         content: `You write tailored, recruiter-ready CV bullets and a short application note. ${UNTRUSTED_GUARD}
-Use ONLY the candidate's verified facts. Every bullet and every note sentence that states anything about the candidate must cite the fact IDs it relies on in fact_ids. Write 5-7 bullets ordered by relevance to the posting, strong action verbs, specific, under 30 words each. Keep numbers, tools and titles exactly as in the facts.
+Use ONLY the candidate's verified facts. Every bullet and every note sentence that states anything about the candidate must cite the fact IDs it relies on in fact_ids. Write 5-7 bullets ordered by relevance to the posting, strong action verbs, specific, under 30 words each. Keep numbers, tools and titles exactly as in the facts. Prefer the facts' own wording. Do NOT add impact, benefit or quality clauses the facts don't state (e.g. "driving data-informed decisions", "validating advanced skills", "ensuring accuracy"): every clause must be traceable to a fact.
 The note is 4-6 sentences addressed to the hiring team: why this role, the 2-3 most relevant proofs, a close. Connective sentences that make no claim about the candidate may have empty fact_ids.
 Respond with JSON only: {"bullets":[{"text":"","fact_ids":["fct_x"]}],"note":[{"text":"","fact_ids":[]}]}`,
       },

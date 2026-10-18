@@ -236,7 +236,7 @@ export function extractTerms(text: string): string[] {
   // split into sentences so the first word of each sentence is not a "name"
   const sentences = text.split(/(?<=[.!?;:])\s+|\n+/);
   for (const sentence of sentences) {
-    const tokens = sentence.split(/\s+/).filter(Boolean);
+    const tokens = sentence.split(/[\s\u2013\u2014]+/).filter(Boolean);
     tokens.forEach((tok, idx) => {
       const clean = tok
         .replace(/^[("'\u2018\u201c\[]+|[)"'\u2019\u201d\],.;:!?]+$/g, "")
@@ -289,7 +289,8 @@ export function overlap(claim: string, support: string): number {
 // Ordinary CV and connective words that don't add a factual claim.
 export const NEUTRAL_WORDS = new Set(
   (
-    "built build building created create creating developed develop developing wrote write writing used use using made make " +
+    "built build building created create creating developed develop developing wrote write writing authored used use using made make " +
+    "reduce reduced reducing cut cutting lowered decreased " +
     "worked work working helped help helping contributed contributing supported supporting prepared prepare produced produce " +
     "analysed analyzed analyse analyze analysing analyzing ran run running conducted completed earned achieved hold holding holds " +
     "including include includes such also both each every-day various different relevant key core main " +
@@ -321,7 +322,7 @@ export function novelWords(claim: string, support: string, context: Set<string>)
   for (const w of words(claim)) {
     const clean = w.replace(/[^a-z0-9#+\-']/g, "");
     if (clean.length < 3 || STOP.has(clean) || NEUTRAL_WORDS.has(clean) || context.has(clean)) continue;
-    if (/^\d/.test(clean)) continue; // numbers are checked separately
+    if (/^\d/.test(clean) || clean in NUMBER_WORDS) continue; // numbers are checked separately
     if (supportStems.has(stem(clean))) continue;
     if (!out.includes(clean)) out.push(clean);
   }

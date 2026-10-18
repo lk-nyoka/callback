@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ErrorNote, FitBadge, SignalBadge, Spinner } from "@/components/ui";
 import { useWorkspace } from "@/components/workspace";
-import { api, timeAgo, type ClientJob } from "@/lib/client";
+import { api, displayLocation, timeAgo, type ClientJob } from "@/lib/client";
 import type { SignalStatus } from "@/lib/types";
 
 const SIGNAL_RANK: Record<SignalStatus, number> = { strong: 0, mixed: 1, insufficient: 2, low: 3 };
@@ -95,7 +95,7 @@ export default function JobsPage() {
                         {j.isNew && <span className="ml-2 rounded bg-verified px-1.5 py-0.5 align-middle text-[0.7rem] font-bold text-paper">New overnight</span>}
                       </p>
                       <p className="mt-0.5 text-sm text-muted">
-                        {j.company}, {j.location || "Location not stated"}
+                        {j.company}, {displayLocation(j.location, state.intent?.locations)}
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-2">

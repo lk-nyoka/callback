@@ -72,3 +72,24 @@ describe("matching", () => {
     expect(titleRelevance("Account Executive", intent)).toBe(0);
   });
 });
+
+describe("matching: remote country restrictions", () => {
+  const intent = { role: "Data Analyst", keywords: [], locations: ["Johannesburg", "Remote"], remoteOk: true, seniority: "junior" as const, dealbreakers: [] };
+  it("rejects a remote role limited to Austria", () => expect(locationMatches("Austria", true, intent).ok).toBe(false));
+  it("accepts a multi-country list that includes Johannesburg", () =>
+    expect(locationMatches("Mexico - Monterrey; South Africa - Johannesburg; Chile - Santiago", true, intent).ok).toBe(true));
+  it("keeps roles with no stated location", () => expect(locationMatches("", false, intent).ok).toBe(true));
+});
+
+describe("matching: title precision", () => {
+  const intent = { role: "Data Analyst", keywords: [], locations: ["Johannesburg"], remoteOk: true, seniority: "junior" as const, dealbreakers: [] };
+  it("drops head-noun-only matches", () => {
+    expect(titleRelevance("Technical Support Analyst (German Speaker)", intent)).toBe(0);
+    expect(titleRelevance("Risk Operations Analyst", intent)).toBe(0);
+  });
+  it("keeps domain matches", () => {
+    expect(titleRelevance("People Analytics Intern", intent)).toBeGreaterThan(0);
+    expect(titleRelevance("BI Data Analyst", intent)).toBeGreaterThan(0);
+    expect(titleRelevance("Junior Data Analyst", intent)).toBeGreaterThan(titleRelevance("People Analytics Intern", intent));
+  });
+});

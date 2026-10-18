@@ -109,3 +109,9 @@ describe("uncited sentences (cover note connective text)", () => {
   it("blocks uncited leadership claims", () =>
     expect(checkClaim({ text: "I have led many data teams.", factIds: [] }, F).status).toBe("blocked"));
 });
+
+describe("real-draft regressions", () => {
+  it("does not treat number words as novel content", () =>
+    expect(checkClaim({ text: "Led a team of three students in a university robotics project", factIds: ["f3"] }, F).status).toBe("pass"));
+  it("splits terms on em dashes", () => expect(extractTerms("Certified—demonstrates skill")).not.toContain("Certified—demonstrates"));
+});

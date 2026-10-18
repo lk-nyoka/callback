@@ -44,3 +44,14 @@ export function timeAgo(iso: string) {
   if (s < 86400) return `${Math.floor(s / 3600)} h ago`;
   return `${Math.floor(s / 86400)} d ago`;
 }
+
+// Long multi-location strings: show the place that matched the user's search first.
+export function displayLocation(location: string, wanted: string[] = []): string {
+  const parts = location.split(/;\s*/).map((p) => p.trim()).filter(Boolean);
+  if (parts.length <= 2) return location || "Location not stated";
+  const want = wanted.map((w) => w.toLowerCase()).filter((w) => !/remote/.test(w));
+  const hit = parts.filter((p) => want.some((w) => p.toLowerCase().includes(w)) || /south africa/i.test(p));
+  const lead = hit.length ? hit : parts.slice(0, 1);
+  const rest = parts.length - lead.length;
+  return `${lead.join("; ")}${rest > 0 ? ` and ${rest} other location${rest > 1 ? "s" : ""}` : ""}`;
+}

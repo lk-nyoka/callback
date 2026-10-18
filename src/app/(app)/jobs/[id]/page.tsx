@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ErrorNote, FitBadge, SignalBadge, Spinner } from "@/components/ui";
 import { useWorkspace } from "@/components/workspace";
 import { Markdown } from "@/components/markdown";
-import { api, shortModel, timeAgo } from "@/lib/client";
+import { api, displayLocation, shortModel, timeAgo } from "@/lib/client";
 import type { SignalObservation } from "@/lib/types";
 
 export default function JobPage() {
@@ -43,7 +43,7 @@ export default function JobPage() {
       </Link>
       <h1 className="mt-2 text-3xl font-semibold leading-tight tracking-tight">{job.title}</h1>
       <p className="mt-1 text-lg text-ink-2">
-        {job.company}, {job.location || "location not stated"}
+        <span title={job.location}>{job.company}, {displayLocation(job.location, state.intent?.locations)}</span>
       </p>
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <FitBadge level={job.fit?.level} />

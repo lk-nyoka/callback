@@ -7,6 +7,10 @@ import { computeSignal } from "./signals";
 import { ATS_DOMAINS, tavilyEnabled, tavilySearch, type TavilyResult } from "./tavily";
 
 // Aggregators whose terms forbid automated use, or that only re-post others' listings.
+// ATS boards that belong to job aggregators re-posting other companies' roles.
+// Their listings are not "the employer's own board", so they are skipped.
+export const AGGREGATOR_BOARDS = new Set(["jobgether", "remoterocketship", "himalayas", "jobleads", "talentify", "lensa", "jooble", "dice"]);
+
 const EXCLUDED_DOMAINS = ["linkedin.com", "indeed.com", "za.indeed.com", "glassdoor.com", "glassdoor.co.za", "ziprecruiter.com", "facebook.com"];
 
 const WebSchema = z.object({
@@ -37,7 +41,7 @@ async function normaliseWebResults(results: TavilyResult[], trace: Trace): Promi
       messages: [
         {
           role: "system",
-          content: `For each search result, decide if the page is ONE specific job posting (not a list of jobs, article or company page). If so extract its job title, hiring company, location (as written) and whether it is remote. ${UNTRUSTED_GUARD} Respond JSON only: {"items":[{"index":0,"is_single_job_posting":true,"title":"","company":"","location":"","remote":false}]}`,
+          content: `For each search result, decide if the page is ONE specific job posting (not a list of jobs, article or company page). If so extract the job title ONLY (no company, location or site name, e.g. "BI Data Analyst"), the hiring company (not the job site), the location as written, and whether it is remote. ${UNTRUSTED_GUARD} Respond JSON only: {"items":[{"index":0,"is_single_job_posting":true,"title":"","company":"","location":"","remote":false}]}`,
         },
         { role: "user", content: results.map((r, i) => `#${i}\nURL: ${r.url}\n<posting>\n${r.title}\n${r.content.slice(0, 700)}\n</posting>`).join("\n\n") },
       ],
@@ -120,15 +124,25 @@ export async function discover(intent: SearchIntent, previous: JobPosting[], tra
 
   // Tavily: find more employer boards hosting matching roles.
   if (tavilyEnabled()) {
-    const loc = intent.locations.filter((l) => !/remote/i.test(l)).join(" OR ") || "remote";
-    const q = `"${intent.role}" jobs ${loc}${intent.remoteOk ? " OR remote" : ""}`;
+    const places = intent.locations.filter((l) => !/remote/i.test(l));
+    const sa = places.some((p) => /johannesburg|joburg|cape town|pretoria|durban|gauteng|south africa|sandton/i.test(p));
+    const where = [...places, ...(sa ? ["South Africa"] : [])];
+    const role = `"${intent.role}"`;
+    // A few targeted queries: employer boards near the user, and remote roles open to their region.
+    const atsQueries = [
+      `${role} jobs ${where.join(" OR ") || "remote"}`,
+      ...(intent.remoteOk ? [`${role} remote ${sa ? "Africa OR EMEA OR worldwide" : "worldwide"}`] : []),
+    ];
+    const q = atsQueries[0];
     try {
-      const results = await tavilySearch(q, { includeDomains: ATS_DOMAINS, maxResults: 20, step: "Discover employer boards", trace });
-      for (const r of results) {
-        const b = boardFromUrl(r.url);
-        if (b && !boards.has(`${b.provider}:${b.slug}`)) {
-          boards.set(`${b.provider}:${b.slug}`, b);
-          tavilyBoards++;
+      for (const aq of atsQueries) {
+        const results = await tavilySearch(aq, { includeDomains: ATS_DOMAINS, maxResults: 20, step: "Discover employer boards", trace });
+        for (const r of results) {
+          const b = boardFromUrl(r.url);
+          if (b && !AGGREGATOR_BOARDS.has(b.slug.toLowerCase()) && !boards.has(`${b.provider}:${b.slug}`)) {
+            boards.set(`${b.provider}:${b.slug}`, b);
+            tavilyBoards++;
+          }
         }
       }
       // Employer careers pages and local job sites. Used as listings in their
@@ -173,7 +187,15 @@ export async function discover(intent: SearchIntent, previous: JobPosting[], tra
   }
 
   candidates.sort((a, b) => b.rel - a.rel || recency(b.job) - recency(a.job));
-  const top = candidates.slice(0, limit);
+  // One listing per company + title (employers often post a role per city).
+  const seenRole = new Set<string>();
+  const unique = candidates.filter((c) => {
+    const k = `${c.job.company}|${c.job.title}`.toLowerCase().replace(/\s+/g, " ");
+    if (seenRole.has(k)) return false;
+    seenRole.add(k);
+    return true;
+  });
+  const top = unique.slice(0, limit);
 
   // Evidence for each kept listing.
   await pool(top, 6, async (c) => {

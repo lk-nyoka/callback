@@ -121,7 +121,7 @@ Being published on an ATS board proves the employer is **advertising** a role, n
 - **Nemotron 3 Super** (reasoning on): fit scoring per requirement, drafting application packs, honest rewrites.
 - **Nemotron 3 Ultra**: the on-demand "how to position yourself honestly" analysis.
 - **Nebius Token Factory**: one OpenAI-compatible client for all three tiers (`src/lib/nemotron.ts`), with a one-tier-down fallback (never up), JSON validation with one corrective retry, and every call logged.
-- **Tavily**: finds employer job boards and careers-page listings beyond the built-in board list, and provides the independent-source signal. **Status: built, not yet tested with a live key.**
+- **Tavily**: finds employer job boards and careers-page listings beyond the built-in board list, and provides the independent-source signal. In a live run for a junior data analyst in Johannesburg, three Tavily searches added 31 employer boards (12 built in, 45 in total), lifting a two-role shortlist to fifteen, including roles at Takealot and Nedbank.
 - **"How this ran"** panel on every screen: the model used per step, tokens, latency, fallbacks and every source fetched.
 
 ### Measured cost
@@ -200,7 +200,7 @@ Locally, without Supabase variables, workspaces are stored as JSON files in `.da
 |---|---|
 | Nemotron calls | Live, Nebius Token Factory |
 | ATS discovery and hiring signals | Live, from the built-in list of employer boards (`SEED_BOARDS` in `discovery.ts`) |
-| Tavily discovery | Built, **not yet tested with a live key** |
+| Tavily discovery | Live (tested 19 Oct 2026) |
 | Demo CV | Synthetic (`data/demo/`) |
 | Pinned demo shortlist | Optional, clearly labelled in the UI |
 | Overnight watch | A real endpoint, scheduled with Vercel Cron or GitHub Actions |
@@ -210,7 +210,8 @@ Locally, without Supabase variables, workspaces are stored as JSON files in `.da
 ## Limitations
 
 - **The ledger misses relational and timeframe exaggeration** (see the fresh held-out results). Every pack needs your review.
-- **Coverage.** Without Tavily, discovery only covers employers on the built-in board list. Public ATS feeds cover many global employers but few South African ones: a live run for a junior data analyst in Johannesburg found only two relevant roles. Broad local coverage will need Tavily and job-feed partnerships.
+- **Coverage.** Without Tavily, discovery only covers employers on the built-in board list (`SEED_BOARDS`): for a junior data analyst in Johannesburg that found two relevant roles. With Tavily it found fifteen, but listings found only on careers pages or job sites carry weaker evidence (usually "Insufficient evidence"). Broad local coverage will need job-feed partnerships.
+- **Aggregator boards.** Some ATS boards belong to aggregators that re-post other companies' roles (for example Jobgether, which posted one role once per country). Known ones are excluded (`AGGREGATOR_BOARDS`), but the list is manual.
 - Hiring signals are evidence, not proof, and will sometimes be wrong in both directions.
 - English-language CVs and postings only. Scanned-image PDFs are not supported.
 
@@ -226,7 +227,7 @@ Locally, without Supabase variables, workspaces are stored as JSON files in `.da
 
 - **Token Factory**: the OpenAI-compatible API made three Nemotron tiers a configuration change. The biggest surprise was that reasoning is on by default: an extraction call with a 16k `max_tokens` budget spent all of it reasoning and returned almost nothing after 55 seconds. Setting `chat_template_kwargs: { enable_thinking: false }` brought the same call down to about 4 seconds and under 1k tokens, with a complete answer. We found the switch by experiment; it deserves a prominent place in the docs and model cards.
 - **Nemotron**: Lightning with reasoning off was fast and faithful at verbatim quoting (23 facts, 0 unverifiable quotes on the demo CV). Super's drafts were strong but naturally embellished ("managed" for "tracked"), which is exactly why the ledger exists. As an auditor, Lightning caught 2 of the 5 fresh-set claims the code missed, and flagged no honest lines.
-- **Tavily**: `TODO after testing with a key`.
+- **Tavily**: `include_domains` restricted to ATS hosts was the most useful pattern: two queries surfaced 31 employer boards Callback didn't know about. Open-web queries for roles mostly returned *list* pages from job sites (PNet, CareerJunction, Jobgether) rather than single postings, so Callback has Lightning classify each result before using it. `published_date` was empty on every job result we saw, which would be the single most useful field for a hiring-signal product.
 
 ## Pre-existing work
 
