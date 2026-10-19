@@ -33,7 +33,7 @@ const NEXT: ApplicationStatus[] = ["applied", "replied", "interview", "rejected"
 export default function ApplicationsPage() {
   const { state, refresh } = useWorkspace();
   const [err, setErr] = useState("");
-  const [tab, setTab] = useState<Tab>("active");
+  const [picked, setTab] = useState<Tab | null>(null);
   if (!state) return <p className="text-muted">Loading…</p>;
   const apps = [...state.applications].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   const jobs = new Map(state.jobs.map((j) => [j.id, j]));
@@ -53,6 +53,7 @@ export default function ApplicationsPage() {
   }
 
   const tabCount = (t: Tab) => apps.filter((a) => TAB_OF(a.status) === t).length;
+  const tab: Tab = picked ?? (tabCount("active") ? "active" : tabCount("applied") ? "applied" : tabCount("closed") ? "closed" : "active");
   const shown = apps.filter((a) => TAB_OF(a.status) === tab);
   return (
     <div className="mx-auto max-w-4xl">
