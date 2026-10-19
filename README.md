@@ -132,7 +132,7 @@ Being published on an ATS board proves the employer is **advertising** a role, n
 - **Nemotron 3 Super** (reasoning on): fit scoring per requirement, drafting application packs, honest rewrites.
 - **Nemotron 3 Ultra**: the on-demand "how to position yourself honestly" analysis.
 - **Nebius Token Factory**: one OpenAI-compatible client for all three tiers (`src/lib/nemotron.ts`), with a one-tier-down fallback (never up), JSON validation with one corrective retry, and every call logged.
-- **Tavily**: finds employer job boards and careers-page listings beyond the built-in board list (search, category and listing pages are rejected by URL rules in code before a model classifies a result), and provides the independent-source signal. In a live run for a junior data analyst in Johannesburg, three Tavily searches added 31 employer boards (12 built in, 45 in total), lifting a two-role shortlist to fifteen, including roles at Takealot and Nedbank.
+- **Tavily**: finds employer job boards and careers-page listings beyond the built-in board list (search, category and listing pages are rejected by URL rules in code before a model classifies a result), and provides the independent-source signal. In a live run for a junior data analyst in Johannesburg (19 Oct), Tavily added 25 employer boards and a careers-page search, giving thirteen real roles, including PSG, Absa, Experian, ICON and Takealot. Two web phrasings are used; the "vacancy ... apply closing date" phrasing surfaces single employer postings (Workday, careers sites) rather than job-site listing pages.
 - **"How this ran"** panel on every screen: the model used per step, tokens, latency, fallbacks and every source fetched.
 
 ### Measured cost

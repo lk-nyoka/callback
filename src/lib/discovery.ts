@@ -17,7 +17,12 @@ const EXCLUDED_DOMAINS = [
   // not job postings, or aggregators of other sites' listings
   "youtube.com", "upwork.com", "fiverr.com", "reddit.com", "quora.com", "medium.com", "simplyhired.com", "za.simplyhired.com",
   "jobgether.com", "remoterocketship.com", "himalayas.app", "jooble.org", "careerjet.co.za", "adzuna.co.za", "talent.com",
+  "tiktok.com", "instagram.com", "threads.com", "threads.net", "x.com", "twitter.com", "pinterest.com",
+  "erieri.com", "payscale.com", "naukri.com", "learn4good.com", "whatjobs.com", "jobleads.com", "expertini.com",
 ];
+
+// Any country TLD of these brands (glassdoor.ca, glassdoor.co.in ...).
+const EXCLUDED_BRANDS = ["glassdoor", "indeed", "linkedin", "ziprecruiter", "careerjet", "jooble", "simplyhired"];
 
 // Search, category and listing pages are not single postings, whatever a
 // model says about them. Checked in code before a result is used.
@@ -30,11 +35,15 @@ export function looksLikeSinglePosting(rawUrl: string): boolean {
   }
   const host = u.hostname.replace(/^www\./, "");
   if (EXCLUDED_DOMAINS.some((d) => host === d || host.endsWith("." + d))) return false;
+  if (EXCLUDED_BRANDS.some((b) => host.split(".").includes(b))) return false;
   const path = u.pathname.toLowerCase().replace(/\/+$/, "");
   const segs = path.split("/").filter(Boolean);
   const last = segs[segs.length - 1] ?? "";
   if (/[?&](q|query|keywords?|search|kw|what)=/i.test(u.search)) return false;
-  if (/\/(search|hire|browse|categories|category|country|remote-jobs|job-search|jobs-in)(\/|$)/.test(path)) return false;
+  if (/\/(search|hire|browse|categories|category|country|remote-jobs|job-search|jobs-in|salary|salaries|blogs?|resources|news)(\/|$)/.test(path)) return false;
+  // Postings identified by a query string (ViewJob.aspx?u=..., ?listingid=..., Workday-style ids).
+  if (/[?&](id|jobid|job_id|listingid|reqid|requisitionid|vacancyid|u|qs|ref)=[^&]{6,}/i.test(u.search) && !/(^|-)jobs(-|$)/.test(last)) return true;
+  if (/viewjob|jobdetail|job_detail|job-details|vacancydetail/.test(path)) return true;
   if (/(^|-)jobs?(\.\w+)?$/.test(last) || /(^|-)jobs(-|$)/.test(last) || /(^|\/)(kw|lc)-/.test(path)) return false;
   if (!segs.length) return false;
   // Positive evidence of a single posting: an id, a /job/ style path, or a long slug.
@@ -178,7 +187,20 @@ export async function discover(intent: SearchIntent, previous: JobPosting[], tra
       }
       // Employer careers pages and local job sites. Used as listings in their
       // own right (weaker evidence) and as independent confirmation.
-      const web = await tavilySearch(`${q} careers apply`, { excludeDomains: [...ATS_DOMAINS, ...EXCLUDED_DOMAINS], maxResults: 20, step: "Find roles on careers pages", trace });
+      // Two phrasings: "vacancy ... closing date" tends to surface single
+      // employer postings (Workday, SuccessFactors, careers sites).
+      const city = places[0] ?? (sa ? "South Africa" : "");
+      const webQueries = [`${q} careers apply`, `${role} vacancy ${city} apply closing date`];
+      const seenUrl = new Set<string>();
+      const web: TavilyResult[] = [];
+      for (const wq of webQueries) {
+        for (const r of await tavilySearch(wq, { excludeDomains: [...ATS_DOMAINS, ...EXCLUDED_DOMAINS], maxResults: 20, step: "Find roles on careers pages", trace })) {
+          if (!seenUrl.has(r.url)) {
+            seenUrl.add(r.url);
+            web.push(r);
+          }
+        }
+      }
       for (const r of web) independentByTitle.set(r.title.toLowerCase(), r.url);
       webPostings = await normaliseWebResults(web, trace);
     } catch {
