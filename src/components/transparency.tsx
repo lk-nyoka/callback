@@ -16,14 +16,14 @@ export function TransparencyButton() {
     <>
       <button className="btn btn-quiet btn-sm" onClick={() => setOpen(true)} aria-haspopup="dialog">
         How this ran
-        {calls.length > 0 && <span className="rounded bg-sunk px-1.5 text-xs text-muted">{calls.length}</span>}
+        {calls.length > 0 && <span className="rounded-full bg-white/10 px-1.5 text-xs text-ink-2">{calls.length}</span>}
       </button>
       {open && (
-        <div className="fixed inset-0 z-50 flex justify-end bg-ink/30" onClick={() => setOpen(false)}>
+        <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)}>
           <aside
             role="dialog"
             aria-label="How this ran"
-            className="h-full w-full max-w-xl overflow-y-auto border-l border-rule bg-surface p-6 shadow-2xl"
+            className="glass-strong h-full w-full max-w-xl overflow-y-auto rounded-l-[28px] p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-4 flex items-start justify-between gap-4">
@@ -38,15 +38,15 @@ export function TransparencyButton() {
               </button>
             </div>
             <dl className="mb-6 grid grid-cols-3 gap-3 text-sm">
-              <div className="rounded-lg bg-sunk p-3">
+              <div className="rounded-2xl border border-rule bg-white/[0.04] p-3">
                 <dt className="text-muted">Model calls</dt>
                 <dd className="text-lg font-semibold">{calls.length}</dd>
               </div>
-              <div className="rounded-lg bg-sunk p-3">
+              <div className="rounded-2xl border border-rule bg-white/[0.04] p-3">
                 <dt className="text-muted">Tokens in</dt>
                 <dd className="text-lg font-semibold">{totals.inp.toLocaleString()}</dd>
               </div>
-              <div className="rounded-lg bg-sunk p-3">
+              <div className="rounded-2xl border border-rule bg-white/[0.04] p-3">
                 <dt className="text-muted">Tokens out</dt>
                 <dd className="text-lg font-semibold">{totals.out.toLocaleString()}</dd>
               </div>

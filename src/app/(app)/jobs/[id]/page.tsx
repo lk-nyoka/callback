@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { ErrorNote, FitBadge, SignalBadge, Spinner } from "@/components/ui";
+import { IconBack, IconLink, IconPin, IconSpark } from "@/components/icons";
+import { ErrorNote, FitBadge, Monogram, SignalBadge, Spinner } from "@/components/ui";
 import { useWorkspace } from "@/components/workspace";
 import { Markdown } from "@/components/markdown";
 import { api, displayLocation, shortModel, timeAgo } from "@/lib/client";
@@ -38,19 +39,27 @@ export default function JobPage() {
 
   return (
     <div className="mx-auto max-w-4xl">
-      <Link href="/jobs" className="text-sm text-muted underline-offset-2 hover:underline">
-        All jobs
+      <Link href="/jobs" className="inline-flex items-center gap-1 text-sm text-muted hover:text-ink">
+        <IconBack size={15} /> All jobs
       </Link>
-      <h1 className="mt-2 text-3xl font-semibold leading-tight tracking-tight">{job.title}</h1>
-      <p className="mt-1 text-lg text-ink-2">
-        <span title={job.location}>{job.company}, {displayLocation(job.location, state.intent?.locations)}</span>
-      </p>
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <FitBadge level={job.fit?.level} />
-        <SignalBadge status={job.signal?.status} />
-        <a href={job.url} target="_blank" rel="noreferrer" className="ml-1 text-sm underline decoration-rule-strong underline-offset-2">
-          Posting on the employer&apos;s job board
-        </a>
+      <div className="glass-strong relative mt-4 overflow-hidden rounded-[28px] p-6 sm:p-7">
+        <div className="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full bg-accent/25 blur-3xl" />
+        <div className="relative flex items-start gap-4">
+          <Monogram name={job.company} size={56} />
+          <div className="min-w-0">
+            <h1 className="text-[1.7rem] font-semibold leading-tight tracking-[-0.025em] sm:text-[2rem]">{job.title}</h1>
+            <p className="mt-1 flex flex-wrap items-center gap-1.5 text-ink-2" title={job.location}>
+              {job.company} <span className="text-muted">·</span> <IconPin size={14} className="text-muted" /> {displayLocation(job.location, state.intent?.locations)}
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <FitBadge level={job.fit?.level} />
+              <SignalBadge status={job.signal?.status} />
+              <a href={job.url} target="_blank" rel="noreferrer" className="chip">
+                <IconLink size={13} /> {job.provider === "web" ? "Original posting" : "On the employer's job board"}
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="mt-4">
         <ErrorNote>{err}</ErrorNote>
@@ -58,7 +67,7 @@ export default function JobPage() {
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_1fr]">
         {/* Hiring signal */}
-        <section className="rounded-xl border border-rule bg-surface p-5">
+        <section className="glass rounded-[22px] p-5">
           <div className="flex items-start justify-between gap-3">
             <h2 className="text-lg font-semibold">Hiring signal</h2>
             <button className="btn btn-quiet btn-sm" disabled={!!busy} onClick={() => run("recheck", `/api/jobs/${job.id}/recheck`)}>
@@ -76,7 +85,7 @@ export default function JobPage() {
         </section>
 
         {/* Fit */}
-        <section className="rounded-xl border border-rule bg-surface p-5">
+        <section className="glass rounded-[22px] p-5">
           <div className="flex items-start justify-between gap-3">
             <h2 className="text-lg font-semibold">Your fit</h2>
             <button className="btn btn-quiet btn-sm" disabled={!!busy} onClick={() => run("fit", `/api/jobs/${job.id}/fit`)}>
@@ -114,10 +123,10 @@ export default function JobPage() {
       </div>
 
       {/* Deep analysis */}
-      <section className="mt-8 rounded-xl border border-rule bg-surface p-5">
+      <section className="mt-8 glass rounded-[22px] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h2 className="text-lg font-semibold">How to position yourself honestly</h2>
+            <h2 className="flex items-center gap-2 text-lg font-semibold"><IconSpark size={18} className="text-accent" /> How to position yourself honestly</h2>
             <p className="mt-1 text-sm text-muted">A deeper read by Nemotron 3 Ultra, run only when you ask. It can take a minute. This is advice: nothing here goes into an application unless it passes the Claims Ledger.</p>
           </div>
           <button className="btn btn-quiet btn-sm" disabled={!!busy} onClick={() => run("deep", `/api/jobs/${job.id}/deep`)}>
@@ -136,12 +145,12 @@ export default function JobPage() {
       </section>
 
       {/* Posting preview */}
-      <details className="mt-8 rounded-xl border border-rule bg-surface p-5">
+      <details className="glass mt-8 rounded-[22px] p-5">
         <summary className="cursor-pointer font-semibold">Posting excerpt</summary>
         <p className="mt-3 whitespace-pre-line text-sm text-ink-2">{job.descriptionPreview}…</p>
       </details>
 
-      <div className="sticky bottom-4 mt-10 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-rule-strong bg-surface p-4 shadow-lg">
+      <div className="glass-strong sticky bottom-4 z-20 mt-10 flex flex-wrap items-center justify-between gap-3 rounded-[24px] p-4 sm:rounded-full sm:py-3 sm:pl-6 sm:pr-3">
         <p className="text-sm text-muted">
           {existing ? "You already have a pack for this role." : "Drafts CV bullets and a short note. Every line is checked against your Vault."}
         </p>
@@ -151,7 +160,7 @@ export default function JobPage() {
           </Link>
         ) : (
           <button
-            className="btn btn-primary"
+            className="btn btn-accent"
             disabled={!!busy}
             onClick={() => run("pack", `/api/jobs/${job.id}/pack`, (r) => router.push(`/applications/${(r as { id: string }).id}`))}
           >

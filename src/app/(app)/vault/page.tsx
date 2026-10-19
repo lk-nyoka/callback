@@ -1,8 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
-import { ErrorNote, Spinner } from "@/components/ui";
+import { useEffect, useRef, useState } from "react";
+import { IconUpload } from "@/components/icons";
+import { Orb } from "@/components/orb";
+import { ErrorNote, SectionTitle, Spinner } from "@/components/ui";
 import { useWorkspace } from "@/components/workspace";
 import { api } from "@/lib/client";
 import type { CareerFact, FactType, SearchIntent } from "@/lib/types";
@@ -23,10 +25,7 @@ export default function VaultPage() {
   const hasDocs = state.documents.length > 0;
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="text-3xl font-semibold tracking-tight">Career Vault</h1>
-      <p className="mt-2 max-w-prose text-muted">
-        Callback only uses facts you confirm here. Each one is linked to the exact words in your CV, so every claim in an application can be traced back to its source.
-      </p>
+      <SectionTitle title="Career Vault" sub="Callback only uses facts you confirm here. Each one is linked to the exact words in your CV, so every claim in an application can be traced back to its source." />
       {!hasDocs ? <Upload onDone={refresh} /> : <Review facts={state.facts} refresh={refresh} docs={state.documents} />}
       {hasDocs && <IntentForm intent={state.intent} confirmed={state.facts.filter((f) => f.status === "user_confirmed").length} />}
     </div>
@@ -65,6 +64,7 @@ function Upload({ onDone }: { onDone: () => Promise<void> }) {
       setBusy(null);
     }
   }
+  if (busy) return <Extracting label={busy === "sample" ? "sample CV" : "your CV"} />;
   return (
     <section className="mt-8">
       <div
@@ -79,29 +79,62 @@ function Upload({ onDone }: { onDone: () => Promise<void> }) {
           const f = e.dataTransfer.files[0];
           if (f) send(f);
         }}
-        className={`rounded-xl border-2 border-dashed p-10 text-center ${drag ? "border-verified bg-verified-tint" : "border-rule-strong bg-surface"}`}
+        className={`glass relative overflow-hidden rounded-[28px] p-8 text-center transition-colors sm:p-12 ${drag ? "ring-2 ring-accent/70" : ""}`}
       >
-        <p className="text-lg font-semibold">Upload your CV</p>
-        <p className="mt-1 text-sm text-muted">PDF or TXT, up to 5 MB. Read by Nemotron 3.5 Lightning, stored only in your private workspace.</p>
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <button className="btn btn-primary" disabled={!!busy} onClick={() => input.current?.click()}>
-            {busy === "file" ? <Spinner /> : null}
-            {busy === "file" ? "Reading your CV…" : "Choose a file"}
+        <div className="pointer-events-none absolute inset-3 rounded-[22px] border-2 border-dashed border-white/10" />
+        <span className="relative mx-auto grid size-16 place-items-center rounded-[20px] bg-gradient-to-br from-accent to-accent-2 text-white shadow-[0_20px_50px_-15px_rgba(103,116,255,0.8)]">
+          <IconUpload size={26} />
+        </span>
+        <p className="relative mt-5 text-xl font-semibold">Upload your CV</p>
+        <p className="relative mt-1 text-sm text-muted">Drag and drop, or choose a file. PDF or TXT, up to 5 MB.</p>
+        <div className="relative mt-7 flex flex-wrap justify-center gap-3">
+          <button className="btn btn-accent" onClick={() => input.current?.click()}>
+            Choose file
           </button>
-          <button className="btn btn-quiet" disabled={!!busy} onClick={sample}>
-            {busy === "sample" ? <Spinner /> : null}
-            {busy === "sample" ? "Reading sample CV…" : "Use a sample CV"}
+          <button className="btn btn-quiet" onClick={sample}>
+            Use a sample CV
           </button>
         </div>
         <input ref={input} type="file" accept=".pdf,.txt,.md" className="sr-only" onChange={(e) => e.target.files?.[0] && send(e.target.files[0])} />
-        <p className="mt-4 text-xs text-muted">The sample is a fictional junior data analyst in Johannesburg.</p>
-        <p className="mx-auto mt-2 max-w-md text-xs text-muted">
-          This is a hackathon build with no accounts: your workspace is tied to this browser. Remove ID numbers and your home address from your CV before uploading.
-        </p>
+        <p className="relative mt-6 text-xs text-muted">Read by Nemotron 3.5 Lightning. The sample is a fictional junior data analyst in Johannesburg.</p>
+        <p className="relative mx-auto mt-1.5 max-w-md text-xs text-muted">No accounts in this build: your workspace is tied to this browser. Remove ID numbers and your home address first.</p>
       </div>
       <div className="mt-4">
         <ErrorNote>{err}</ErrorNote>
       </div>
+    </section>
+  );
+}
+
+const EXTRACT_STAGES = ["Parsing document", "Extracting facts with Nemotron 3.5 Lightning", "Verifying every quote against your CV", "Preparing your review"];
+
+// Paced to the typical extraction time; the result itself comes from the server.
+function Extracting({ label }: { label: string }) {
+  const [stage, setStage] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setStage((s) => Math.min(s + 1, EXTRACT_STAGES.length - 1)), 1600);
+    return () => clearInterval(t);
+  }, []);
+  const pct = Math.round(((stage + 1) / EXTRACT_STAGES.length) * 92);
+  return (
+    <section className="glass-strong relative mt-8 overflow-hidden rounded-[28px] p-8" aria-live="polite">
+      <div className="pointer-events-none absolute -right-10 -top-10">
+        <Orb size={170} mood="thinking" />
+      </div>
+      <p className="relative text-lg font-semibold">Reading {label}…</p>
+      <div className="relative mt-5 h-1.5 max-w-md overflow-hidden rounded-full bg-white/10">
+        <div className="h-full rounded-full bg-gradient-to-r from-accent to-accent-2 transition-[width] duration-700" style={{ width: `${pct}%` }} />
+      </div>
+      <ul className="relative mt-5 space-y-2.5">
+        {EXTRACT_STAGES.map((s, i) => (
+          <li key={s} className={`flex items-center gap-3 text-sm transition-opacity ${i <= stage ? "" : "opacity-40"}`}>
+            <span className={`grid size-5 place-items-center rounded-full text-[0.65rem] font-bold ${i < stage ? "bg-verified text-black" : i === stage ? "ring-2 ring-accent/70" : "bg-white/10"}`}>
+              {i < stage ? "✓" : i === stage ? <Spinner className="size-3" /> : ""}
+            </span>
+            {s}
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
@@ -174,7 +207,7 @@ function FactRow({ fact, refresh }: { fact: CareerFact; refresh: () => Promise<v
   }
   const confirmed = fact.status === "user_confirmed";
   return (
-    <li className={`rounded-xl border bg-surface p-4 ${confirmed ? "border-rule" : "border-caution/50"}`}>
+    <li className={`glass rounded-[20px] p-4 ${confirmed ? "border-rule" : "border-caution/50"}`}>
       {editing ? (
         <div className="space-y-2">
           <label className="sr-only" htmlFor={`f-${fact.id}`}>Fact text</label>
@@ -225,7 +258,7 @@ function AddFact({ refresh }: { refresh: () => Promise<void> }) {
   const [busy, setBusy] = useState(false);
   return (
     <form
-      className="mt-10 rounded-xl border border-rule bg-sunk p-4"
+      className="glass mt-10 rounded-[22px] p-5"
       onSubmit={async (e) => {
         e.preventDefault();
         setBusy(true);
@@ -272,7 +305,7 @@ function IntentForm({ intent, confirmed }: { intent: SearchIntent | null; confir
   const [err, setErr] = useState("");
   const split = (s: string) => s.split(",").map((x) => x.trim()).filter(Boolean);
   return (
-    <section className="mt-14 border-t border-rule pt-10">
+    <section className="glass-strong mt-14 rounded-[28px] p-6 sm:p-8">
       <h2 className="text-2xl font-semibold tracking-tight">What you&apos;re looking for</h2>
       <p className="mt-1 text-muted">Hard filters run in code before any model is used, so nothing is spent on roles you would never take.</p>
       <form
@@ -324,7 +357,7 @@ function IntentForm({ intent, confirmed }: { intent: SearchIntent | null; confir
         <div className="flex flex-col justify-end gap-2 sm:col-span-2">
           <ErrorNote>{err}</ErrorNote>
           <div className="flex flex-wrap items-center gap-3">
-            <button className="btn btn-primary" disabled={busy || confirmed < 3}>
+            <button className="btn btn-accent" disabled={busy || confirmed < 3}>
               {busy && <Spinner />}
               {busy ? "Checking employer job boards…" : "Find roles"}
             </button>
