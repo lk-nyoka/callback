@@ -194,15 +194,39 @@ export function boardFromUrl(u: string): BoardRef | null {
 }
 
 // Check that the application link still resolves to a live posting.
-export async function checkLink(url: string): Promise<{ ok: boolean; status: number; finalUrl: string }> {
+//   live       2xx on a page that still looks like the job
+//   dead       404 / 410, or redirected to a board index or error page
+//   unverified bot protection (401/403/429/999), timeouts, network errors:
+//              we could not check, which is NOT evidence the job is gone
+export type LinkState = "live" | "dead" | "unverified";
+export interface LinkCheck {
+  ok: boolean;
+  state: LinkState;
+  status: number;
+  finalUrl: string;
+}
+
+export function classifyLink(status: number, finalUrl: string): LinkState {
+  let lostJob = false;
+  try {
+    const u = new URL(finalUrl);
+    lostJob = /\/jobs\/?$|error=true|\/404\b|[?&]gh_error/.test(u.pathname + u.search);
+  } catch {
+    /* keep false */
+  }
+  if (status === 404 || status === 410) return "dead";
+  if (status >= 200 && status < 300) return lostJob ? "dead" : "live";
+  return "unverified";
+}
+
+export async function checkLink(url: string): Promise<LinkCheck> {
   try {
     const r = await fetch(url, { method: "GET", redirect: "follow", headers: UA, signal: AbortSignal.timeout(15_000), cache: "no-store" });
     const finalUrl = r.url || url;
-    // A redirect to a board's index (no job id in the path) means the job is gone.
-    const lostJob = /\/jobs\/?$|error=true|\/404/.test(new URL(finalUrl).pathname + new URL(finalUrl).search);
-    return { ok: r.ok && !lostJob, status: r.status, finalUrl };
+    const state = classifyLink(r.status, finalUrl);
+    return { ok: state === "live", state, status: r.status, finalUrl };
   } catch {
-    return { ok: false, status: 0, finalUrl: url };
+    return { ok: false, state: "unverified", status: 0, finalUrl: url };
   }
 }
 

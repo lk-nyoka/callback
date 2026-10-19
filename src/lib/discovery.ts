@@ -10,8 +10,38 @@ import { ATS_DOMAINS, tavilyEnabled, tavilySearch, type TavilyResult } from "./t
 // ATS boards that belong to job aggregators re-posting other companies' roles.
 // Their listings are not "the employer's own board", so they are skipped.
 export const AGGREGATOR_BOARDS = new Set(["jobgether", "remoterocketship", "himalayas", "jobleads", "talentify", "lensa", "jooble", "dice"]);
+const isSkippableBoard = (slug: string) => AGGREGATOR_BOARDS.has(slug.toLowerCase()) || /internal|referral|test|sandbox|demo/i.test(slug);
 
-const EXCLUDED_DOMAINS = ["linkedin.com", "indeed.com", "za.indeed.com", "glassdoor.com", "glassdoor.co.za", "ziprecruiter.com", "facebook.com"];
+const EXCLUDED_DOMAINS = [
+  "linkedin.com", "indeed.com", "za.indeed.com", "glassdoor.com", "glassdoor.co.za", "ziprecruiter.com", "facebook.com",
+  // not job postings, or aggregators of other sites' listings
+  "youtube.com", "upwork.com", "fiverr.com", "reddit.com", "quora.com", "medium.com", "simplyhired.com", "za.simplyhired.com",
+  "jobgether.com", "remoterocketship.com", "himalayas.app", "jooble.org", "careerjet.co.za", "adzuna.co.za", "talent.com",
+];
+
+// Search, category and listing pages are not single postings, whatever a
+// model says about them. Checked in code before a result is used.
+export function looksLikeSinglePosting(rawUrl: string): boolean {
+  let u: URL;
+  try {
+    u = new URL(rawUrl);
+  } catch {
+    return false;
+  }
+  const host = u.hostname.replace(/^www\./, "");
+  if (EXCLUDED_DOMAINS.some((d) => host === d || host.endsWith("." + d))) return false;
+  const path = u.pathname.toLowerCase().replace(/\/+$/, "");
+  const segs = path.split("/").filter(Boolean);
+  const last = segs[segs.length - 1] ?? "";
+  if (/[?&](q|query|keywords?|search|kw|what)=/i.test(u.search)) return false;
+  if (/\/(search|hire|browse|categories|category|country|remote-jobs|job-search|jobs-in)(\/|$)/.test(path)) return false;
+  if (/(^|-)jobs?(\.\w+)?$/.test(last) || /(^|-)jobs(-|$)/.test(last) || /(^|\/)(kw|lc)-/.test(path)) return false;
+  if (!segs.length) return false;
+  // Positive evidence of a single posting: an id, a /job/ style path, or a long slug.
+  if (segs.some((x) => /\d{4,}/.test(x))) return true;
+  if (/\/(job|jobs\/view|vacancy|vacancies|position|posting|opening|careers?\/[^/]+)\/[^/]+/.test(path)) return true;
+  return last.split("-").length >= 5;
+}
 
 const WebSchema = z.object({
   items: z.array(
@@ -27,7 +57,8 @@ const WebSchema = z.object({
 });
 
 // Lightning (reasoning off) turns raw search results into structured listings.
-async function normaliseWebResults(results: TavilyResult[], trace: Trace): Promise<RawPosting[]> {
+async function normaliseWebResults(all: TavilyResult[], trace: Trace): Promise<RawPosting[]> {
+  const results = all.filter((r) => looksLikeSinglePosting(r.url));
   if (!results.length) return [];
   try {
     const { data } = await chatJson({
@@ -47,7 +78,7 @@ async function normaliseWebResults(results: TavilyResult[], trace: Trace): Promi
       ],
     });
     return data.items
-      .filter((x) => x.is_single_job_posting && x.title && results[x.index])
+      .filter((x) => x.is_single_job_posting && x.title && results[x.index] && looksLikeSinglePosting(results[x.index].url))
       .map((x) => {
         const r = results[x.index];
         const host = new URL(r.url).hostname.replace(/^www\./, "");
@@ -139,7 +170,7 @@ export async function discover(intent: SearchIntent, previous: JobPosting[], tra
         const results = await tavilySearch(aq, { includeDomains: ATS_DOMAINS, maxResults: 20, step: "Discover employer boards", trace });
         for (const r of results) {
           const b = boardFromUrl(r.url);
-          if (b && !AGGREGATOR_BOARDS.has(b.slug.toLowerCase()) && !boards.has(`${b.provider}:${b.slug}`)) {
+          if (b && !isSkippableBoard(b.slug) && !boards.has(`${b.provider}:${b.slug}`)) {
             boards.set(`${b.provider}:${b.slug}`, b);
             tavilyBoards++;
           }

@@ -29,7 +29,7 @@
     "eslint-config-next": "^15.5.28",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^3.2.4"
+    "vitest": "^5.0.5"
   },
   "overrides": {
     "sharp": "0.35.5",

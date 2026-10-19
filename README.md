@@ -107,7 +107,7 @@ Callback never calls a job fake. It records observable evidence, and code comput
 | Published on the employer's own ATS board right now | Greenhouse / Ashby / Lever public job-board APIs | +3 |
 | First published within 30 days | ATS `first_published` / `publishedAt` | +2 |
 | First published more than 90 days ago, even if edited since | ATS dates | −2 |
-| Application link resolves to the live posting | HTTP check | +1 / −2 |
+| Application link resolves to the live posting (+1); 404/410 or a redirect to a board index (−2). Bot protection (401/403/429) or a timeout counts as **not verified**, never against the role | HTTP check | +1 / −2 / 0 |
 | Employer published or updated 3+ other roles in 30 days (a maintained board, not proof this role is being interviewed for) | Same board | +1 |
 | Same role on an independent page | Tavily | +1 |
 | Disappeared from the employer's board | Re-check | −3 |
@@ -132,7 +132,7 @@ Being published on an ATS board proves the employer is **advertising** a role, n
 - **Nemotron 3 Super** (reasoning on): fit scoring per requirement, drafting application packs, honest rewrites.
 - **Nemotron 3 Ultra**: the on-demand "how to position yourself honestly" analysis.
 - **Nebius Token Factory**: one OpenAI-compatible client for all three tiers (`src/lib/nemotron.ts`), with a one-tier-down fallback (never up), JSON validation with one corrective retry, and every call logged.
-- **Tavily**: finds employer job boards and careers-page listings beyond the built-in board list, and provides the independent-source signal. In a live run for a junior data analyst in Johannesburg, three Tavily searches added 31 employer boards (12 built in, 45 in total), lifting a two-role shortlist to fifteen, including roles at Takealot and Nedbank.
+- **Tavily**: finds employer job boards and careers-page listings beyond the built-in board list (search, category and listing pages are rejected by URL rules in code before a model classifies a result), and provides the independent-source signal. In a live run for a junior data analyst in Johannesburg, three Tavily searches added 31 employer boards (12 built in, 45 in total), lifting a two-role shortlist to fifteen, including roles at Takealot and Nedbank.
 - **"How this ran"** panel on every screen: the model used per step, tokens, latency, fallbacks and every source fetched.
 
 ### Measured cost
@@ -170,7 +170,7 @@ cd callback
 npm install
 cp .env.example .env.local   # add NEBIUS_API_KEY and TAVILY_API_KEY
 npm run dev                  # http://localhost:3000
-npm test                     # 73 unit tests and ledger evaluations
+npm test                     # 91 unit tests and ledger evaluations
 ```
 
 Check which model IDs your key can use:
@@ -214,7 +214,7 @@ Locally, without Supabase variables, workspaces are stored as JSON files in `.da
 | Tavily discovery | Live (tested 19 Oct 2026) |
 | Demo CV | Synthetic (`data/demo/`) |
 | Pinned demo shortlist | Optional, clearly labelled in the UI |
-| Overnight watch | Live endpoint, protected by `CRON_SECRET`, scheduled daily by Vercel Cron (`vercel.json`) |
+| Overnight watch | Live endpoint, protected by `CRON_SECRET`, scheduled daily by Vercel Cron (`vercel.json`). Runs least-recently-watched workspaces first, two at a time, within a 4-minute budget; workspaces inactive for 14 days are skipped |
 | Outcomes in the tracker | Entered by you, never inferred |
 | Evaluation numbers | Measured on the included synthetic sets only |
 

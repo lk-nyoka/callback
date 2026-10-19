@@ -11,7 +11,7 @@ export interface SignalEvidence {
   onBoardNow: boolean | null; // null = could not check
   postedAt?: string;
   updatedAt?: string;
-  link?: { ok: boolean; status: number; finalUrl: string } | null;
+  link?: { ok: boolean; status: number; finalUrl: string; state?: "live" | "dead" | "unverified" } | null;
   otherRolesUpdatedLast30d?: number | null;
   independentSourceUrl?: string | null; // a non-ATS page listing the same role
   historyDays: number; // how long we have been observing this listing
@@ -69,10 +69,19 @@ export function computeSignal(ev: SignalEvidence): SignalResult {
   // 3. Application link
   if (ev.link === undefined || ev.link === null) {
     add({ key: "apply_link", label: "Application link", direction: "unavailable", weight: 0, detail: "Not checked yet." });
-  } else if (ev.link.ok) {
+  } else if (ev.link.ok || ev.link.state === "live") {
     add({ key: "apply_link", label: "Application link works", direction: "positive", weight: W.applyLinkLive, detail: `Resolved with HTTP ${ev.link.status}.`, sourceUrl: ev.link.finalUrl });
+  } else if (ev.link.state === "unverified" || (!ev.link.state && ![404, 410].includes(ev.link.status))) {
+    add({
+      key: "apply_link",
+      label: "Application link not verified",
+      direction: "unavailable",
+      weight: 0,
+      detail: ev.link.status ? `The site answered HTTP ${ev.link.status} to an automated check (often bot protection), so we couldn't verify it. Not counted against the role.` : "The site didn't respond to an automated check. Not counted against the role.",
+      sourceUrl: ev.link.finalUrl,
+    });
   } else {
-    add({ key: "apply_link", label: "Application link is broken", direction: "negative", weight: W.applyLinkDead, detail: ev.link.status ? `Returned HTTP ${ev.link.status} or redirected away from the job.` : "Could not be reached.", sourceUrl: ev.link.finalUrl });
+    add({ key: "apply_link", label: "Application link is broken", direction: "negative", weight: W.applyLinkDead, detail: ev.link.status === 404 || ev.link.status === 410 ? `Returned HTTP ${ev.link.status}: the posting is gone.` : "Redirected away from the job to a board index or error page.", sourceUrl: ev.link.finalUrl });
   }
 
   // 4. Board activity
