@@ -10,7 +10,7 @@ Callback is a private job-search assistant. It reads your CV into a **Career Vau
 | | |
 |---|---|
 | Live demo | **https://callback-psi-two.vercel.app** (try it with the sample CV) |
-| Video (3 min) | `TODO: add YouTube URL` |
+| Video (2:56) | **https://youtu.be/4D_0Bo9xkmc** |
 
 ---
 
@@ -160,7 +160,7 @@ A full run from CV to shortlist to one pack costs about **4 US cents**. Reasonin
 | Track | Personal AI: a persistent, user-confirmed Vault; a nightly watch; private, exportable, deletable data; every outbound action approval-gated |
 | Public repo with an open-source license | MIT, `LICENSE` at the root |
 | README with setup | [Run it](#run-it) |
-| Working demo and video | Demo: https://callback-psi-two.vercel.app. Video: `TODO` |
+| Working demo and video | Demo: https://callback-psi-two.vercel.app. Video: https://youtu.be/4D_0Bo9xkmc |
 | Feedback on the tools | [Below](#feedback-on-the-tools) |
 
 ## Run it
