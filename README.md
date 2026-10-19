@@ -5,7 +5,7 @@
 Callback is a private job-search assistant. It reads your CV into a **Career Vault** of facts you confirm, finds roles published on employers' own job boards, shows the **hiring-signal evidence** for each one, and drafts applications in which **every line must cite a confirmed fact and pass the Claims Ledger**: deterministic checks, plus a Nemotron audit that can only make a verdict stricter. Lines that fail are blocked or sent back to you. **You approve the final pack, and Callback never sends anything for you.**
 
 > Built for the **Nebius x NVIDIA Global AI Hackathon 2026**, Personal AI track.
-> Models: **NVIDIA Nemotron 3.5 Lightning, Nemotron 3 Super and Nemotron 3 Ultra** on **Nebius Token Factory**. Search: **Tavily**. License: **MIT**.
+> Models: **NVIDIA Nemotron 3.5 Lightning, Nemotron 3 Super, Nemotron 3 Ultra and Nemotron 3.5 Super VL** on **Nebius Token Factory**. Search: **Tavily**. License: **MIT**.
 
 | | |
 |---|---|
@@ -32,6 +32,8 @@ CV ──► Career Vault ──► Discover ──► Hiring signal ──► F
                                     ▲
                         The overnight watch re-runs this every night
 ```
+
+**Upload in any format.** PDF, Word (.docx and legacy .doc), OpenDocument (.odt), RTF, HTML, plain text, pasted text, or a photo, screenshot or scanned PDF of the CV. The type is detected from the file's bytes, so a wrong or missing extension still works. Images and scans are transcribed by Nemotron 3.5 Super VL; phone photos are shrunk in the browser first so they fit the 4.4 MB upload limit. Tested on the live app with every format (`src/lib/parse.ts`, `src/lib/parse.test.ts`).
 
 ### Who decides what
 
@@ -128,6 +130,7 @@ Being published on an ATS board proves the employer is **advertising** a role, n
 
 ## Where NVIDIA, Nebius and Tavily are used
 
+- **Nemotron 3.5 Super VL** (vision): reads CVs uploaded as photos, screenshots or scanned PDFs, then hands the text to the same extraction.
 - **Nemotron 3.5 Lightning** (reasoning off): CV fact extraction, web-listing normalisation, the claims auditor.
 - **Nemotron 3 Super** (reasoning on): fit scoring per requirement, drafting application packs, honest rewrites.
 - **Nemotron 3 Ultra**: the on-demand "how to position yourself honestly" analysis.

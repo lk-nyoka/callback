@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { shortModel, timeAgo } from "@/lib/client";
 import { useWorkspace } from "./workspace";
 
@@ -11,6 +12,16 @@ export function TransparencyButton() {
   const { state } = useWorkspace();
   const calls = [...(state?.modelCalls ?? [])].reverse();
   const fetches = [...(state?.sourceFetches ?? [])].reverse();
+  // The drawer is portalled to <body>: the sidebar uses backdrop-filter, which
+  // would otherwise trap a position:fixed overlay inside the sidebar.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
   const totals = calls.reduce((t, c) => ({ inp: t.inp + c.inputTokens, out: t.out + c.outputTokens }), { inp: 0, out: 0 });
   return (
     <>
@@ -18,7 +29,7 @@ export function TransparencyButton() {
         How this ran
         {calls.length > 0 && <span className="rounded-full bg-white/10 px-1.5 text-xs text-ink-2">{calls.length}</span>}
       </button>
-      {open && (
+      {open && mounted && createPortal(
         <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)}>
           <aside
             role="dialog"
@@ -88,7 +99,8 @@ export function TransparencyButton() {
               ))}
             </ul>
           </aside>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );
