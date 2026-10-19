@@ -43,3 +43,6 @@ next-env.d.ts
 # local data
 /.data/
 !.env.example
+
+# Demo video, thumbnail and YouTube files (kept out of git)
+submission/
