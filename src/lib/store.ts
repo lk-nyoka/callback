@@ -91,9 +91,25 @@ function filePath(id: string) {
 const supabaseUrl = (process.env.CALLBACK_SUPABASE_URL || process.env.SUPABASE_URL || "").replace(/\/$/, "") || undefined;
 const supabaseKey = process.env.CALLBACK_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
+// Supabase's free tier occasionally answers 502/503/504 (and sometimes a
+// cold project times out). Retry those with backoff; upserts are idempotent.
+async function sbFetch(url: string, init: RequestInit): Promise<Response> {
+  let last: Response | undefined;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      last = await fetch(url, { ...init, signal: AbortSignal.timeout(20_000) });
+      if (![502, 503, 504, 520, 522, 524].includes(last.status)) return last;
+    } catch (e) {
+      if (attempt === 3) throw e;
+    }
+    await new Promise((r) => setTimeout(r, 400 * 2 ** attempt));
+  }
+  return last!;
+}
+
 const supabaseAdapter: Adapter = {
   async load(id) {
-    const r = await fetch(`${supabaseUrl}/rest/v1/workspaces?id=eq.${encodeURIComponent(id)}&select=state`, {
+    const r = await sbFetch(`${supabaseUrl}/rest/v1/workspaces?id=eq.${encodeURIComponent(id)}&select=state`, {
       headers: sbHeaders(),
       cache: "no-store",
     });
@@ -102,7 +118,7 @@ const supabaseAdapter: Adapter = {
     return rows[0]?.state ?? null;
   },
   async save(state) {
-    const r = await fetch(`${supabaseUrl}/rest/v1/workspaces`, {
+    const r = await sbFetch(`${supabaseUrl}/rest/v1/workspaces`, {
       method: "POST",
       headers: { ...sbHeaders(), Prefer: "resolution=merge-duplicates" },
       body: JSON.stringify({ id: state.id, state, updated_at: new Date().toISOString() }),
