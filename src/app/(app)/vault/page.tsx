@@ -32,16 +32,48 @@ export default function VaultPage() {
   );
 }
 
+const MAX_UPLOAD = 4.4 * 1024 * 1024;
+const ACCEPT = ".pdf,.doc,.docx,.odt,.rtf,.txt,.md,.htm,.html,image/*";
+
+// Phone photos are often 3-10 MB; shrink them in the browser (long edge
+// 2200 px, JPEG) so they fit the upload limit and read quickly.
+async function shrinkImage(file: File): Promise<File> {
+  if (!file.type.startsWith("image/") || file.type === "image/gif") return file;
+  try {
+    const bmp = await createImageBitmap(file);
+    const scale = Math.min(1, 2200 / Math.max(bmp.width, bmp.height));
+    if (scale === 1 && file.size < 1.5 * 1024 * 1024 && /png|jpe?g|webp/.test(file.type)) return file;
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(bmp.width * scale);
+    canvas.height = Math.round(bmp.height * scale);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return file;
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", 0.88));
+    return blob ? new File([blob], file.name.replace(/\.\w+$/, "") + ".jpg", { type: "image/jpeg" }) : file;
+  } catch {
+    return file; // e.g. HEIC on a browser that can't decode it: the server explains
+  }
+}
+
 function Upload({ onDone }: { onDone: () => Promise<void> }) {
-  const [busy, setBusy] = useState<"file" | "sample" | null>(null);
+  const [busy, setBusy] = useState<"file" | "photo" | "sample" | "paste" | null>(null);
   const [err, setErr] = useState("");
   const [drag, setDrag] = useState(false);
+  const [pasting, setPasting] = useState(false);
+  const [pasted, setPasted] = useState("");
   const input = useRef<HTMLInputElement>(null);
+  const camera = useRef<HTMLInputElement>(null);
 
-  async function send(file: File) {
-    setBusy("file");
+  async function send(raw: File) {
+    const isImage = raw.type.startsWith("image/") || /\.(png|jpe?g|webp|heic|heif|gif)$/i.test(raw.name);
+    setBusy(isImage ? "photo" : "file");
     setErr("");
     try {
+      const file = await shrinkImage(raw);
+      if (file.size > MAX_UPLOAD) throw new Error("That file is larger than 4.4 MB. Save it as a smaller PDF, upload a photo of it, or paste the text.");
       const fd = new FormData();
       fd.append("file", file);
       await api("/api/documents", { method: "POST", body: fd });
@@ -64,7 +96,19 @@ function Upload({ onDone }: { onDone: () => Promise<void> }) {
       setBusy(null);
     }
   }
-  if (busy) return <Extracting label={busy === "sample" ? "sample CV" : "your CV"} />;
+  async function sendText() {
+    setBusy("paste");
+    setErr("");
+    try {
+      await api("/api/documents", { method: "POST", json: { text: pasted } });
+      await onDone();
+    } catch (e) {
+      setErr((e as Error).message);
+    } finally {
+      setBusy(null);
+    }
+  }
+  if (busy) return <Extracting label={busy === "sample" ? "the sample CV" : busy === "photo" ? "your photo" : "your CV"} vision={busy === "photo"} />;
   return (
     <section className="mt-8">
       <div
@@ -86,17 +130,44 @@ function Upload({ onDone }: { onDone: () => Promise<void> }) {
           <IconUpload size={26} />
         </span>
         <p className="relative mt-5 text-xl font-semibold">Upload your CV</p>
-        <p className="relative mt-1 text-sm text-muted">Drag and drop, or choose a file. PDF or TXT, up to 5 MB.</p>
+        <p className="relative mx-auto mt-1 max-w-md text-sm text-muted">Drag and drop, or choose a file: PDF, Word, OpenDocument, RTF or text, or a photo or screenshot of your CV. Up to 4.4 MB.</p>
         <div className="relative mt-7 flex flex-wrap justify-center gap-3">
           <button className="btn btn-accent" onClick={() => input.current?.click()}>
             Choose file
+          </button>
+          <button className="btn btn-quiet sm:hidden" onClick={() => camera.current?.click()}>
+            Take a photo
+          </button>
+          <button className="btn btn-quiet" onClick={() => setPasting((v) => !v)} aria-expanded={pasting}>
+            Paste text
           </button>
           <button className="btn btn-quiet" onClick={sample}>
             Use a sample CV
           </button>
         </div>
-        <input ref={input} type="file" accept=".pdf,.txt,.md" className="sr-only" onChange={(e) => e.target.files?.[0] && send(e.target.files[0])} />
-        <p className="relative mt-6 text-xs text-muted">Read by Nemotron 3.5 Lightning. The sample is a fictional junior data analyst in Johannesburg.</p>
+        <input ref={input} type="file" accept={ACCEPT} className="sr-only" aria-label="Choose your CV file" onChange={(e) => e.target.files?.[0] && send(e.target.files[0])} />
+        <input ref={camera} type="file" accept="image/*" capture="environment" className="sr-only" aria-label="Take a photo of your CV" onChange={(e) => e.target.files?.[0] && send(e.target.files[0])} />
+        {pasting && (
+          <form
+            className="relative mx-auto mt-6 max-w-xl text-left"
+            onSubmit={(e) => {
+              e.preventDefault();
+              sendText();
+            }}
+          >
+            <label htmlFor="paste" className="text-sm font-medium">
+              Paste your CV text
+            </label>
+            <textarea id="paste" className="field mt-2 min-h-48" value={pasted} onChange={(e) => setPasted(e.target.value)} placeholder="Copy everything from your CV and paste it here" />
+            <div className="mt-3 flex items-center justify-between gap-3">
+              <span className="text-xs text-muted">{pasted.trim().length < 200 ? `${200 - pasted.trim().length} more characters needed` : `${pasted.trim().length.toLocaleString()} characters`}</span>
+              <button className="btn btn-accent btn-sm" disabled={pasted.trim().length < 200}>
+                Read my CV
+              </button>
+            </div>
+          </form>
+        )}
+        <p className="relative mt-6 text-xs text-muted">Text is read by Nemotron 3.5 Lightning; photos and scans by Nemotron 3.5 Super VL. The sample is a fictional junior data analyst in Johannesburg.</p>
         <p className="relative mx-auto mt-1.5 max-w-md text-xs text-muted">No accounts in this build: your workspace is tied to this browser. Remove ID numbers and your home address first.</p>
       </div>
       <div className="mt-4">
@@ -109,13 +180,14 @@ function Upload({ onDone }: { onDone: () => Promise<void> }) {
 const EXTRACT_STAGES = ["Parsing document", "Extracting facts with Nemotron 3.5 Lightning", "Verifying every quote against your CV", "Preparing your review"];
 
 // Paced to the typical extraction time; the result itself comes from the server.
-function Extracting({ label }: { label: string }) {
+function Extracting({ label, vision }: { label: string; vision?: boolean }) {
+  const stages = vision ? ["Reading your photo with Nemotron 3.5 Super VL", ...EXTRACT_STAGES.slice(1)] : EXTRACT_STAGES;
   const [stage, setStage] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setStage((s) => Math.min(s + 1, EXTRACT_STAGES.length - 1)), 1600);
+    const t = setInterval(() => setStage((s) => Math.min(s + 1, stages.length - 1)), vision ? 2200 : 1600);
     return () => clearInterval(t);
-  }, []);
-  const pct = Math.round(((stage + 1) / EXTRACT_STAGES.length) * 92);
+  }, [stages.length, vision]);
+  const pct = Math.round(((stage + 1) / stages.length) * 92);
   return (
     <section className="glass-strong relative mt-8 overflow-hidden rounded-[28px] p-8" aria-live="polite">
       <div className="pointer-events-none absolute -right-10 -top-10">
@@ -126,7 +198,7 @@ function Extracting({ label }: { label: string }) {
         <div className="h-full rounded-full bg-gradient-to-r from-accent to-accent-2 transition-[width] duration-700" style={{ width: `${pct}%` }} />
       </div>
       <ul className="relative mt-5 space-y-2.5">
-        {EXTRACT_STAGES.map((s, i) => (
+        {stages.map((s, i) => (
           <li key={s} className={`flex items-center gap-3 text-sm transition-opacity ${i <= stage ? "" : "opacity-40"}`}>
             <span className={`grid size-5 place-items-center rounded-full text-[0.65rem] font-bold ${i < stage ? "bg-verified text-black" : i === stage ? "ring-2 ring-accent/70" : "bg-white/10"}`}>
               {i < stage ? "✓" : i === stage ? <Spinner className="size-3" /> : ""}

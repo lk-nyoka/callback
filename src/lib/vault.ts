@@ -115,17 +115,3 @@ export async function extractFacts(docId: string, text: string, trace: Trace): P
   }
   return { facts, dropped, model };
 }
-
-export async function parseDocument(filename: string, bytes: Uint8Array): Promise<string> {
-  const lower = filename.toLowerCase();
-  if (lower.endsWith(".pdf")) {
-    const { extractText, getDocumentProxy } = await import("unpdf");
-    const pdf = await getDocumentProxy(bytes);
-    const { text } = await extractText(pdf, { mergePages: false });
-    return (Array.isArray(text) ? text.join("\n\n") : text).replace(/\u0000/g, "");
-  }
-  if (lower.endsWith(".txt") || lower.endsWith(".md")) {
-    return new TextDecoder().decode(bytes);
-  }
-  throw new Error("Unsupported file type. Upload a PDF or TXT file.");
-}

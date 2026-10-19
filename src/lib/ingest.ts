@@ -5,10 +5,12 @@ import { Trace } from "./trace";
 import { extractFacts } from "./vault";
 import { mutate, saveTrace } from "./workspace";
 
-export async function ingestDocument(filename: string, text: string) {
+export async function ingestDocument(filename: string, text: string, trace = new Trace()) {
   const clean = text.replace(/\r\n/g, "\n").trim();
-  if (clean.length < 200) throw new Error("We could not read enough text from that file. If it is a scanned PDF, export it as text first.");
-  const trace = new Trace();
+  if (clean.length < 200) {
+    await saveTrace(trace);
+    throw new Error("We could only read a little text from that file. A CV usually has more: try a clearer photo, a PDF, or paste the text instead.");
+  }
   const docId = `doc_${nanoid(8)}`;
   try {
     const { facts, dropped, model } = await extractFacts(docId, clean, trace);

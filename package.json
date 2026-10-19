@@ -12,11 +12,14 @@
     "eval:live": "LIVE=1 vitest run test/auditor.live.test.ts"
   },
   "dependencies": {
+    "fast-png": "^8.0.0",
+    "fflate": "^0.8.3",
     "nanoid": "^6.0.2",
     "next": "^15.5.28",
     "react": "19.2",
     "react-dom": "19.2",
     "unpdf": "^1.9.0",
+    "word-extractor": "^1.0.4",
     "zod": "^4.6.7"
   },
   "devDependencies": {

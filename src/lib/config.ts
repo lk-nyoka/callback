@@ -11,6 +11,8 @@ export const config = {
     super: process.env.MODEL_SUPER ?? "nvidia/nemotron-3-super-120b-a12b",
     ultra: process.env.MODEL_ULTRA ?? "nvidia/Nemotron-3-Ultra-550b-a55b",
   } satisfies Record<Tier, string>,
+  // Vision: photos, screenshots and scanned PDFs of CVs.
+  visionModel: process.env.MODEL_VISION ?? "nvidia/Nemotron-3.5-Super-VL",
   enableUltra: (process.env.ENABLE_ULTRA ?? "true") === "true",
   dailyApplicationCap: Number(process.env.DAILY_APPLICATION_CAP ?? 10),
   dataDir: process.env.CALLBACK_DATA_DIR ?? ".data",

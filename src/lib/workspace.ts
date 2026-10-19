@@ -31,6 +31,8 @@ export async function mutate<T>(fn: (s: WorkspaceState) => T | Promise<T>, trace
 export async function saveTrace(trace: Trace) {
   if (!trace.calls.length && !trace.fetches.length) return;
   await mutate(() => undefined, trace);
+  trace.calls = [];
+  trace.fetches = [];
 }
 
 export function jsonError(e: unknown, status = 500) {

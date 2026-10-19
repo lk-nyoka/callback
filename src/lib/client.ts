@@ -30,6 +30,7 @@ export async function api<T = unknown>(path: string, init?: RequestInit & { json
 }
 
 export function shortModel(id: string) {
+  if (/-vl\b|vl$/i.test(id)) return "Nemotron 3.5 Super VL";
   if (/lightning/i.test(id)) return "Nemotron 3.5 Lightning";
   if (/ultra/i.test(id)) return "Nemotron 3 Ultra";
   if (/super/i.test(id)) return "Nemotron 3 Super";
